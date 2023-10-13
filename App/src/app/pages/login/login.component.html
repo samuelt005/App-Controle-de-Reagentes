@@ -1,0 +1,19 @@
+<div class="login-bg">
+    <div class="container">
+        <section class="login-container">
+            <header class="login-header">
+                <img src="/assets/logos/colored.png" alt="Logo do Biopark">
+            </header>
+            <div class="login-content">
+                <div class="content" [formGroup]="form">
+                    <input formControlName="username" type="text" placeholder="Informe seu RA ou E-mail ou CPF" />
+                    <input formControlName="password" type="password" placeholder="Informe a sua senha" />
+                    <hr>
+                    <button class="filled" (click)="login()" [class]="(form.valid).toString()">Entrar</button>
+                    <button class="not-filled">Cadastrar</button>
+                    <p>Esqueceu sua senha?</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
