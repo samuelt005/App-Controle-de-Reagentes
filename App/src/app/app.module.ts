@@ -6,11 +6,27 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ListingComponent } from './pages/listing/listing.component';
+import { SideBarComponent } from './shared/side-bar/side-bar.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { InfoCardComponent } from './shared/info-card/info-card.component';
+import { TableComponent } from './shared/table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ListingComponent,
+    SideBarComponent,
+    HeaderComponent,
+    InfoCardComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -18,6 +34,12 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

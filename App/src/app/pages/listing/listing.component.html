@@ -1,0 +1,10 @@
+<div class="page-container">
+    <app-side-bar />
+    <div class="page-content">
+        <app-header [pageTitle]="pageTitle" />
+        <div class="cards-container">
+            <app-info-card *ngFor="let card of infoCards" [card]="card" />
+        </div>
+        <app-table [tableColumns]="tableColumns"/>
+    </div>
+</div>

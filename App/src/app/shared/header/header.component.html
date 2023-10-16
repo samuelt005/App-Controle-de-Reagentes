@@ -1,0 +1,13 @@
+<header>
+    <div class="page-title">
+        <mat-icon class="title-icon material-icons-outlined" [style.color]="pageTitle.iconColor">
+            {{ pageTitle.icon }}
+        </mat-icon>
+        <h1>{{ pageTitle.title }}</h1>
+    </div>
+    <span class="spacer"></span>
+    <div class="search-box" appearance="outline">
+        <input matInput placeholder="Pesquisar por Código ou Descrição">
+        <mat-icon matSuffix>search</mat-icon>
+    </div>
+</header>

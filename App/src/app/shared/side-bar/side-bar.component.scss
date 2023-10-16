@@ -1,0 +1,39 @@
+.mat-toolbar-column {
+  flex-direction: column;
+  width: 80px;
+  height: 100vh;
+  background-color: var(--primaria-2);
+  padding: 10px 15px;
+}
+
+.top-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bottom-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--base-branco);
+  padding: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+mat-icon {
+  font-size: 35px;
+  height: 35px;
+  width: 35px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
