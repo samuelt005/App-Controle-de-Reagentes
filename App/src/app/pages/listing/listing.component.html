@@ -5,6 +5,38 @@
         <div class="cards-container">
             <app-info-card *ngFor="let card of infoCards" [card]="card" />
         </div>
-        <app-table [tableColumns]="tableColumns"/>
+        <div class="table-container" >
+            <div class="table-header" >
+                <p class="cod">Código</p>
+                <p class="desc">Descrição</p>
+                <p class="tags">Tags</p>
+                <p class="estoque">Estoque Atual</p>
+                <p class="un">Un</p>
+                <p class="localizacao">Loc. no Estoque</p>
+                <p class="valor-un">Valor Unitário</p>
+                <p class="valor-tot">Valor Total</p>
+                <mat-icon class="table-icon-header material-icons-outlined">
+                    history
+                </mat-icon>
+            </div>
+            <div *ngFor="let row of tableRow" class="table-row">
+                <p class="cod">{{row.cod}}</p>
+                <p class="desc">{{row.desc}}</p>
+                <div class="tags">
+                    <div class="tag" *ngFor="let tag of row.tags">
+                        {{ tag }}
+                    </div>
+                </div>
+                <p class="estoque">{{row.estoque}}</p>
+                <p class="un">{{row.un}}</p>
+                <p class="localizacao">{{row.localizacao}}</p>
+                <p class="valor-un">{{row.valor_un}}</p>
+                <p class="valor-tot">{{row.valor_tot}}</p>
+                <mat-icon class="table-icon material-icons-outlined">
+                    open_in_new
+                </mat-icon>
+            </div>
+        </div>
+        <app-paginator />     
     </div>
 </div>

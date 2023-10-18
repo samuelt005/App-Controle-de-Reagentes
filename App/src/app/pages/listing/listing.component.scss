@@ -10,16 +10,131 @@
     margin: 22px auto;
     gap: 15px;
     max-width: 1200px;
-  
+
     .cards-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       align-self: stretch;
     }
+
+    .table-container {
+      border-radius: 10px;
+      border: 0.5px solid var(--cinza-2);
+
+      .table-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 0.5px solid var(--cinza-2);
+
+        p {
+          margin: 0;
+          overflow: hidden;
+          color: var(--cinza-3);
+          text-overflow: ellipsis;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: 0.25px;
+        }
+      }
+
+      .table-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 5px 10px;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .table-row:not(:last-child) {
+        border-bottom: 0.5px solid var(--cinza-2);
+      }
+
+      .cod {
+        width: 60px;
+      }
+
+      .desc {
+        width: 350px;
+      }
+
+      .tags {
+        width: 200px;
+      }
+
+      .estoque,
+      .valor-un,
+      .valor-tot {
+        width: 100px;
+      }
+
+      .un {
+        width: 50px;
+      }
+
+      .localizacao {
+        width: 120px;
+      }
+
+      .estoque,
+      .valor-un,
+      .valor-tot,
+      .un,
+      .localizacao {
+        text-align: center;
+      }
+
+      .tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tag {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 26px;
+        height: 20px;
+        padding: 0px 4px;
+        border-radius: 4px;
+        background-color: var(--cinza-1);
+        color: var(--cinza-3);
+        text-align: center;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+      }
+
+      .table-icon-header {
+        color: var(--cinza-3);
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .table-icon {
+        color: var(--cinza-2);
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .table-icon:hover {
+        color: var(--cinza-3);
+      }
+    }
   }
 }
-
-
-
-

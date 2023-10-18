@@ -1,6 +1,7 @@
 import { AuthService } from './../../auth/auth.service';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ export class LoginComponent {
     password: ['', Validators.required], //TODO add more validatos
   });
 
-  constructor(private AuthService: AuthService, private fb: FormBuilder) {}
+  constructor(private AuthService: AuthService, private fb: FormBuilder, private router: Router) {}
 
   login() {
     let user = this.AuthService.login(
@@ -22,5 +23,6 @@ export class LoginComponent {
     if (!user) {
       alert('Usuário ou senha inválido!');
     }
+    this.router.navigate(['/listing'])
   }
 }

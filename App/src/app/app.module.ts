@@ -16,7 +16,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { InfoCardComponent } from './shared/info-card/info-card.component';
-import { TableComponent } from './shared/table/table.component';
+import { PaginatorComponent } from './shared/paginator/paginator.component';
+import {NgIf} from '@angular/common';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import { TableComponent } from './shared/table/table.component';
     SideBarComponent,
     HeaderComponent,
     InfoCardComponent,
-    TableComponent
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,9 @@ import { TableComponent } from './shared/table/table.component';
     MatButtonModule,
     MatToolbarModule,
     MatFormFieldModule,
+    NgIf,
+    MatSidenavModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
