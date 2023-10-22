@@ -1,13 +1,19 @@
 <header>
-    <div class="page-title">
-        <mat-icon class="title-icon material-icons-outlined" [style.color]="pageTitle.iconColor">
-            {{ pageTitle.icon }}
-        </mat-icon>
-        <h1>{{ pageTitle.title }}</h1>
-    </div>
-    <span class="spacer"></span>
-    <div class="search-box">
-        <input placeholder="Pesquisar por Código ou Descrição">
-        <mat-icon>search</mat-icon>
-    </div>
+  <div class="page-title title-large">
+    <mat-icon
+      class="title-icon material-icons-outlined"
+      [style.color]="pageTitle.iconColor"
+    >
+      {{ pageTitle.icon }}
+    </mat-icon>
+    <h1>{{ pageTitle.title }}</h1>
+  </div>
+  <span class="spacer"></span>
+  <div class="search-box" *ngIf="pageTitle.searchBox">
+    <input class="body-large" placeholder="Pesquisar por Código ou Descrição" />
+    <mat-icon>search</mat-icon>
+  </div>
+  <button class="adjust-button body-medium" *ngIf="pageTitle.adjustButton" (click)="openAdjustment('100ms', '100ms')">
+    Incluir Ajuste
+  </button>
 </header>

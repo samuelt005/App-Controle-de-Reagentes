@@ -1,160 +1,235 @@
 <div class="side-bar-container">
-    <mat-toolbar class="mat-toolbar-column">
-        <div class="top-content">
-            <img src="assets/logos/no-text-white.svg" alt="" />
-            <button mat-icon-button class="button-icon" (click)="toggleMenusDrawer()">
-                <mat-icon class="material-icons-outlined">menu</mat-icon>
-            </button>
-            <button mat-icon-button class="button-icon" (click)="toggleFiltersDrawer()">
-                <mat-icon class="material-icons-outlined"> filter_alt </mat-icon>
-            </button>
-        </div>
-        <span class="spacer"></span>
-        <div class="bottom-content">
-            <button mat-icon-button class="button-icon">
-                <mat-icon class="material-icons-outlined">person</mat-icon>
-            </button>
-            <button mat-icon-button class="button-icon">
-                <mat-icon class="material-icons-outlined"> logout </mat-icon>
-            </button>
-        </div>
-    </mat-toolbar>
+  <mat-toolbar class="mat-toolbar-column">
+    <div class="top-content">
+      <img src="assets/logos/no-text-white.svg" alt="" />
+      <button mat-icon-button class="button-icon" (click)="toggleMenusDrawer()">
+        <mat-icon class="material-icons-outlined">menu</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="button-icon"
+        (click)="toggleFiltersDrawer()"
+        *ngIf="!filtersHidden"
+      >
+        <mat-icon class="material-icons-outlined"> filter_alt </mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="button-icon"
+        (click)="returnPage()"
+        *ngIf="!returnHidden"
+      >
+        <mat-icon class="material-icons-outlined"> arrow_back </mat-icon>
+      </button>
+    </div>
+    <span class="spacer"></span>
+    <div class="bottom-content">
+      <button mat-icon-button class="button-icon">
+        <mat-icon class="material-icons-outlined">person</mat-icon>
+      </button>
+      <button mat-icon-button class="button-icon">
+        <mat-icon class="material-icons-outlined"> logout </mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
 
-    <mat-drawer-container class="drawer-container">
-        <mat-drawer #drawer1 class="drawer" mode="over" [opened]="menusDrawer">
-            <div class="menus-drawer">
-                <h2 class="drawer-title">Administrador</h2>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <mat-icon class="material-icons-outlined">
-                        arrow_forward_ios
-                    </mat-icon>
-                    <p>Cadastrar Baixa</p>
-                </div>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <mat-icon class="material-icons-outlined">
-                        arrow_forward_ios
-                    </mat-icon>
-                    <p>Cadastrar Solicitação</p>
-                </div>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <mat-icon class="material-icons-outlined">
-                        arrow_forward_ios
-                    </mat-icon>
-                    <p>Solicitações de Compra</p>
-                </div>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <mat-icon class="material-icons-outlined">
-                        arrow_forward_ios
-                    </mat-icon>
-                    <p>Gerar Relatórios</p>
-                </div>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <mat-icon class="material-icons-outlined">
-                        arrow_forward_ios
-                    </mat-icon>
-                    <p>Registro de Materiais</p>
-                </div>
-                <hr class="drawer-line" />
-            </div>
-        </mat-drawer>
-    </mat-drawer-container>
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer1 class="drawer" mode="over" [opened]="menusDrawer">
+      <div class="menus-drawer">
+        <h2 class="drawer-title title-large">Administrador</h2>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <mat-icon class="material-icons-outlined">
+            arrow_forward_ios
+          </mat-icon>
+          <p class="title-medium">Cadastrar Baixa</p>
+        </div>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <mat-icon class="material-icons-outlined">
+            arrow_forward_ios
+          </mat-icon>
+          <p class="title-medium">Cadastrar Solicitação</p>
+        </div>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <mat-icon class="material-icons-outlined">
+            arrow_forward_ios
+          </mat-icon>
+          <p class="title-medium">Solicitações de Compra</p>
+        </div>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <mat-icon class="material-icons-outlined">
+            arrow_forward_ios
+          </mat-icon>
+          <p class="title-medium">Gerar Relatórios</p>
+        </div>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <mat-icon class="material-icons-outlined">
+            arrow_forward_ios
+          </mat-icon>
+          <p class="title-medium">Registro de Materiais</p>
+        </div>
+        <hr class="drawer-line" />
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
 
-    <mat-drawer-container class="drawer-container">
-        <mat-drawer #drawer2 class="drawer" mode="over" [opened]="filtersDrawer">
-            <div class="filters-drawer">
-                <h2 class="drawer-title">Filtros</h2>
-                <hr class="drawer-line" />
-                <div class="menu-option">
-                    <div class="filter-option">
-                        <div class="checkbox"> <!--  TODO melhorar este checkbox -->
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('un')">
-                                {{ filtersOptions.un ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label for="un-medida" (click)="toggleCheckbox('un')">Unidade de Medida</label>
-                        </div>
-                        <select name="un-medida" class="select-button" id="un-medida">
-                            <option value="" selected disabled hidden>Selecione</option>
-                            <option value="kg" class="option">Kilogramas</option>
-                            <option value="l" class="option">Litros</option>
-                            <option value="gr" class="option">Gramas</option>
-                            <option value="ml" class="option">Mililitros</option>
-                        </select>
-                    </div>
-                    <hr class="drawer-line" />
-                    <div class="filter-option">
-                        <div class="checkbox">
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('quantidade')">
-                                {{ filtersOptions.quantidade ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label (click)="toggleCheckbox('quantidade')">Quantidade</label>
-                        </div>
-                        <div class="min-max">
-                            <input type="number" placeholder="min">
-                            <input type="number" placeholder="max">
-                        </div>
-                    </div>
-                    <hr class="drawer-line" />
-                    <div class="filter-option">
-                        <div class="checkbox">
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('vlr_unit')">
-                                {{ filtersOptions.vlr_unit ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label (click)="toggleCheckbox('vlr_unit')">Valor Unitário</label>
-                        </div>
-                        <div class="min-max">
-                            <input type="number" placeholder="min">
-                            <input type="number" placeholder="max">
-                        </div>
-                    </div>
-                    <hr class="drawer-line" />
-                    <div class="filter-option">
-                        <div class="checkbox">
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('vlr_tot')">
-                                {{ filtersOptions.vlr_tot ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label (click)="toggleCheckbox('vlr_tot')">Valor Total</label>
-                        </div>
-                        <div class="min-max">
-                            <input type="number" placeholder="min">
-                            <input type="number" placeholder="max">
-                        </div>
-                    </div>
-                    <hr class="drawer-line" />
-                    <div class="filter-option">
-                        <div class="checkbox">
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('tag')">
-                                {{ filtersOptions.tag ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label (click)="toggleCheckbox('tag')">Tag</label>
-                        </div>
-                        <select name="un-medida" class="select-button" id="un-medida">
-                            <option value="" selected disabled hidden>Selecione</option>
-                            <option value="kg" class="option">Estoque Mínimo</option>
-                            <option value="l" class="option">Polícia Federal</option>
-                            <option value="gr" class="option">Polícia Civil</option>
-                            <option value="ml" class="option">Exército Brasileiro</option>
-                        </select>
-                    </div>
-                    <hr class="drawer-line" />
-                    <div class="filter-option">
-                        <div class="checkbox">
-                            <mat-icon class="material-icons-outlined" (click)="toggleCheckbox('localizacao')">
-                                {{ filtersOptions.localizacao ? 'check_box' : 'check_box_outline_blank' }}
-                            </mat-icon>
-                            <label (click)="toggleCheckbox('localizacao')">Localização no Estoque</label>
-                        </div>
-                        <input class="filter-input" placeholder="Localização" type="text">
-                    </div>
-                    <div class="filters-button">
-                        <button>Filtrar</button>
-                    </div>
-                </div>
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer2 class="drawer" mode="over" [opened]="filtersDrawer">
+      <div class="filters-drawer">
+        <h2 class="drawer-title title-large">Filtros</h2>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <div class="filter-option">
+            <div class="checkbox">
+              <!--  TODO melhorar este checkbox -->
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('un')"
+              >
+                {{
+                  filtersOptions.un ? "check_box" : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label
+                class="body-large"
+                for="un-medida"
+                (click)="toggleCheckbox('un')"
+                >Unidade de Medida</label
+              >
             </div>
-        </mat-drawer>
-    </mat-drawer-container>
+            <select
+              name="un-medida"
+              class="select-button body-medium"
+              id="un-medida"
+            >
+              <option value="" selected disabled hidden>Selecione</option>
+              <option value="kg" class="option">Kilogramas</option>
+              <option value="l" class="option">Litros</option>
+              <option value="gr" class="option">Gramas</option>
+              <option value="ml" class="option">Mililitros</option>
+            </select>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <div class="checkbox">
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('quantidade')"
+              >
+                {{
+                  filtersOptions.quantidade
+                    ? "check_box"
+                    : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label class="body-large" (click)="toggleCheckbox('quantidade')"
+                >Quantidade</label
+              >
+            </div>
+            <div class="min-max">
+              <input class="body-medium" type="number" placeholder="min" />
+              <input class="body-medium" type="number" placeholder="max" />
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <div class="checkbox">
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('vlr_unit')"
+              >
+                {{
+                  filtersOptions.vlr_unit
+                    ? "check_box"
+                    : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label class="body-large" (click)="toggleCheckbox('vlr_unit')"
+                >Valor Unitário</label
+              >
+            </div>
+            <div class="min-max">
+              <input class="body-medium" type="number" placeholder="min" />
+              <input class="body-medium" type="number" placeholder="max" />
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <div class="checkbox">
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('vlr_tot')"
+              >
+                {{
+                  filtersOptions.vlr_tot
+                    ? "check_box"
+                    : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label class="body-large" (click)="toggleCheckbox('vlr_tot')"
+                >Valor Total</label
+              >
+            </div>
+            <div class="min-max">
+              <input class="body-medium" type="number" placeholder="min" />
+              <input class="body-medium" type="number" placeholder="max" />
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <div class="checkbox">
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('tag')"
+              >
+                {{
+                  filtersOptions.tag ? "check_box" : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label class="body-large" (click)="toggleCheckbox('tag')"
+                >Tag</label
+              >
+            </div>
+            <select
+              name="un-medida"
+              class="select-button body-medium"
+              id="un-medida"
+            >
+              <option value="" selected disabled hidden>Selecione</option>
+              <option value="kg" class="option">Estoque Mínimo</option>
+              <option value="l" class="option">Polícia Federal</option>
+              <option value="gr" class="option">Polícia Civil</option>
+              <option value="ml" class="option">Exército Brasileiro</option>
+            </select>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <div class="checkbox">
+              <mat-icon
+                class="material-icons-outlined"
+                (click)="toggleCheckbox('localizacao')"
+              >
+                {{
+                  filtersOptions.localizacao
+                    ? "check_box"
+                    : "check_box_outline_blank"
+                }}
+              </mat-icon>
+              <label class="body-large" (click)="toggleCheckbox('localizacao')"
+                >Localização no Estoque</label
+              >
+            </div>
+            <input class="filter-input" placeholder="Localização" type="text" />
+          </div>
+          <div class="filters-button">
+            <button class="body-medium">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
 </div>

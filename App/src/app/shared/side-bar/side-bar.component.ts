@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { filtersOptions } from 'src/app/interfaces/filters-option';
 
 @Component({
@@ -10,6 +11,8 @@ export class SideBarComponent {
   menusDrawer: boolean = false;
   filtersDrawer: boolean = false;
   isChecked: boolean = false;
+  @Input() filtersHidden: boolean = false;
+  @Input() returnHidden: boolean = false;
 
   filtersOptions: filtersOptions = {
     un: false,
@@ -19,6 +22,8 @@ export class SideBarComponent {
     tag: false,
     localizacao: false,
   };
+
+  constructor(private router: Router) {}
 
   toggleCheckbox(filterName: keyof filtersOptions) {
     this.filtersOptions[filterName] = !this.filtersOptions[filterName];
@@ -36,5 +41,9 @@ export class SideBarComponent {
     if (this.menusDrawer) {
       this.menusDrawer = false;
     }
+  }
+
+  returnPage() {
+    this.router.navigate(['/listing']);
   }
 }

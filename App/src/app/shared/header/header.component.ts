@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PageTitle } from 'src/app/interfaces/page-title';
+import { AdjustmentComponent } from '../dialogs/adjustment/adjustment.component';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +10,23 @@ import { PageTitle } from 'src/app/interfaces/page-title';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-    @Input() pageTitle: PageTitle = {
-        iconColor: '',
-        icon: '',
-        title: 'PLACEHOLDER',
-    };
+  @Input() pageTitle: PageTitle = {
+    iconColor: '',
+    icon: '',
+    title: 'PLACEHOLDER',
+    searchBox: false,
+    adjustButton: false,
+  };
+
+  constructor(public dialog: MatDialog) {}
+
+  openAdjustment(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(AdjustmentComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
 }

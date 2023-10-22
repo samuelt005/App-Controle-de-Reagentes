@@ -2,6 +2,7 @@ import { ListingRow } from '../../interfaces/tables/listing-row';
 import { InfoCard } from 'src/app/interfaces/info-card';
 import { PageTitle } from './../../interfaces/page-title';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './listing.component.html',
@@ -12,6 +13,8 @@ export class ListingComponent {
     iconColor: 'var(--secundaria-2)',
     icon: 'inventory_2',
     title: 'Inventário de Reagentes e Materiais',
+    searchBox: true,
+    adjustButton: false
   };
 
   infoCards: InfoCard[] = [
@@ -25,7 +28,7 @@ export class ListingComponent {
       iconColor: '',
       icon: 'calculate',
       title: 'Valor total',
-      data: '-',
+      data: 'R$ -',
     },
     {
       iconColor: '',
@@ -257,4 +260,10 @@ export class ListingComponent {
       prod_id: 1,
     },
   ];
+
+  constructor(private router: Router) {}
+
+  openHistory() {
+    this.router.navigate(['/history'])
+  }
 }

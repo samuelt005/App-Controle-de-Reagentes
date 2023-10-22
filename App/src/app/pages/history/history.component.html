@@ -1,0 +1,46 @@
+<div class="page-container">
+  <app-side-bar [filtersHidden]="true" [returnHidden]="false" />
+  <div class="page-content">
+    <app-header [pageTitle]="pageTitle" />
+    <div class="cards-container">
+      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+    </div>
+    <div class="table-container">
+      <div class="table-header">
+        <mat-icon class="table-icon-header material-icons-outlined">
+          description
+        </mat-icon>
+        <p class="data">Data</p>
+        <p class="forn-resp">Fornecedor/Responsável</p>
+        <p class="nfe">Nº NF-e</p>
+        <p class="valor-tot">Valor Total</p>
+        <p class="quant">Quantidade</p>
+        <p class="un">Un</p>
+        <mat-icon class="table-icon-header material-icons-outlined">
+          info
+        </mat-icon>
+      </div>
+      <div *ngFor="let row of tableRow; let i = index" class="table-row">
+        <mat-icon
+          class="table-icon-type material-icons-outlined"
+          [style.color]="getIconColor(i)"
+        >
+          {{ getIconType(i) }}
+        </mat-icon>
+        <p class="data">{{ row.data }}</p>
+        <p class="forn-resp">{{ row.forn_resp }}</p>
+        <p class="nfe">{{ row.tipo == "entrada" ? row.nfe : "-" }}</p>
+        <p class="valor-tot">R$ {{ row.valor_tot }}</p>
+        <p class="quant">{{ row.quant }}</p>
+        <p class="un">{{ row.un }}</p>
+        <mat-icon
+          class="table-icon material-icons-outlined"
+          (click)="openCommentary('100ms', '100ms', row.commentary)"
+        >
+          more_horiz
+        </mat-icon>
+      </div>
+    </div>
+    <app-paginator />
+  </div>
+</div>

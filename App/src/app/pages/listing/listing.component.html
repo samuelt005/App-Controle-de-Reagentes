@@ -1,5 +1,5 @@
 <div class="page-container">
-    <app-side-bar />
+    <app-side-bar [filtersHidden]="false" [returnHidden]="true" />
     <div class="page-content">
         <app-header [pageTitle]="pageTitle" />
         <div class="cards-container">
@@ -20,19 +20,19 @@
                 </mat-icon>
             </div>
             <div *ngFor="let row of tableRow" class="table-row">
-                <p class="cod">{{row.cod}}</p>
-                <p class="desc">{{row.desc}}</p>
+                <p class="cod">{{ row.cod }}</p>
+                <p class="desc">{{ row.desc }}</p>
                 <div class="tags">
                     <div class="tag" *ngFor="let tag of row.tags">
                         {{ tag }}
                     </div>
                 </div>
-                <p class="estoque">{{row.estoque}}</p>
-                <p class="un">{{row.un}}</p>
-                <p class="localizacao">{{row.localizacao}}</p>
-                <p class="valor-un">{{row.valor_un}}</p>
-                <p class="valor-tot">{{row.valor_tot}}</p>
-                <mat-icon class="table-icon material-icons-outlined">
+                <p class="estoque">{{ row.estoque }}</p>
+                <p class="un">{{ row.un }}</p>
+                <p class="localizacao">{{ row.localizacao }}</p>
+                <p class="valor-un">{{ row.valor_un }}</p>
+                <p class="valor-tot">{{ row.valor_tot }}</p>
+                <mat-icon class="table-icon material-icons-outlined" (click)="openHistory()">
                     open_in_new
                 </mat-icon>
             </div>

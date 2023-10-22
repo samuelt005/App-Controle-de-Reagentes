@@ -1,60 +1,112 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~normalize.css';
+@import "~normalize.css";
 
 :root {
-    /* Color styles */
-    --base-branco: #FFFFFF;
-    --base-preto: #000000;
-    --primaria-1: #395671;
-    --primaria-2: #283745;
-    --primaria-3: #1C252D;
-    --secundaria-1: #F06279;
-    --secundaria-2: #D82E4A;
-    --secundaria-3: #96152A;
-    --erro-1: #F27373;
-    --erro-2: #EF5252;
-    --erro-3: #AA3B39;
-    --aviso-1: #FFD08A;
-    --aviso-2: #FF9800;
-    --aviso-3: #6B4000;
-    --sucesso-1: #C8E6C9;
-    --sucesso-2: #459F49;
-    --sucesso-3: #204A22;
-    --informativo-1: #B1E4FC;
-    --informativo-2: #1C93C9;
-    --informativo-3: #014766;
-    --cinza-1: #E2E2E2;
-    --cinza-2: #A1A1A1;
-    --cinza-3: #454545;
+  /* Color styles */
+  --base-branco: #ffffff;
+  --base-preto: #000000;
+  --primaria-1: #395671;
+  --primaria-2: #283745;
+  --primaria-3: #1c252d;
+  --secundaria-1: #f06279;
+  --secundaria-2: #d82e4a;
+  --secundaria-3: #96152a;
+  --erro-1: #f27373;
+  --erro-2: #ef5252;
+  --erro-3: #aa3b39;
+  --aviso-1: #ffd08a;
+  --aviso-2: #ff9800;
+  --aviso-3: #6b4000;
+  --sucesso-1: #c8e6c9;
+  --sucesso-2: #459f49;
+  --sucesso-3: #204a22;
+  --informativo-1: #b1e4fc;
+  --informativo-2: #1c93c9;
+  --informativo-3: #014766;
+  --cinza-1: #e2e2e2;
+  --cinza-2: #a1a1a1;
+  --cinza-3: #454545;
 
-    /* Text-size styles */
-    --titulos-grandes-large: 57px;
-    --titulos-grandes-medium: 45px;
-    --titulos-grandes-small: 36px;
-    --titulos-medios-large: 32px;
-    --titulos-medios-medium: 28px;
-    --titulos-medios-small: 24px;
-    --titulos-pequenos-large: 22px;
-    --titulos-pequenos-medium: 16px;
-    --titulos-pequenos-small: 14px;
-    --corpo-large: 16px;
-    --corpo-medium: 14px;
-    --corpo-small: 12px;
-    --rotulos-large-prominent: 14px;
-    --rotulos-large: 14px;
-    --rotulos-medium-prominent: 12px;
-    --rotulos-medium: 12px;
-    --rotulos-small: 11px;
+  /* Text-size styles */
+  --titulos-grandes-large: 57px;
+  --titulos-grandes-medium: 45px;
+  --titulos-grandes-small: 36px;
+  --titulos-medios-large: 32px;
+  --titulos-medios-medium: 28px;
+  --titulos-medios-small: 24px;
+  --titulos-pequenos-large: 22px;
+  --titulos-pequenos-medium: 16px;
+  --titulos-pequenos-small: 14px;
+  --corpo-large: 16px;
+  --corpo-medium: 14px;
+  --corpo-small: 12px;
+  --rotulos-large-prominent: 14px;
+  --rotulos-large: 14px;
+  --rotulos-medium-prominent: 12px;
+  --rotulos-medium: 12px;
+  --rotulos-small: 11px;
 
-    /* Effect styles */
-    --elevacoes-1: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
-    --elevacoes-2: 0px 2px 6px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
-    --elevacoes-3: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
-    --elevacoes-4: 0px 2px 3px rgba(0, 0, 0, 0.3), 0px 6px 10px rgba(0, 0, 0, 0.15);
-    --elevacoes-5: 0px 4px 4px rgba(0, 0, 0, 0.3), 0px 8px 12px rgba(0, 0, 0, 0.15);
+  /* Effect styles */
+  --elevacoes-1: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+  --elevacoes-2: 0px 2px 6px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3);
+  --elevacoes-3: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px rgba(0, 0, 0, 0.15);
+  --elevacoes-4: 0px 2px 3px rgba(0, 0, 0, 0.3),
+    0px 6px 10px rgba(0, 0, 0, 0.15);
+  --elevacoes-5: 0px 4px 4px rgba(0, 0, 0, 0.3),
+    0px 8px 12px rgba(0, 0, 0, 0.15);
 
-    /* Default page font*/
-    font-family: 'Roboto', sans-serif;
+  /* Default page font*/
+  font-family: "Roboto", sans-serif;
+
+  .title-large {
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  .title-medium {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  .title-small {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+  }
+
+  .body-large {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .body-medium {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+  }
+
+  .body-small {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+}

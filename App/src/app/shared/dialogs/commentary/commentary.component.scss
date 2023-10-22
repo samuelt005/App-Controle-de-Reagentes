@@ -1,0 +1,56 @@
+.commentary-container {
+  display: flex;
+  width: 470px;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  .title {
+    margin: 0;
+  }
+
+  .commentary {
+    border-radius: 4px;
+    border: 0.5px solid var(--cinza-2);
+    padding: 8px 16px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--cinza-1);
+      border-radius: 4px;
+    }
+  }
+
+  .button {
+    display: flex;
+    width: 150px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--base-branco);
+    border-radius: 100px;
+    border: 1px solid var(--cinza-2);
+    cursor: pointer;
+    transition: border-color 0.3s;
+    outline: none;
+  }
+
+  .button:hover {
+    border: 0.6px solid var(--cinza-3);
+  }
+}
+
+::ng-deep .cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}

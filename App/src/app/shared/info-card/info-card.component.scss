@@ -33,11 +33,6 @@
 
     .card-data, .card-title {
       margin: 0;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 20px;
-      letter-spacing: 0.25px;
     }
 
     .card-title {
@@ -47,7 +42,7 @@
     }
 
     .card-data {
-      color: var(--base-preto, #000);
+      color: var(--base-preto);
       overflow: hidden;
       text-overflow: ellipsis;
     }
