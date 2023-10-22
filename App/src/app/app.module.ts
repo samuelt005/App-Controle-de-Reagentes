@@ -24,6 +24,8 @@ import { InfoCardComponent } from './shared/info-card/info-card.component';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { AdjustmentComponent } from './shared/dialogs/adjustment/adjustment.component';
+import { WriteOffComponent } from './pages/write-off/write-off.component';
+import { DataInputsComponent } from './pages/write-off/data-inputs/data-inputs.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { AdjustmentComponent } from './shared/dialogs/adjustment/adjustment.comp
     HistoryComponent,
     CommentaryComponent,
     AdjustmentComponent,
+    WriteOffComponent,
+    DataInputsComponent,
   ],
   imports: [
     BrowserModule,

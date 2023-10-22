@@ -8,6 +8,7 @@ import { filtersOptions } from 'src/app/interfaces/filters-option';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
+    //TODO arrumar responsívidade
   menusDrawer: boolean = false;
   filtersDrawer: boolean = false;
   isChecked: boolean = false;
@@ -45,5 +46,10 @@ export class SideBarComponent {
 
   returnPage() {
     this.router.navigate(['/listing']);
+  }
+
+  writeOffPage() {
+    this.router.navigate(['/writeoff']);
+    this.toggleMenusDrawer();
   }
 }

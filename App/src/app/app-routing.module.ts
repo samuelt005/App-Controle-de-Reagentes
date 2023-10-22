@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { ListingComponent } from './pages/listing/listing.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { WriteOffComponent } from './pages/write-off/write-off.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: 'history',
         component: HistoryComponent
+    },
+    {
+        path: 'writeoff',
+        component: WriteOffComponent
     }
 ];
 
