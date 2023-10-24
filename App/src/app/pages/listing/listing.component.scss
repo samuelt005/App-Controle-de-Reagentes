@@ -47,9 +47,20 @@
         flex-direction: row;
         justify-content: space-between;
         padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
 
         p {
           margin: 0;
+        }
+
+        &:hover {
+          background-color: #efefef;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
         }
       }
 
@@ -106,6 +117,7 @@
         width: 26px;
         height: 20px;
         padding: 0px 4px;
+        outline: 0.5px solid var(--base-branco);
         border-radius: 4px;
         background-color: var(--cinza-1);
         color: var(--cinza-3);
@@ -114,26 +126,6 @@
         font-style: normal;
         font-weight: 400;
         line-height: 16px;
-      }
-
-      .table-icon-header {
-        color: var(--cinza-3);
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-      }
-
-      .table-icon {
-        color: var(--cinza-2);
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-        transition: color 0.2s;
-      }
-
-      .table-icon:hover {
-        color: var(--cinza-3);
       }
     }
   }

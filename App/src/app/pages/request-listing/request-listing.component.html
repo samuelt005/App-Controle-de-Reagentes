@@ -1,0 +1,21 @@
+<div class="page-container">
+    <app-side-bar [filtersHidden]="false" [returnHidden]="true" />
+    <div class="page-content">
+        <app-header [pageTitle]="pageTitle" />
+        <div class="table-container" >
+            <div class="table-header" >
+                <p class="numero">Nº Pedido</p>
+                <p class="data">Data</p>
+                <p class="status">Status</p>
+                <p class="solicitante">Solicitante</p>
+            </div>
+            <div *ngFor="let row of tableRow; let i = index" class="table-row" (click)="openDetails()">
+                <p class="numero">{{ row.numero }}</p>
+                <p class="data">{{ row.data }}</p>
+                <p class="status" [style.color]="getStatusColor(i)">{{ getStatus(i) }}</p>
+                <p class="solicitante">{{ row.solicitante }}</p>
+            </div>
+        </div>
+        <app-paginator />     
+    </div>
+</div>

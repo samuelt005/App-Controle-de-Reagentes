@@ -6,8 +6,8 @@
       <div class="first-data-inputs">
         <div class="first-line">
             <input class="body-medium" type="text" placeholder="Código" />
-            <input class="body-medium" type="text" placeholder="Item" /> <!-- TODO mudar para dropdown -->
-            <input class="body-medium" type="number" placeholder="Qtd." />
+            <input class="body-medium" type="text" placeholder="Item" />
+            <input class="body-medium" type="number" placeholder="Qtd." /> <!-- TODO remover setas de todos os inputs number -->
             <input class="body-medium" type="text" placeholder="Un." />
         </div>
         <div class="second-line">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="button-container">
-      <button class="save-button body-medium" (click)="saveWriteOff()">
+      <button class="save-button body-medium" (click)="saveWriteOff('100ms', '100ms')">
         Salvar
       </button>
     </div>

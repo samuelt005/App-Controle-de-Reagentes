@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageTitle } from 'src/app/interfaces/page-title';
-import { NewCommentaryComponent } from '../../shared/dialogs/new-commentary/new-commentary.component';
+import { NewCommentaryComponent } from 'src/app/shared/dialogs/new-commentary/new-commentary.component';
 
 @Component({
-  templateUrl: './write-off.component.html',
-  styleUrls: ['./write-off.component.scss'],
+  templateUrl: './request.component.html',
+  styleUrls: ['./request.component.scss'],
 })
-export class WriteOffComponent {
+export class RequestComponent {
   pageTitle: PageTitle = {
-    iconColor: 'var(--secundaria-2)',
-    icon: 'file_upload',
-    title: 'Cadastrar Baixa de Reagentes e Materiais',
+    iconColor: 'var(--sucesso-2)',
+    icon: 'file_download',
+    title: 'Cadastrar Solicitação de Compra',
     searchBox: false,
     adjustButton: false,
   };
@@ -27,9 +27,9 @@ export class WriteOffComponent {
     this.dataInputs.splice(index, 1);
   }
 
-  saveWriteOff(
+  saveRequest(
     enterAnimationDuration: string,
-    exitAnimationDuration: string,
+    exitAnimationDuration: string
   ): void {
     this.dialog.open(NewCommentaryComponent, {
       enterAnimationDuration,

@@ -48,8 +48,8 @@ export class SideBarComponent {
     this.router.navigate(['/listing']);
   }
 
-  writeOffPage() {
-    this.router.navigate(['/writeoff']);
+  goToPage(page: string) {
+    this.router.navigate([page]);
     this.toggleMenusDrawer();
   }
 }

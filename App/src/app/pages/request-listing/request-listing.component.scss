@@ -1,0 +1,84 @@
+.page-container {
+    display: flex;
+    flex-direction: row;
+
+    .page-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        max-width: 1200px;
+        height: auto;
+        margin: 22px auto;
+
+      .table-container {
+          border: 0.5px solid var(--cinza-2);
+          border-radius: 10px;
+
+        .table-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 0.5px solid var(--cinza-2);
+
+          p {
+              overflow: hidden;
+              margin: 0;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 20px;
+              color: var(--cinza-3);
+              text-overflow: ellipsis;
+              letter-spacing: 0.25px;
+          }
+        }
+  
+        .table-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+          p {
+              margin: 0;
+          }
+
+          &:hover {
+            background-color: #EFEFEF;
+          }
+
+          &:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+          }
+        }
+  
+        .table-row:not(:last-child) {
+            border-bottom: 0.5px solid var(--cinza-2);
+        }
+  
+        .numero {
+            width: 70px;
+        }
+  
+        .data {
+            width: 80px;
+        }
+
+        .status, .solicitante {
+            width: 200px;
+        }
+  
+        .data,
+        .status {
+            text-align: center;
+        }
+      }
+    }
+  }
+  

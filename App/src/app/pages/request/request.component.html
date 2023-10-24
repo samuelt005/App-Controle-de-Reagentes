@@ -1,0 +1,35 @@
+<div class="page-container">
+    <app-side-bar [filtersHidden]="true" [returnHidden]="false" />
+    <div class="page-content">
+      <app-header [pageTitle]="pageTitle" />
+      <div class="content-container">
+        <div class="first-data-inputs">
+          <div class="first-line">
+              <input class="body-medium" type="text" placeholder="Código" />
+              <input class="body-medium" type="text" placeholder="Item" /> <!-- TODO mudar para dropdown -->
+              <input class="body-medium" type="number" placeholder="Qtd." /> <!-- TODO remover setas de todos os inputs number -->
+              <input class="body-medium" type="text" placeholder="Un." />
+          </div>
+          <div class="second-line">
+              <input class="body-medium" type="text" placeholder="Justificativa" />
+          </div>
+        </div>
+        <div *ngFor="let dataInput of dataInputs; let i = index">
+          <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
+        </div>
+        <div class="button-container">
+          <button class="add-button body-medium" (click)="addNewSection()">
+            <mat-icon class="material-icons-outlined">
+              add
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="save-button body-medium" (click)="saveRequest('100ms', '100ms')">
+          Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+  

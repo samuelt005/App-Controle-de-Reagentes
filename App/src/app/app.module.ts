@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -15,17 +15,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AdjustmentComponent } from './pages/history/adjustment/adjustment.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { ListingComponent } from './pages/listing/listing.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RequestListingComponent } from './pages/request-listing/request-listing.component';
+import { RequestComponent } from './pages/request/request.component';
+import { WriteOffComponent } from './pages/write-off/write-off.component';
+import { DataInputsComponent } from './shared/data-inputs/data-inputs.component';
 import { CommentaryComponent } from './shared/dialogs/commentary/commentary.component';
+import { ConfirmSaveComponent } from './shared/dialogs/confirm-save/confirm-save.component';
+import { NewCommentaryComponent } from './shared/dialogs/new-commentary/new-commentary.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { InfoCardComponent } from './shared/info-card/info-card.component';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
-import { AdjustmentComponent } from './shared/dialogs/adjustment/adjustment.component';
-import { WriteOffComponent } from './pages/write-off/write-off.component';
-import { DataInputsComponent } from './pages/write-off/data-inputs/data-inputs.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,10 @@ import { DataInputsComponent } from './pages/write-off/data-inputs/data-inputs.c
     AdjustmentComponent,
     WriteOffComponent,
     DataInputsComponent,
+    NewCommentaryComponent,
+    ConfirmSaveComponent,
+    RequestComponent,
+    RequestListingComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +68,6 @@ import { DataInputsComponent } from './pages/write-off/data-inputs/data-inputs.c
     MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -177,10 +177,10 @@
             background: var(--base-branco);
             outline: none;
             transition: border-color 0.3s;
-          }
 
-          .filter-input:focus {
-            border: 0.6px solid var(--cinza-3);
+            &:focus {
+              border: 0.6px solid var(--cinza-3);
+            }
           }
 
           input::placeholder {

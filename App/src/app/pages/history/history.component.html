@@ -8,7 +8,7 @@
     <div class="table-container">
       <div class="table-header">
         <mat-icon class="table-icon-header material-icons-outlined">
-          description
+            info
         </mat-icon>
         <p class="data">Data</p>
         <p class="forn-resp">Fornecedor/Responsável</p>
@@ -16,11 +16,8 @@
         <p class="valor-tot">Valor Total</p>
         <p class="quant">Quantidade</p>
         <p class="un">Un</p>
-        <mat-icon class="table-icon-header material-icons-outlined">
-          info
-        </mat-icon>
       </div>
-      <div *ngFor="let row of tableRow; let i = index" class="table-row">
+      <div *ngFor="let row of tableRow; let i = index" class="table-row" (click)="openCommentary('100ms', '100ms', row.commentary)">
         <mat-icon
           class="table-icon-type material-icons-outlined"
           [style.color]="getIconColor(i)"
@@ -33,12 +30,6 @@
         <p class="valor-tot">R$ {{ row.valor_tot }}</p>
         <p class="quant">{{ row.quant }}</p>
         <p class="un">{{ row.un }}</p>
-        <mat-icon
-          class="table-icon material-icons-outlined"
-          (click)="openCommentary('100ms', '100ms', row.commentary)"
-        >
-          more_horiz
-        </mat-icon>
       </div>
     </div>
     <app-paginator />

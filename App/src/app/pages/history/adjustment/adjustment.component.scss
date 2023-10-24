@@ -21,6 +21,7 @@
       box-sizing: border-box;
       border: 0.5px solid var(--cinza-2);
       outline: none;
+      transition: border-color 0.3s;
 
       &::placeholder {
         color: var(--cinza-3);
@@ -35,6 +36,10 @@
       &.has-value::-webkit-datetime-edit {
         color: var(--base-preto);
       }
+
+      &:focus {
+        border: 0.6px solid var(--cinza-3);
+      }
     }
 
     textarea {
@@ -47,6 +52,7 @@
       border: 0.5px solid var(--cinza-2);
       outline: none;
       resize: none;
+      transition: border-color 0.3s;
 
       &::placeholder {
         color: var(--cinza-3);
@@ -60,6 +66,10 @@
       &::-webkit-scrollbar-thumb {
         background-color: var(--cinza-1);
         border-radius: 4px;
+      }
+
+      &:focus {
+        border: 0.6px solid var(--cinza-3);
       }
     }
   }
