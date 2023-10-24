@@ -1,36 +1,36 @@
 .adjustment-container {
   display: flex;
-  width: 470px;
-  padding: 20px;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 470px;
+  padding: 20px;
 
   .inputs {
     display: inline-flex;
-    padding: 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    padding: 20px;
 
     input {
+      outline: none;
+      box-sizing: border-box;
       width: 460px;
       height: 40px;
       padding: 8px 16px;
-      border-radius: 4px;
-      box-sizing: border-box;
-      border: 0.5px solid var(--cinza-2);
-      outline: none;
       transition: border-color 0.3s;
+      border: 0.5px solid var(--cinza-2);
+      border-radius: 4px;
 
       &::placeholder {
-        color: var(--cinza-3);
         opacity: 1;
+        color: var(--cinza-3);
       }
 
       &::-webkit-datetime-edit {
-        color: var(--cinza-3);
         opacity: 1;
+        color: var(--cinza-3);
       }
 
       &.has-value::-webkit-datetime-edit {
@@ -43,20 +43,20 @@
     }
 
     textarea {
+      outline: none;
+      resize: none;
+      box-sizing: border-box;
       width: 460px;
       height: 100px;
       padding: 8px 16px;
-      border-radius: 4px;
-      box-sizing: border-box;
-      text-align: start;
-      border: 0.5px solid var(--cinza-2);
-      outline: none;
-      resize: none;
       transition: border-color 0.3s;
+      border: 0.5px solid var(--cinza-2);
+      border-radius: 4px;
+      text-align: start;
 
       &::placeholder {
-        color: var(--cinza-3);
         opacity: 1;
+        color: var(--cinza-3);
       }
 
       &::-webkit-scrollbar {
@@ -80,31 +80,6 @@
     align-items: center;
     gap: 10px;
     align-self: stretch;
-
-    .button {
-      display: flex;
-      width: 150px;
-      height: 40px;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: var(--base-branco);
-      border-radius: 100px;
-      border: 1px solid var(--cinza-2);
-      cursor: pointer;
-      transition: border-color 0.3s;
-      outline: none;
-
-      &:first-child {
-        background-color: var(--primaria-2);
-        color: var(--base-branco);
-        border: none;
-      }
-
-      &:hover:not(:first-child) {
-        border: 0.6px solid var(--cinza-3);
-      }
-    }
   }
 }
 

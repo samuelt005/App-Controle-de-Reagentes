@@ -5,13 +5,14 @@
     <div class="content-container">
       <div class="first-data-inputs">
         <div class="first-line">
-            <input class="body-medium" type="text" placeholder="Código" />
-            <input class="body-medium" type="text" placeholder="Item" />
-            <input class="body-medium" type="number" placeholder="Qtd." /> <!-- TODO remover setas de todos os inputs number -->
-            <input class="body-medium" type="text" placeholder="Un." />
+          <input class="body-medium" type="text" placeholder="Código" />
+          <input class="body-medium" type="text" placeholder="Item" />
+          <input class="body-medium" type="number" placeholder="Qtd." />
+          <!-- TODO remover setas de todos os inputs number -->
+          <input class="body-medium" type="text" placeholder="Un." />
         </div>
         <div class="second-line">
-            <input class="body-medium" type="text" placeholder="Justificativa" />
+          <input class="body-medium" type="text" placeholder="Justificativa" />
         </div>
       </div>
       <div *ngFor="let dataInput of dataInputs; let i = index">
@@ -19,16 +20,14 @@
       </div>
       <div class="button-container">
         <button class="add-button body-medium" (click)="addNewSection()">
-          <mat-icon class="material-icons-outlined">
-            add
-          </mat-icon>
+          <mat-icon class="material-icons-outlined"> add </mat-icon>
         </button>
       </div>
     </div>
     <div class="button-container">
-      <button class="save-button body-medium" (click)="saveWriteOff('100ms', '100ms')">
+      <app-button (click)="saveWriteOff('100ms', '100ms')" [filled]="true">
         Salvar
-      </button>
+      </app-button>
     </div>
   </div>
 </div>

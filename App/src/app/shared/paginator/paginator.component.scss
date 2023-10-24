@@ -1,32 +1,33 @@
 .paginator-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
 
-    p {
+  p {
     margin: 0;
     margin-top: 2px;
-    }
+  }
 
-    .pages {
-        color: var(--base-preto);
-        text-align: center;
-    }
+  .pages {
+    color: var(--base-preto);
+    text-align: center;
+  }
 
-    .back-button, .forward-button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 0;
-        gap: 4px;
-        color: var(--cinza-1);
-        text-align: center;
-    }
+  .back-button,
+  .forward-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    color: var(--cinza-1);
+    text-align: center;
+  }
 
-    .active {
-        color: var(--cinza-3);
-        cursor: pointer;
-    }
+  .active {
+    cursor: pointer;
+    color: var(--cinza-3);
+  }
 }

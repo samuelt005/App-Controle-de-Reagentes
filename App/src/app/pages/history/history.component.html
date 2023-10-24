@@ -8,7 +8,7 @@
     <div class="table-container">
       <div class="table-header">
         <mat-icon class="table-icon-header material-icons-outlined">
-            info
+          info
         </mat-icon>
         <p class="data">Data</p>
         <p class="forn-resp">Fornecedor/Responsável</p>
@@ -17,7 +17,12 @@
         <p class="quant">Quantidade</p>
         <p class="un">Un</p>
       </div>
-      <div *ngFor="let row of tableRow; let i = index" class="table-row" (click)="openCommentary('100ms', '100ms', row.commentary)">
+      <div
+        *ngFor="let row of tableRow; let i = index"
+        class="table-row"
+        (click)="openCommentary('100ms', '100ms', row.commentary)"
+        matRipple
+      >
         <mat-icon
           class="table-icon-type material-icons-outlined"
           [style.color]="getIconColor(i)"

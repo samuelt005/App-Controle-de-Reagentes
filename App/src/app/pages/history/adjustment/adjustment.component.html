@@ -1,12 +1,28 @@
 <div class="adjustment-container">
   <div class="inputs">
-    <input class="body-medium" type="date" [(ngModel)]="dataValue" [ngClass]="{ 'has-value': dataValue }" />
-    <input class="body-medium" type="number" placeholder="Insira o valor total" />
-    <input class="body-medium" type="number" placeholder="Insira a quantidade" />
-    <textarea class="body-medium" placeholder="Insira um comentário..."></textarea>
+    <input
+      class="body-medium"
+      type="date"
+      [(ngModel)]="dataValue"
+      [ngClass]="{ 'has-value': dataValue }"
+    />
+    <input
+      class="body-medium"
+      type="number"
+      placeholder="Insira o valor total"
+    />
+    <input
+      class="body-medium"
+      type="number"
+      placeholder="Insira a quantidade"
+    />
+    <textarea
+      class="body-medium"
+      placeholder="Insira um comentário..."
+    ></textarea>
   </div>
   <div class="buttons">
-    <button class="button body-medium" mat-dialog-close>Salvar</button>
-    <button class="button body-medium" mat-dialog-close>Cancelar</button>
+    <app-button mat-dialog-close [filled]="true"> Salvar </app-button>
+    <app-button mat-dialog-close> Cancelar </app-button>
   </div>
 </div>

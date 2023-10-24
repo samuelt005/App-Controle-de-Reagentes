@@ -1,8 +1,8 @@
 header {
   display: flex;
   flex-direction: row;
-  height: 56px;
   align-items: center;
+  height: 56px;
 
   .page-title {
     display: flex;
@@ -11,8 +11,8 @@ header {
     gap: 10px;
 
     mat-icon {
-      height: 30px;
       width: 30px;
+      height: 30px;
       font-size: 30px;
     }
 
@@ -24,52 +24,35 @@ header {
   .search-box {
     display: flex;
     align-items: center;
-    width: 450px;
-    height: 56px;
-    max-width: 450px;
     box-sizing: border-box;
-    border-radius: 28px;
-    border: 0.5px solid var(--cinza-2);
-    background: var(--base-branco);
+    width: 450px;
+    max-width: 450px;
+    height: 56px;
     padding: 0 16px 0 24px;
     transition: border-color 0.3s;
+    background: var(--base-branco);
+    border: 0.5px solid var(--cinza-2);
+    border-radius: 28px;
 
     input {
-      border: none;
       outline: none;
-      height: auto;
-      padding: 0;
-      outline: none;
-      width: auto;
       flex: 1 0 0;
       align-self: stretch;
+      width: auto;
+      height: auto;
+      padding: 0;
+      border: none;
       color: var(--cinza-2);
     }
 
     mat-icon {
-      color: var(--cinza-3);
       cursor: pointer;
+      color: var(--cinza-3);
     }
   }
 
   .search-box:focus-within {
     border: 0.6px solid var(--cinza-3);
-  }
-
-  .adjust-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 40px;
-    padding: 0;
-    box-sizing: border-box;
-    border-radius: 100px;
-    border: none;
-    background: var(--primaria-2);
-    color: var(--base-branco);
-    cursor: pointer;
   }
 
   .spacer {

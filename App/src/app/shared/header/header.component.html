@@ -13,7 +13,11 @@
     <input class="body-large" placeholder="Pesquisar por Código ou Descrição" />
     <mat-icon>search</mat-icon>
   </div>
-  <button class="adjust-button body-medium" *ngIf="pageTitle.adjustButton" (click)="openAdjustment('100ms', '100ms')">
+  <app-button
+    (click)="openAdjustment('100ms', '100ms')"
+    *ngIf="pageTitle.adjustButton"
+    [filled]="true"
+  >
     Incluir Ajuste
-  </button>
+  </app-button>
 </header>

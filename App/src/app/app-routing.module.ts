@@ -6,41 +6,46 @@ import { LoginComponent } from './pages/login/login.component';
 import { RequestListingComponent } from './pages/request-listing/request-listing.component';
 import { RequestComponent } from './pages/request/request.component';
 import { WriteOffComponent } from './pages/write-off/write-off.component';
+import { TestsComponent } from './pages/tests/tests.component';
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: 'listing',
-        component: ListingComponent
-    },
-    {
-        path: 'history',
-        component: HistoryComponent
-    },
-    {
-        path: 'writeoff',
-        component: WriteOffComponent
-    },
-    {
-        path: 'request',
-        component: RequestComponent
-    },
-    {
-        path: 'requestlisting',
-        component: RequestListingComponent
-    }
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'listing',
+    component: ListingComponent,
+  },
+  {
+    path: 'history',
+    component: HistoryComponent,
+  },
+  {
+    path: 'writeoff',
+    component: WriteOffComponent,
+  },
+  {
+    path: 'request',
+    component: RequestComponent,
+  },
+  {
+    path: 'requestlisting',
+    component: RequestListingComponent,
+  },
+  {
+    path: 'tests',
+    component: TestsComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -30,6 +30,9 @@ import { HeaderComponent } from './shared/header/header.component';
 import { InfoCardComponent } from './shared/info-card/info-card.component';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
+import { TestsComponent } from './pages/tests/tests.component';
+import { ButtonComponent } from './shared/button/button.component';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,8 @@ import { SideBarComponent } from './shared/side-bar/side-bar.component';
     ConfirmSaveComponent,
     RequestComponent,
     RequestListingComponent,
+    TestsComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,7 @@ import { SideBarComponent } from './shared/side-bar/side-bar.component';
     MatSidenavModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatRippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

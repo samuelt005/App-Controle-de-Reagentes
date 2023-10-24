@@ -87,9 +87,9 @@
           box-sizing: border-box;
           height: 40px;
           padding: 8px 16px;
+          transition: border-color 0.3s;
           border: 0.5px solid var(--cinza-2);
           border-radius: 4px;
-          transition: border-color 0.3s;
 
           &:focus {
             border: 0.6px solid var(--cinza-3);
@@ -113,22 +113,6 @@
         cursor: pointer;
         border: none;
         border-radius: 5px;
-        color: var(--base-branco);
-      }
-
-      .save-button {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        width: 150px;
-        height: 40px;
-        padding: 0;
-        background: var(--primaria-2);
-        cursor: pointer;
-        border: none;
-        border-radius: 100px;
         color: var(--base-branco);
       }
     }
