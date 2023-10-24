@@ -1,0 +1,18 @@
+.menu-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0 16px 16px;
+  cursor: pointer;
+  color: var(--cinza-3);
+
+  p {
+    margin: 0;
+    margin-top: 2px;
+  }
+}
+
+.drawer-line {
+  width: 99%;
+  margin: 0;
+}

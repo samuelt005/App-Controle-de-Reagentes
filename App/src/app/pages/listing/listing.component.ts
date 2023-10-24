@@ -264,6 +264,8 @@ export class ListingComponent {
   constructor(private router: Router) {}
 
   openHistory() {
-    this.router.navigate(['/history'])
+    setTimeout(() => {
+      this.router.navigate(['/history']);
+    }, 500);
   }
 }

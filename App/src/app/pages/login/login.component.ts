@@ -23,6 +23,8 @@ export class LoginComponent {
     if (!user) {
       alert('Usuário ou senha inválido!');
     }
-    this.router.navigate(['/listing'])
+    setTimeout(() => {
+      this.router.navigate(['/listing']);
+    }, 500);
   }
 }

@@ -17,15 +17,16 @@
             placeholder="Informe a sua senha"
           />
           <hr />
-          <app-button
+          <app-normal-button
             (click)="form.valid ? login() : ''"
             [filled]="true"
+            [matRippleDisabled]="!form.valid"
             [inactive]="!form.valid"
             customWidth="258px"
           >
             Entrar
-          </app-button>
-          <app-button customWidth="258px"> Cadastrar </app-button>
+          </app-normal-button>
+          <app-normal-button customWidth="258px"> Cadastrar </app-normal-button>
           <p>Esqueceu sua senha?</p>
         </div>
       </div>

@@ -1,0 +1,10 @@
+<div
+  class="icon-button body-medium"
+  matRipple
+  matRippleColor = "rgba(255, 255, 255, 0.1)"
+  [ngClass]="activated ? 'activated' : ''"
+>
+  <mat-icon class="material-icons-outlined">
+    <ng-content />
+  </mat-icon>
+</div>

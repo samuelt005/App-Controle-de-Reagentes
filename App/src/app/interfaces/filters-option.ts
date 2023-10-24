@@ -1,4 +1,4 @@
-export interface filtersOptions {
+export interface FiltersOptions {
     un: boolean
     quantidade: boolean
     vlr_unit: boolean

@@ -1,5 +1,5 @@
 <div class="page-container">
-  <app-side-bar [filtersHidden]="true" [returnHidden]="false" />
+  <app-side-bar [filtersHidden]="true"/>
   <div class="page-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="content-container">
@@ -25,9 +25,9 @@
       </div>
     </div>
     <div class="button-container">
-      <app-button (click)="saveWriteOff('100ms', '100ms')" [filled]="true">
+      <app-normal-button (click)="saveWriteOff('100ms', '100ms')" [filled]="true">
         Salvar
-      </app-button>
+      </app-normal-button>
     </div>
   </div>
 </div>

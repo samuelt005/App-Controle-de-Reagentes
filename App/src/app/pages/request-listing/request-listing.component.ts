@@ -168,6 +168,8 @@ export class RequestListingComponent {
   }
 
   openDetails() {
-    this.router.navigate(['/requestlisting']);
+    setTimeout(() => {
+      this.router.navigate(['/requestlisting']);
+    }, 500);
   }
 }
