@@ -1,12 +1,17 @@
 <div class="new-commentary-container">
   <div class="inputs">
-    <textarea
-      class="body-medium"
-      placeholder="Insira um comentário (opcional)"
-    ></textarea>
+    <mat-form-field class="textarea" appearance="outline">
+      <textarea
+        matInput
+        placeholder="Insira um comentário (opcional)"
+        cdkAutosizeMinRows="4"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+      ></textarea>
+    </mat-form-field>
   </div>
   <div class="buttons">
-    <app-normal-button (click)="confirm('100ms', '100ms')" [filled]="true">
+    <app-normal-button (click)="confirm('100ms', '100ms')" [filled]="true"> 
       Salvar
     </app-normal-button>
     <app-normal-button mat-dialog-close> Cancelar </app-normal-button>

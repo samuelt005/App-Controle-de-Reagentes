@@ -3,18 +3,7 @@
   <div class="page-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="content-container">
-      <div class="first-data-inputs">
-        <div class="first-line">
-          <input class="body-medium" type="text" placeholder="Código" />
-          <input class="body-medium" type="text" placeholder="Item" />
-          <input class="body-medium" type="number" placeholder="Qtd." />
-          <!-- TODO remover setas de todos os inputs number -->
-          <input class="body-medium" type="text" placeholder="Un." />
-        </div>
-        <div class="second-line">
-          <input class="body-medium" type="text" placeholder="Justificativa" />
-        </div>
-      </div>
+      <app-data-inputs [noDeleteButton]="true"></app-data-inputs>
       <div *ngFor="let dataInput of dataInputs; let i = index">
         <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
       </div>

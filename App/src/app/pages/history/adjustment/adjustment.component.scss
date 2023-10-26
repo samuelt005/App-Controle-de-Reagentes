@@ -11,67 +11,42 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
 
-    input {
-      outline: none;
-      box-sizing: border-box;
+    .input {
       width: 460px;
-      height: 40px;
-      padding: 8px 16px;
-      transition: border-color 0.3s;
-      border: 0.5px solid var(--cinza-2);
-      border-radius: 4px;
 
-      &::placeholder {
-        opacity: 1;
-        color: var(--cinza-3);
-      }
+      .number-input {
 
-      &::-webkit-datetime-edit {
-        opacity: 1;
-        color: var(--cinza-3);
-      }
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
 
-      &.has-value::-webkit-datetime-edit {
-        color: var(--base-preto);
-      }
-
-      &:focus {
-        border: 0.6px solid var(--cinza-3);
+        &[type=number] {
+          appearance: textfield;
+          -moz-appearance: textfield;
+        }
       }
     }
 
-    textarea {
-      outline: none;
-      resize: none;
-      box-sizing: border-box;
-      width: 460px;
-      height: 100px;
-      padding: 8px 16px;
-      transition: border-color 0.3s;
-      border: 0.5px solid var(--cinza-2);
-      border-radius: 4px;
-      text-align: start;
-
-      &::placeholder {
-        opacity: 1;
-        color: var(--cinza-3);
-      }
-
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: var(--cinza-1);
-        border-radius: 4px;
-      }
-
-      &:focus {
-        border: 0.6px solid var(--cinza-3);
-      }
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      height: 38px !important;
     }
+
+    ::ng-deep .mat-mdc-input-element {
+      position: relative !important;
+      top: -5px !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field {
+      height: 38px;
+    }
+  }
+
+  .textarea {
+    width: 460px;
   }
 
   .buttons {

@@ -17,6 +17,8 @@ export class HeaderComponent {
     adjustButton: false,
   };
 
+  searchInput: string = '';
+
   constructor(public dialog: MatDialog) {}
 
   openAdjustment(

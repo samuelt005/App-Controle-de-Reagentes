@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-data-inputs',
   templateUrl: './data-inputs.component.html',
-  styleUrls: ['./data-inputs.component.scss']
+  styleUrls: ['./data-inputs.component.scss'],
 })
 export class DataInputsComponent {
+  @Input() noDeleteButton = false;
+  @Output() delete = new EventEmitter<void>();
 
-    @Output() delete = new EventEmitter<void>();
-
-    deleteThisSection() {
-      this.delete.emit();
-    }
+  deleteThisSection() {
+    this.delete.emit();
+  }
 }

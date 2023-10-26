@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,8 +34,8 @@ import { NewCommentaryComponent } from './shared/dialogs/new-commentary/new-comm
 import { HeaderComponent } from './shared/header/header.component';
 import { InfoCardComponent } from './shared/info-card/info-card.component';
 import { PaginatorComponent } from './shared/paginator/paginator.component';
-import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { MenuOptionComponent } from './shared/side-bar/menu-option/menu-option.component';
+import { SideBarComponent } from './shared/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { MenuOptionComponent } from './shared/side-bar/menu-option/menu-option.c
     MatCheckboxModule,
     MatDialogModule,
     MatRippleModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

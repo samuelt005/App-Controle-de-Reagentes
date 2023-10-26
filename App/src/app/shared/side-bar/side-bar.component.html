@@ -46,149 +46,148 @@
         <hr class="drawer-line" />
         <div class="menu-option">
           <div class="filter-option">
-            <div class="checkbox">
-              <!--  TODO melhorar este checkbox -->
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('un')"
+            <h3 class="body-large">Unidade de Medida</h3>
+            <mat-form-field class="select-input" appearance="outline">
+              <mat-label>Selecione</mat-label>
+              <mat-select [(ngModel)]="filtersValue.un">
+                <mat-option selected></mat-option>
+                <mat-option value="kg">Kilogramas</mat-option>
+                <mat-option value="l">Litros</mat-option>
+                <mat-option value="gr">Gramas</mat-option>
+                <mat-option value="ml">Mililitros</mat-option>
+              </mat-select>
+              <button
+                *ngIf="filtersValue.un"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.un = ''"
               >
-                {{
-                  filtersOptions.un ? "check_box" : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label
-                class="body-large"
-                for="un-medida"
-                (click)="toggleCheckbox('un')"
-                >Unidade de Medida</label
-              >
-            </div>
-            <select
-              name="un-medida"
-              class="select-button body-medium"
-              id="un-medida"
-            >
-              <option value="" selected disabled hidden>Selecione</option>
-              <option value="kg" class="option">Kilogramas</option>
-              <option value="l" class="option">Litros</option>
-              <option value="gr" class="option">Gramas</option>
-              <option value="ml" class="option">Mililitros</option>
-            </select>
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
           </div>
           <hr class="drawer-line" />
           <div class="filter-option">
-            <div class="checkbox">
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('quantidade')"
+            <h3 class="body-large" (click)="toggleCheckbox('tag')">Tag</h3>
+            <mat-form-field class="select-input" appearance="outline">
+              <mat-label>Selecione</mat-label>
+              <mat-select [(ngModel)]="filtersValue.tag">
+                <mat-option selected></mat-option>
+                <mat-option value="em">Estoque Mínimo</mat-option>
+                <mat-option value="pf">Polícia Federal</mat-option>
+                <mat-option value="pc">Polícia Civil</mat-option>
+                <mat-option value="eb">Exército Brasileiro</mat-option>
+              </mat-select>
+              <button
+                *ngIf="filtersValue.tag"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.tag = ''"
               >
-                {{
-                  filtersOptions.quantidade
-                    ? "check_box"
-                    : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label class="body-large" (click)="toggleCheckbox('quantidade')"
-                >Quantidade</label
-              >
-            </div>
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Quantidade</h3>
             <div class="min-max">
-              <input class="body-medium" type="number" placeholder="min" />
-              <input class="body-medium" type="number" placeholder="max" />
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.qtyMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.qtyMax"
+                />
+              </mat-form-field>
             </div>
           </div>
           <hr class="drawer-line" />
           <div class="filter-option">
-            <div class="checkbox">
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('vlr_unit')"
-              >
-                {{
-                  filtersOptions.vlr_unit
-                    ? "check_box"
-                    : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label class="body-large" (click)="toggleCheckbox('vlr_unit')"
-                >Valor Unitário</label
-              >
-            </div>
+            <h3 class="body-large">Valor Unitário</h3>
             <div class="min-max">
-              <input class="body-medium" type="number" placeholder="min" />
-              <input class="body-medium" type="number" placeholder="max" />
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrUnitMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrUnitMax"
+                />
+              </mat-form-field>
             </div>
           </div>
           <hr class="drawer-line" />
           <div class="filter-option">
-            <div class="checkbox">
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('vlr_tot')"
-              >
-                {{
-                  filtersOptions.vlr_tot
-                    ? "check_box"
-                    : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label class="body-large" (click)="toggleCheckbox('vlr_tot')"
-                >Valor Total</label
-              >
-            </div>
+            <h3 class="body-large">Valor Total</h3>
             <div class="min-max">
-              <input class="body-medium" type="number" placeholder="min" />
-              <input class="body-medium" type="number" placeholder="max" />
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrTotMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrTotMax"
+                />
+              </mat-form-field>
             </div>
           </div>
           <hr class="drawer-line" />
           <div class="filter-option">
-            <div class="checkbox">
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('tag')"
+            <h3 class="body-large">Localização no Estoque</h3>
+            <mat-form-field class="text-input" appearance="outline">
+              <mat-label>Localização</mat-label>
+              <input
+                matInput
+                type="text"
+                class="number-input"
+                [(ngModel)]="filtersValue.loc"
+              />
+              <button
+                *ngIf="filtersValue.loc"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.loc = ''"
               >
-                {{
-                  filtersOptions.tag ? "check_box" : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label class="body-large" (click)="toggleCheckbox('tag')"
-                >Tag</label
-              >
-            </div>
-            <select
-              name="un-medida"
-              class="select-button body-medium"
-              id="un-medida"
-            >
-              <option value="" selected disabled hidden>Selecione</option>
-              <option value="kg" class="option">Estoque Mínimo</option>
-              <option value="l" class="option">Polícia Federal</option>
-              <option value="gr" class="option">Polícia Civil</option>
-              <option value="ml" class="option">Exército Brasileiro</option>
-            </select>
-          </div>
-          <hr class="drawer-line" />
-          <div class="filter-option">
-            <div class="checkbox">
-              <mat-icon
-                class="material-icons-outlined"
-                (click)="toggleCheckbox('localizacao')"
-              >
-                {{
-                  filtersOptions.localizacao
-                    ? "check_box"
-                    : "check_box_outline_blank"
-                }}
-              </mat-icon>
-              <label class="body-large" (click)="toggleCheckbox('localizacao')"
-                >Localização no Estoque</label
-              >
-            </div>
-            <input class="filter-input" placeholder="Localização" type="text" />
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
           </div>
           <div class="filters-button">
-            <app-normal-button [filled]="true"> Filtrar </app-normal-button>
+            <app-normal-button [filled]="true" (click)="applyFilters()">
+              Filtrar
+            </app-normal-button>
+            <app-normal-button (click)="cleanFilters()">
+              Limpar Filtros
+            </app-normal-button>
           </div>
         </div>
       </div>

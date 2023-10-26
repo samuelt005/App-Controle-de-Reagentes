@@ -59,6 +59,7 @@
       border-right: 0.5px solid var(--cinza-2);
 
       .drawer-title {
+        user-select: none;
         margin: 0;
         margin-bottom: 10px;
         color: var(--base-preto);
@@ -74,20 +75,6 @@
         flex-direction: column;
         justify-content: center;
         height: 100%;
-
-        .menu-option {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          margin: 16px 0 16px 16px;
-          cursor: pointer;
-          color: var(--cinza-3);
-
-          p {
-            margin: 0;
-            margin-top: 2px;
-          }
-        }
       }
 
       .filters-drawer {
@@ -101,40 +88,18 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          gap: 10px;
           align-self: stretch;
-          padding: 0px 10px 40px 10px;
+          padding: 0px 10px 20px 10px;
 
-          .checkbox {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            align-self: stretch;
-            height: 30px;
-
-            label {
-              margin-top: 2px;
-              color: var(--base-preto);
-            }
+          h3 {
+            user-select: none;
+            margin: 10px 0;
+            color: var(--base-preto);
           }
 
-          .select-button {
-            outline: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 196px;
-            height: 40px;
-            transition: border-color 0.3s;
-            background: var(--base-branco);
-            border: 0.5px solid var(--cinza-2);
-            border-radius: 8px;
-            color: var(--cinza-3);
-            text-align: center;
-          }
-
-          .select-button:focus {
-            border: 0.6px solid var(--cinza-3);
+          .select-input {
+            width: 194px;
+            height: 56px;
           }
 
           .min-max {
@@ -144,45 +109,39 @@
             align-self: stretch;
             padding: 0px 10px;
 
+            .min-max-input {
+              width: 112px;
+              height: 56px;
+
+              input {
+                height: 24px;
+              }
+
+              .number-input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+
+              .number-input[type=number] {
+                appearance: textfield;
+                -moz-appearance: textfield;
+              }
+            }
+          }
+
+          .text-input {
+            width: 194px;
+            height: 56px;
+
             input {
-              outline: none;
-              box-sizing: border-box;
-              width: 104px;
-              height: 40px;
-              padding: 10px;
-              transition: border-color 0.3s;
-              background: var(--base-branco);
-              border: 0.5px solid var(--cinza-2);
-              border-radius: 5px;
-              color: var(--cinza-3);
-            }
-
-            input:focus {
-              border: 0.6px solid var(--cinza-3);
+              height: 24px;
             }
           }
 
-          .filter-input {
-            outline: none;
-            align-items: center;
-            flex-shrink: 0;
-            box-sizing: border-box;
-            width: 196px;
-            height: 40px;
-            padding: 10px;
-            transition: border-color 0.3s;
-            background: var(--base-branco);
-            border: 0.5px solid var(--cinza-2);
-            border-radius: 8px;
-
-            &:focus {
-              border: 0.6px solid var(--cinza-3);
-            }
-          }
-
-          input::placeholder {
-            opacity: 1;
-            color: var(--cinza-3);
+          ::ng-deep .mat-mdc-form-field {
+            background-color: var(--base-branco);
+            border-radius: 4px;
           }
         }
 

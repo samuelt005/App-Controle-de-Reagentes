@@ -6,13 +6,25 @@
     >
       {{ pageTitle.icon }}
     </mat-icon>
-    <h1>{{ pageTitle.title }}</h1>
+    <h1 class="title-large">{{ pageTitle.title }}</h1>
   </div>
   <span class="spacer"></span>
-  <div class="search-box" *ngIf="pageTitle.searchBox">
-    <input class="body-large" placeholder="Pesquisar por Código ou Descrição" />
-    <mat-icon>search</mat-icon>
-  </div>
+
+  <mat-form-field
+    class="search-input"
+    appearance="outline"
+    *ngIf="pageTitle.searchBox"
+  >
+    <mat-label>Pesquisar por Código ou Descrição</mat-label>
+    <input
+      matInput
+      type="text"
+      class="number-input"
+      [(ngModel)]="searchInput"
+    />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
   <app-normal-button
     (click)="openAdjustment('100ms', '100ms')"
     *ngIf="pageTitle.adjustButton"

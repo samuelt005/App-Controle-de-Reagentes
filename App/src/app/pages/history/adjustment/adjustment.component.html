@@ -1,28 +1,39 @@
 <div class="adjustment-container">
   <div class="inputs">
-    <input
-      class="body-medium"
-      type="date"
-      [(ngModel)]="dataValue"
-      [ngClass]="{ 'has-value': dataValue }"
-    />
-    <input
-      class="body-medium"
-      type="number"
-      placeholder="Insira o valor total"
-    />
-    <input
-      class="body-medium"
-      type="number"
-      placeholder="Insira a quantidade"
-    />
-    <textarea
-      class="body-medium"
-      placeholder="Insira um comentário..."
-    ></textarea>
+    <!-- TODO trocar o date input por datepicker -->
+    <mat-form-field class="input" appearance="outline">
+      <input matInput type="date" class="number-input body-large" />
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="number"
+        class="number-input body-large"
+        placeholder="Insira o valor total"
+      />
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="number"
+        class="number-input body-large"
+        placeholder="Insira a quantidade"
+      />
+    </mat-form-field>
   </div>
+  <mat-form-field class="textarea" appearance="outline">
+    <textarea
+      matInput
+      placeholder="Insira um comentário..."
+      cdkAutosizeMinRows="4"
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+    ></textarea>
+  </mat-form-field>
   <div class="buttons">
-    <app-normal-button mat-dialog-close [filled]="true"> Salvar </app-normal-button>
+    <app-normal-button mat-dialog-close [filled]="true">
+      Salvar
+    </app-normal-button>
     <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
   </div>
 </div>

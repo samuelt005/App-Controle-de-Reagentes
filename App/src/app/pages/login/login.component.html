@@ -6,16 +6,14 @@
       </header>
       <div class="login-content">
         <div class="content" [formGroup]="form">
-          <input
-            formControlName="username"
-            type="text"
-            placeholder="Informe seu RA ou E-mail ou CPF"
-          />
-          <input
-            formControlName="password"
-            type="password"
-            placeholder="Informe a sua senha"
-          />
+          <mat-form-field appearance="outline">
+            <mat-label>Usuário</mat-label>
+            <input matInput placeholder="Informe seu RA ou E-mail ou CPF" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput placeholder="Informe seu Senha" />
+          </mat-form-field>
           <hr />
           <app-normal-button
             (click)="form.valid ? login() : ''"

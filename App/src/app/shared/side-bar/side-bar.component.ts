@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FiltersOptions } from 'src/app/interfaces/filters-option';
+import { FiltersValue } from 'src/app/interfaces/filters-value';
 import { MenuOptions } from 'src/app/interfaces/menu-options';
 
 @Component({
@@ -15,6 +16,18 @@ export class SideBarComponent {
   filtersDrawer: boolean = false;
   isChecked: boolean = false;
   @Input() filtersHidden: boolean = false;
+
+  filtersValue: FiltersValue = {
+    un: '',
+    tag: '',
+    qtyMin: null,
+    qtyMax: null,
+    vlrUnitMin: null,
+    vlrUnitMax: null,
+    vlrTotMin: null,
+    vlrTotMax: null,
+    loc: '',
+  }
 
   menuOptions: MenuOptions[] = [
     {
@@ -107,5 +120,21 @@ export class SideBarComponent {
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 500);
+  }
+
+  applyFilters() {
+    console.log(this.filtersValue)
+  }
+
+  cleanFilters() {
+    this.filtersValue.un = '';
+    this.filtersValue.tag = '';
+    this.filtersValue.qtyMin = null;
+    this.filtersValue.qtyMax = null;
+    this.filtersValue.vlrUnitMin = null;
+    this.filtersValue.vlrUnitMax = null;
+    this.filtersValue.vlrTotMin = null;
+    this.filtersValue.vlrTotMax = null;
+    this.filtersValue.loc = '';
   }
 }
