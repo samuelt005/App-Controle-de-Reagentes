@@ -3,11 +3,11 @@
   <div class="page-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="table-container">
-      <div class="table-header">
-        <p class="numero">Nº Pedido</p>
-        <p class="data">Data</p>
-        <p class="status">Status</p>
-        <p class="solicitante">Solicitante</p>
+      <div class="table-header body-medium">
+        <p class="numero body-medium">Nº Pedido</p>
+        <p class="data body-medium">Data</p>
+        <p class="status body-medium">Status</p>
+        <p class="solicitante body-medium">Solicitante</p>
       </div>
       <div
         *ngFor="let row of tableRow; let i = index"
@@ -15,12 +15,12 @@
         (click)="openDetails()"
         matRipple
       >
-        <p class="numero">{{ row.numero }}</p>
-        <p class="data">{{ row.data }}</p>
-        <p class="status" [style.color]="getStatusColor(i)">
+        <p class="numero body-medium">{{ row.numero }}</p>
+        <p class="data body-medium">{{ row.data }}</p>
+        <p class="status body-medium" [style.color]="getStatusColor(i)">
           {{ getStatus(i) }}
         </p>
-        <p class="solicitante">{{ row.solicitante }}</p>
+        <p class="solicitante body-medium">{{ row.solicitante }}</p>
       </div>
     </div>
     <app-paginator />

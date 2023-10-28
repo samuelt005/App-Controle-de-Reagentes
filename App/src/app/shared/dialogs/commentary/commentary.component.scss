@@ -20,18 +20,5 @@
     padding: 8px 16px;
     border: 0.5px solid var(--cinza-2);
     border-radius: 4px;
-
-    &::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--cinza-1);
-      border-radius: 4px;
-    }
   }
-}
-
-::ng-deep .cdk-overlay-dark-backdrop {
-  background: rgba(0, 0, 0, 0.7);
 }

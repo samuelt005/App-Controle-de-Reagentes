@@ -1,0 +1,50 @@
+<div class="page-container">
+  <app-side-bar [filtersHidden]="true" />
+  <div class="page-content">
+    <app-header [pageTitle]="pageTitle" />
+    <div class="table-container">
+      <div class="table-header">
+        <p class="cod body-medium">Código</p>
+        <p class="desc body-medium">Descrição</p>
+        <p class="tags body-medium">Tags</p>
+        <p class="localizacao body-medium">Loc. no Estoque</p>
+        <p class="un body-medium">Un</p>
+        <p class="valor-estoque body-medium">Valor em Estoque</p>
+        <span class="buttons-spacer"></span>
+      </div>
+      <div *ngFor="let row of tableRow" class="table-row">
+        <p class="cod body-medium">{{ row.cod }}</p>
+        <p class="desc body-medium">{{ row.desc }}</p>
+        <app-tags [tags]="row.tags"></app-tags>
+        <p class="localizacao body-medium">{{ row.localizacao }}</p>
+        <p class="un body-medium">{{ row.un.toString() | uppercase }}</p>
+        <p class="valor-estoque body-medium">R$ {{ row.valor_estoque }}</p>
+        <div class="buttons">
+          <app-small-button (click)="openTags('100ms', '100ms', row.tags)"
+            >Tags</app-small-button
+          >
+          <app-small-button (click)="openEditItem('100ms', '100ms', row)"
+            >Editar</app-small-button
+          >
+          <app-small-button
+            [inactive]="row.valor_estoque != 0"
+            [redColor]="row.valor_estoque == 0"
+            [matRippleDisabled]="row.valor_estoque != 0"
+            (click)="confirmInactivation('100ms', '100ms', row.valor_estoque)"
+            >Inativar</app-small-button
+          >
+        </div>
+      </div>
+    </div>
+    <app-paginator />
+
+    <div class="button-container">
+      <app-normal-button
+        (click)="openNewItem('100ms', '100ms')"
+        [filled]="true"
+      >
+        Incluir Novo
+      </app-normal-button>
+    </div>
+  </div>
+</div>

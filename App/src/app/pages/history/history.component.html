@@ -10,12 +10,12 @@
         <mat-icon class="table-icon-header material-icons-outlined">
           info
         </mat-icon>
-        <p class="data">Data</p>
-        <p class="forn-resp">Fornecedor/Responsável</p>
-        <p class="nfe">Nº NF-e</p>
-        <p class="valor-tot">Valor Total</p>
-        <p class="quant">Quantidade</p>
-        <p class="un">Un</p>
+        <p class="data body-medium">Data</p>
+        <p class="forn-resp body-medium">Fornecedor/Responsável</p>
+        <p class="nfe body-medium">Nº NF-e</p>
+        <p class="valor-tot body-medium">Valor Total</p>
+        <p class="quant body-medium">Quantidade</p>
+        <p class="un body-medium">Un</p>
       </div>
       <div
         *ngFor="let row of tableRow; let i = index"
@@ -29,12 +29,12 @@
         >
           {{ getIconType(i) }}
         </mat-icon>
-        <p class="data">{{ row.data }}</p>
-        <p class="forn-resp">{{ row.forn_resp }}</p>
-        <p class="nfe">{{ row.tipo == "entrada" ? row.nfe : "-" }}</p>
-        <p class="valor-tot">R$ {{ row.valor_tot }}</p>
-        <p class="quant">{{ row.quant }}</p>
-        <p class="un">{{ row.un }}</p>
+        <p class="data body-medium">{{ row.data }}</p>
+        <p class="forn-resp body-medium">{{ row.forn_resp }}</p>
+        <p class="nfe body-medium">{{ row.tipo == "entrada" ? row.nfe : "-" }}</p>
+        <p class="valor-tot body-medium">R$ {{ row.valor_tot }}</p>
+        <p class="quant body-medium">{{ row.quant }}</p>
+        <p class="un body-medium">{{ row.un }}</p>
       </div>
     </div>
     <app-paginator />

@@ -7,6 +7,8 @@ import { RequestListingComponent } from './pages/request-listing/request-listing
 import { RequestComponent } from './pages/request/request.component';
 import { WriteOffComponent } from './pages/write-off/write-off.component';
 import { TestsComponent } from './pages/tests/tests.component';
+import { MaterialTypesComponent } from './pages/material-types/material-types.component';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,14 @@ const routes: Routes = [
   {
     path: 'requestlisting',
     component: RequestListingComponent,
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
+  },
+  {
+    path: 'materialtypes',
+    component: MaterialTypesComponent,
   },
   {
     path: 'tests',

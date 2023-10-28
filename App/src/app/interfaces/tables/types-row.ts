@@ -1,13 +1,11 @@
 import { Tags } from "./tags"
 
-export interface ListingRow {
+export interface TypesRow {
     cod: string
     desc: string
     tags: Tags
-    estoque: number
-    un: string
     localizacao: string
-    valor_un: number
-    valor_tot: number
+    un: String
+    valor_estoque: number
     prod_id: number
 }

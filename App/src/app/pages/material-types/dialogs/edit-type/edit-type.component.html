@@ -1,0 +1,48 @@
+<div class="item-container">
+  <h3 class="title-large">
+    Editar Reagente ou Material
+  </h3>
+  <div class="inputs" [formGroup]="typeData">
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="string"
+        class="number-input body-large"
+        placeholder="Código do Item"
+        formControlName="cod"
+      />
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="string"
+        class="number-input body-large"
+        placeholder="Descrição do Item"
+        formControlName="desc"
+      />
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="string"
+        class="number-input body-large"
+        placeholder="Localização no Estoque"
+        formControlName="localizacao"
+      />
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <mat-select placeholder="Unidade de Medida" formControlName="un">
+        <mat-option value="kg">Kilogramas</mat-option>
+        <mat-option value="lt">Litros</mat-option>
+        <mat-option value="gr">Gramas</mat-option>
+        <mat-option value="ml">Mililitros</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <app-normal-button mat-dialog-close [filled]="true">
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

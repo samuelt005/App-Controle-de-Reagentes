@@ -47,12 +47,12 @@ export class SideBarComponent {
     },
     {
       title: 'Gerar Relatórios',
-      page: '',
+      page: '/reports',
       authorized: [1]
     },
     {
       title: 'Registro de Materiais',
-      page: '',
+      page: '/materialtypes',
       authorized: [1]
     },
   ];

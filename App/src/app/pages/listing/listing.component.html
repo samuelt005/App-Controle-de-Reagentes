@@ -1,5 +1,5 @@
 <div class="page-container">
-  <app-side-bar [filtersHidden]="false"/>
+  <app-side-bar [filtersHidden]="false" />
   <div class="page-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="cards-container">
@@ -7,14 +7,14 @@
     </div>
     <div class="table-container">
       <div class="table-header">
-        <p class="cod">Código</p>
-        <p class="desc">Descrição</p>
-        <p class="tags">Tags</p>
-        <p class="estoque">Estoque Atual</p>
-        <p class="un">Un</p>
-        <p class="localizacao">Loc. no Estoque</p>
-        <p class="valor-un">Valor Unitário</p>
-        <p class="valor-tot">Valor Total</p>
+        <p class="cod body-medium">Código</p>
+        <p class="desc body-medium">Descrição</p>
+        <p class="tags body-medium">Tags</p>
+        <p class="estoque body-medium">Estoque Atual</p>
+        <p class="un body-medium">Un</p>
+        <p class="localizacao body-medium">Loc. no Estoque</p>
+        <p class="valor-un body-medium">Valor Unitário</p>
+        <p class="valor-tot body-medium">Valor Total</p>
       </div>
       <div
         *ngFor="let row of tableRow"
@@ -22,18 +22,14 @@
         (click)="openHistory()"
         matRipple
       >
-        <p class="cod">{{ row.cod }}</p>
-        <p class="desc">{{ row.desc }}</p>
-        <div class="tags">
-          <div class="tag" *ngFor="let tag of row.tags">
-            {{ tag }}
-          </div>
-        </div>
-        <p class="estoque">{{ row.estoque }}</p>
-        <p class="un">{{ row.un }}</p>
-        <p class="localizacao">{{ row.localizacao }}</p>
-        <p class="valor-un">R$ {{ row.valor_un }}</p>
-        <p class="valor-tot">R$ {{ row.valor_tot }}</p>
+        <p class="cod body-medium">{{ row.cod }}</p>
+        <p class="desc body-medium">{{ row.desc }}</p>
+        <app-tags [tags]="row.tags"></app-tags>
+        <p class="estoque body-medium">{{ row.estoque }}</p>
+        <p class="un body-medium">{{ row.un }}</p>
+        <p class="localizacao body-medium">{{ row.localizacao }}</p>
+        <p class="valor-un body-medium">R$ {{ row.valor_un }}</p>
+        <p class="valor-tot body-medium">R$ {{ row.valor_tot }}</p>
       </div>
     </div>
     <app-paginator />

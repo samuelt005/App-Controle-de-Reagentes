@@ -1,0 +1,7 @@
+<div class="tags">
+  <ng-container *ngFor="let tag of getObjectKeys(tags)">
+    <div *ngIf="tags[tag]" class="tag body-medium">
+      {{ tag | uppercase }}
+    </div>
+  </ng-container>
+</div>
