@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'id_tipo_de_reagente_fk',
 			});
 			TiposDeReagente.belongsToMany(models.Tags, {
-				through: 'TiposDeReagentesTags',
+				through: 'TiposDeReagenteTags',
 				foreignKey: 'id_tipo_de_reagente_tag_fk',
 				otherKey: 'id_tag_tipo_de_reagente_fk',
 			});

@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
 			email: DataTypes.STRING,
 			senha_hash: DataTypes.STRING,
 			salt: DataTypes.STRING,
-			data_criacao: DataTypes.DATEONLY,
 			ra: DataTypes.STRING,
 			cpf: DataTypes.BIGINT,
 		},

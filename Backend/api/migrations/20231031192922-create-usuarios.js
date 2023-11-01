@@ -25,10 +25,6 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING(100),
 			},
-			data_criacao: {
-				allowNull: false,
-				type: Sequelize.DATEONLY,
-			},
 			ra: {
 				allowNull: false,
 				type: Sequelize.STRING(8),
