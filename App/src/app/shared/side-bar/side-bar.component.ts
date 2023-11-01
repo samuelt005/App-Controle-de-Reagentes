@@ -20,8 +20,8 @@ export class SideBarComponent {
   filtersValue: FiltersValue = {
     un: '',
     tag: '',
-    qtyMin: null,
-    qtyMax: null,
+    qtdMin: null,
+    qtdMax: null,
     vlrUnitMin: null,
     vlrUnitMax: null,
     vlrTotMin: null,
@@ -129,8 +129,8 @@ export class SideBarComponent {
   cleanFilters() {
     this.filtersValue.un = '';
     this.filtersValue.tag = '';
-    this.filtersValue.qtyMin = null;
-    this.filtersValue.qtyMax = null;
+    this.filtersValue.qtdMin = null;
+    this.filtersValue.qtdMax = null;
     this.filtersValue.vlrUnitMin = null;
     this.filtersValue.vlrUnitMax = null;
     this.filtersValue.vlrTotMin = null;

@@ -8,8 +8,8 @@ module.exports = {
 		objects.push({
 			nome: 'Admin',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO CHANGE THIS LATER
-			salt: 'PLACEHOLDER', //TODO CHANGE THIS LATER
+			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
+			salt: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 1,
@@ -20,8 +20,8 @@ module.exports = {
 		objects.push({
 			nome: 'Professor Teste',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO CHANGE THIS LATER
-			salt: 'PLACEHOLDER', //TODO CHANGE THIS LATER
+			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
+			salt: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 2,
@@ -32,8 +32,8 @@ module.exports = {
 		objects.push({
 			nome: 'Aluno Teste',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO CHANGE THIS LATER
-			salt: 'PLACEHOLDER', //TODO CHANGE THIS LATER
+			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
+			salt: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 3,

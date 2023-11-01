@@ -1,16 +1,7 @@
 const database = require('../models');
+const { Fornecedores } = require('../models');
 
-class FornecedorController {
-	// Método para pegar todos os fornecedores cadastrados
-	static async getAllFornecedores(req, res) {
-		try {
-			const allFornecedores = await database.Fornecedores.findAll();
-			return res.status(200).json(allFornecedores);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
+class FornecedoresController {
 	// Método para pegar um fornecedor específico
 	static async getFornecedor(req, res) {
 		const { id } = req.params;
@@ -25,14 +16,13 @@ class FornecedorController {
 	}
 
 	// Método para pegar 20 fornecedores (paginação)
-	static async getFornecedoresPerPage(req, res) {
-		const { page } = req.params; // Lê os parâmetros da query
+	static async getFornecedores(req, res) {
+		const { page } = req.params;
 
-		// Valores padrão para página e itens por página
 		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
 		const itemsPerPage = 20;
 
-		const offset = (pageNumber - 1) * itemsPerPage; // Calcula o deslocamento
+		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
 			const fornecedores = await database.Fornecedores.findAndCountAll({
@@ -48,10 +38,22 @@ class FornecedorController {
 	}
 
 	// Método para criar um fornecedor
-	static async createNewFornecedor(req, res) {
+	static async createFornecedor(req, res) {
 		const newFornecedor = req.body;
 
 		try {
+			const existingFornecedor = await Fornecedores.findOne({
+				where: {
+					cnpj: newFornecedor.cnpj,
+				},
+			});
+
+			if (existingFornecedor) {
+				return res.status(400).json({
+					message: 'Já existe um fornecedor com o mesmo CNPJ.',
+				});
+			}
+
 			const createdFornecedor = await database.Fornecedores.create(
 				newFornecedor
 			);
@@ -67,6 +69,18 @@ class FornecedorController {
 		const newInfo = req.body;
 
 		try {
+			const existingFornecedor = await Fornecedores.findOne({
+				where: {
+					cnpj: newInfo.cnpj,
+				},
+			});
+
+			if (existingFornecedor) {
+				return res.status(400).json({
+					message: 'Já existe um fornecedor com o mesmo CNPJ.',
+				});
+			}
+
 			await database.Fornecedores.update(newInfo, {
 				where: { id: Number(id) },
 			});
@@ -80,4 +94,4 @@ class FornecedorController {
 	}
 }
 
-module.exports = FornecedorController;
+module.exports = FornecedoresController;

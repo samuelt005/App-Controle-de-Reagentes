@@ -33,25 +33,28 @@ module.exports = {
 		];
 
 		for (let i = 1; i <= 25; i++) {
-			function getRandomDecimal() {
+			function getRandomDecimal(decimals) {
 				const intPart = Math.floor(Math.random() * 1000);
 				const decimalPart = Math.floor(Math.random() * 100);
 				const decimalNumber = intPart + decimalPart / 100;
-				return parseFloat(decimalNumber.toFixed(2));
+				return parseFloat(decimalNumber.toFixed(decimals));
 			}
 
 			let active = Math.random() < 0.5;
 
-			let randomDecimal = getRandomDecimal();
+			let randomDecimal2 = getRandomDecimal(2);
+			let randomDecimal4 = getRandomDecimal(4);
 
 			objects.push({
+				cod: Math.floor(Math.random() * 1000) + 1,
 				descricao: materialsArray[i - 1],
 				loc_estoque:
 					'A' +
 					(Math.floor(Math.random() * 10) + 1) +
 					'P' +
 					(Math.floor(Math.random() * 3) + 1),
-				vlr_estoque: active ? randomDecimal : 0.0,
+        estoque_atual: active ? randomDecimal2 : 0.0,
+				vlr_estoque: active ? randomDecimal4 : 0.0,
 				entradas: Math.floor(Math.random() * 50) + 1,
 				saidas: Math.floor(Math.random() * 50) + 1,
 				ativo: active,

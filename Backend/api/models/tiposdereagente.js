@@ -12,14 +12,17 @@ module.exports = (sequelize, DataTypes) => {
 				otherKey: 'id_tag_tipo_de_reagente_fk',
 			});
       TiposDeReagente.belongsTo(models.UnsDeMedida, {
+        as: 'un_de_medida',
 				foreignKey: 'id_un_de_medida_fk',
 			});
 		}
 	}
 	TiposDeReagente.init(
 		{
+			cod: DataTypes.BIGINT,
 			descricao: DataTypes.STRING,
 			loc_estoque: DataTypes.STRING,
+			estoque_atual: DataTypes.DECIMAL,
 			vlr_estoque: DataTypes.DECIMAL,
 			entradas: DataTypes.INTEGER,
 			saidas: DataTypes.INTEGER,
@@ -28,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: 'TiposDeReagente',
+      tableName: 'tiposdereagente'
 		}
 	);
 	return TiposDeReagente;

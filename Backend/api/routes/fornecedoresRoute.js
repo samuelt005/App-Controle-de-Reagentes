@@ -1,21 +1,18 @@
 const { Router } = require('express');
-const FornecedorController = require('../controllers/FornecedorController');
+const FornecedoresController = require('../controllers/FornecedoresController');
 
 const router = Router();
 
-// Rota para listar todos os fornecedores
-router.get('/fornecedores', FornecedorController.getAllFornecedores);
-
 // Rota para listar um fornecedor
-router.get('/fornecedores/:id', FornecedorController.getFornecedor);
+router.get('/fornecedores/:id', FornecedoresController.getFornecedor);
 
 // Rota para listar fornecedores com paginação
-router.get('/fornecedores/page/:page', FornecedorController.getFornecedoresPerPage);
+router.get('/fornecedores/page/:page', FornecedoresController.getFornecedores);
 
 // Rota para criar um fornecedor
-router.post('/fornecedores', FornecedorController.createNewFornecedor);
+router.post('/fornecedores', FornecedoresController.createFornecedor);
 
 // Rota para atualizar um fornecedor
-router.put('/fornecedores/:id', FornecedorController.updateFornecedor);
+router.put('/fornecedores/:id', FornecedoresController.updateFornecedor);
 
 module.exports = router;

@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	class Fornecedores extends Model {
 		static associate(models) {
 			Fornecedores.hasMany(models.Nfes, {
+        as: 'emitente',
 				foreignKey: 'id_fornecedor_fk',
 			});
 		}
@@ -16,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: 'Fornecedores',
+      tableName: 'fornecedores'
 		}
 	);
 	return Fornecedores;

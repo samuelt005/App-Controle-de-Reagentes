@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: 'Tags',
+      tableName: 'tags'
 		}
 	);
 	return Tags;

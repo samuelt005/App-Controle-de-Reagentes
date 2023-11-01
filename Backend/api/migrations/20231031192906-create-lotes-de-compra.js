@@ -16,6 +16,7 @@ module.exports = {
 			itens_vinculados: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
+        defaultValue: 0,
 			},
 			createdAt: {
 				allowNull: false,

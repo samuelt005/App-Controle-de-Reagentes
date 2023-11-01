@@ -6,8 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 			Nfes.hasMany(models.ItensMovimentacao, {
 				foreignKey: 'id_nfe_fk',
 			});
-      Nfes.belongsTo(models.Fornecedores, {
-				foreignKey: 'id_emitente_fk',
+			Nfes.belongsTo(models.Fornecedores, {
+				as: 'emitente',
+				foreignKey: 'id_fornecedor_fk',
 			});
 		}
 	}
@@ -19,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: 'Nfes',
+			tableName: 'nfes',
 		}
 	);
 	return Nfes;
