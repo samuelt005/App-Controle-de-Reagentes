@@ -1,5 +1,5 @@
 const database = require('../models');
-const { Op } = require('sequelize');
+const { Op, DECIMAL } = require('sequelize');
 const { TiposDeReagente } = require('../models');
 
 class TiposDeReagenteController {
@@ -9,10 +9,19 @@ class TiposDeReagenteController {
 		try {
 			const TipoDeReagente = await database.TiposDeReagente.findOne({
 				where: { id: Number(id) },
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_un_de_medida_fk'],
+				},
 				include: [
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+					{
+						model: database.Tags,
+						through: { attributes: [] },
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
@@ -26,7 +35,7 @@ class TiposDeReagenteController {
 	static async getTiposDeReagente(req, res) {
 		const { page } = req.params;
 
-		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
+		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
 
 		const offset = (pageNumber - 1) * itemsPerPage;
@@ -36,10 +45,19 @@ class TiposDeReagenteController {
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_un_de_medida_fk'],
+				},
 				include: [
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+					{
+						model: database.Tags,
+						through: { attributes: [] },
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
@@ -52,21 +70,25 @@ class TiposDeReagenteController {
 
 	// Método para pegar 20 tipos de reagente, ativos e filtrado
 	static async getTiposDeReagenteFiltered(req, res) {
-		const { page } = req.query;
-		const searchInput = req.query.searchInput; // Filtro do input de pesquisa
-		// const tag = req.query.tag; // TODO adicionar o filtro por tag
-		const unmedida = req.query.unmedida; // Filtro por unmedida
-		const qtdMin = req.query.qtdMin; // Filtro por quantidade mínima
-		const qtdMax = req.query.qtdMax; // Filtro por quantidade máxima
-		const vlrTotMin = req.query.vlrTotMin; // Filtro por valor total mínimo
-		const vlrTotMax = req.query.vlrTotMax; // Filtro por valor total máximo
-		const loc = req.query.loc; // Filtro por localização
+		const {
+			page,
+			searchInput,
+			unmedida,
+			qtdMin,
+			qtdMax,
+			vlrTotMin,
+			vlrTotMax,
+			loc,
+			tag,
+		} = req.query;
 
-		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
+		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
+			const whereTags = {};
+			const whereUn = {};
 			const where = {
 				ativo: true,
 			};
@@ -84,7 +106,11 @@ class TiposDeReagenteController {
 			}
 
 			if (unmedida) {
-				where['$un_de_medida.sigla$'] = unmedida;
+				whereUn.sigla = unmedida;
+			}
+
+			if (tag) {
+				whereTags.sigla = tag;
 			}
 
 			if (qtdMin !== undefined) {
@@ -113,18 +139,31 @@ class TiposDeReagenteController {
 				};
 			}
 
-			if (loc) {
-				where.loc_estoque = loc;
+			if (loc !== undefined) {
+				where.loc_estoque = {
+					[Op.like]: `%${loc}%`,
+				};
 			}
 
 			const tiposdereagente = await database.TiposDeReagente.findAndCountAll({
 				where: where,
 				limit: itemsPerPage,
 				offset: offset,
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_un_de_medida_fk'],
+				},
 				include: [
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
+						where: whereUn,
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+					{
+						model: database.Tags,
+						through: { attributes: [] },
+						where: whereTags,
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
@@ -137,12 +176,12 @@ class TiposDeReagenteController {
 
 	// Método para criar um tipo de reagente
 	static async createTipoDeReagente(req, res) {
-		const newTipoDeReagente = req.body;
+		const { cod, descricao, loc_estoque, id_un_de_medida } = req.body;
 
 		try {
 			const existingReagente = await TiposDeReagente.findOne({
 				where: {
-					cod: newTipoDeReagente.cod,
+					cod,
 				},
 			});
 
@@ -152,9 +191,12 @@ class TiposDeReagenteController {
 				});
 			}
 
-			const createdTipoDeReagente = await database.TiposDeReagente.create(
-				newTipoDeReagente
-			);
+			const createdTipoDeReagente = await database.TiposDeReagente.create({
+				cod,
+				descricao,
+				loc_estoque,
+				id_un_de_medida_fk: id_un_de_medida,
+			});
 			return res.status(200).json(createdTipoDeReagente);
 		} catch (error) {
 			return res.status(500).json(error.message);
@@ -164,13 +206,68 @@ class TiposDeReagenteController {
 	// Método para atualizar os dados de um tipo de reagente
 	static async updateTipoDeReagente(req, res) {
 		const { id } = req.params;
-		const newInfo = req.body;
-		// TODO converter o estoque atual quando a un de medida é alterada
+		const { cod, descricao, loc_estoque, id_un_de_medida } = req.body;
 
 		try {
-			await database.TiposDeReagente.update(newInfo, {
+			const existingTipoDeReagente = await TiposDeReagente.findOne({
+				where: {
+					cod,
+				},
+			});
+
+			// TODO converter o estoque atual quando a un de medida é alterada
+
+			if (
+				existingTipoDeReagente &&
+				existingTipoDeReagente.id !== parseInt(id)
+			) {
+				return res.status(400).json({
+					message: 'Já existe um tipo de reagente com o mesmo código.',
+				});
+			}
+
+			await database.TiposDeReagente.update(
+				{
+					cod,
+					descricao,
+					loc_estoque,
+					id_un_de_medida_fk: id_un_de_medida,
+				},
+				{
+					where: { id: Number(id) },
+				}
+			);
+			const updatedTipoDeReagente = await database.TiposDeReagente.findOne({
 				where: { id: Number(id) },
 			});
+			return res.status(200).json(updatedTipoDeReagente);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	static async updateAtivo(req, res) {
+		const { id } = req.params;
+
+		try {
+			const existingTipoDeReagente = await TiposDeReagente.findOne({
+				where: { id },
+			});
+
+			console.log(parseFloat(existingTipoDeReagente.vlr_estoque));
+
+			if (parseFloat(existingTipoDeReagente.vlr_estoque) !== 0) {
+				return res.status(400).json({
+					message: 'Não é possível inativar um tipo com valor em estoque.',
+				});
+			}
+
+			await database.TiposDeReagente.update(
+				{ ativo: !existingTipoDeReagente.ativo },
+				{
+					where: { id: Number(id) },
+				}
+			);
 			const updatedTipoDeReagente = await database.TiposDeReagente.findOne({
 				where: { id: Number(id) },
 			});

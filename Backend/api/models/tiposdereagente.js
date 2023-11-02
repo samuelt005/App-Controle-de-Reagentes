@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
 				otherKey: 'id_tag_tipo_de_reagente_fk',
 			});
       TiposDeReagente.belongsTo(models.UnsDeMedida, {
-        as: 'un_de_medida',
 				foreignKey: 'id_un_de_medida_fk',
+        as: 'un_de_medida',
 			});
 		}
 	}

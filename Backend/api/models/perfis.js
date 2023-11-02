@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			Perfis.hasMany(models.Usuarios, {
 				foreignKey: 'id_perfil_fk',
+        as: 'perfil',
 			});
 		}
 	}

@@ -41,13 +41,7 @@ module.exports = {
 		}
 
 		for (let i = 1; i <= 36; i++) {
-			const randomDate = new Date(
-				startDate.getTime() +
-					Math.random() * (endDate.getTime() - startDate.getTime())
-			);
-
 			objects.push({
-				data: randomDate,
 				status: Math.floor(Math.random() * 3) + 1,
 				comentario: generateRandomLorem(10),
 				id_usuario_fk: 2,

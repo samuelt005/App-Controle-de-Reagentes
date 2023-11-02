@@ -4,7 +4,9 @@ class UnsDeMedidaController {
   	// Método para pegar todos as uns de medida cadastradas
 	static async getAllUnsDeMedida(req, res) {
 		try {
-			const allUnsDeMedida = await database.UnsDeMedida.findAll();
+			const allUnsDeMedida = await database.UnsDeMedida.findAll({
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
+			});
 			return res.status(200).json(allUnsDeMedida);
 		} catch (error) {
 			return res.status(500).json(error.message);

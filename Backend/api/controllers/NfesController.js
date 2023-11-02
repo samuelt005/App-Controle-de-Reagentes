@@ -12,8 +12,10 @@ class NfesController {
 					{
 						model: database.Fornecedores,
 						as: 'emitente',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
+				attributes: { exclude: ['createdAt', 'updatedAt', 'id_fornecedor_fk'] },
 			});
 			return res.status(200).json(nfe);
 		} catch (error) {
@@ -25,7 +27,7 @@ class NfesController {
 	static async getNfes(req, res) {
 		const { page } = req.params;
 
-		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
+		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
 
 		const offset = (pageNumber - 1) * itemsPerPage;
@@ -39,8 +41,10 @@ class NfesController {
 					{
 						model: database.Fornecedores,
 						as: 'emitente',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
+				attributes: { exclude: ['createdAt', 'updatedAt', 'id_fornecedor_fk'] },
 			});
 
 			return res.status(200).json(nfes);
@@ -51,13 +55,13 @@ class NfesController {
 
 	// Método para criar um nfe
 	static async createNfe(req, res) {
-		const newNfe = req.body;
+		const { numero, data_emissao, id_fornecedor } = req.body;
 
 		try {
 			const existingNfe = await Nfes.findOne({
 				where: {
-					numero: newNfe.numero,
-					id_fornecedor_fk: newNfe.id_fornecedor_fk,
+					numero,
+					id_fornecedor_fk: id_fornecedor,
 				},
 			});
 
@@ -67,7 +71,11 @@ class NfesController {
 				});
 			}
 
-			const createdNfe = await Nfes.create(newNfe);
+			const createdNfe = await Nfes.create({
+				numero,
+				data_emissao,
+				id_fornecedor_fk: id_fornecedor,
+			});
 			return res.status(200).json(createdNfe);
 		} catch (error) {
 			return res.status(500).json(error.message);
@@ -77,25 +85,32 @@ class NfesController {
 	// Método para atualizar um nfe
 	static async updateNfe(req, res) {
 		const { id } = req.params;
-		const newInfo = req.body;
+		const { numero, data_emissao, id_fornecedor } = req.body;
 
 		try {
 			const existingNfe = await Nfes.findOne({
 				where: {
-					numero: newInfo.numero,
-					id_fornecedor_fk: newInfo.id_fornecedor_fk,
+					numero,
+					id_fornecedor_fk: id_fornecedor,
 				},
 			});
 
-			if (existingNfe) {
+			if (existingNfe && existingNfe.id !== parseInt(id)) {
 				return res.status(400).json({
 					message: 'Já existe uma NFe com o mesmo número e fornecedor.',
 				});
 			}
 
-			await database.Nfes.update(newInfo, {
-				where: { id: Number(id) },
-			});
+			await database.Nfes.update(
+				{
+					numero,
+					data_emissao,
+					id_fornecedor_fk: id_fornecedor,
+				},
+				{
+					where: { id: Number(id) },
+				}
+			);
 			const updatedNfe = await database.Nfes.findOne({
 				where: { id: Number(id) },
 			});

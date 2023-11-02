@@ -12,7 +12,11 @@ router.get('/lotesdecompra/page/:page', LotesDeCompraController.getLotesDeCompra
 // Rota para criar um lote de compra
 router.post('/lotesdecompra', LotesDeCompraController.createLoteDeCompra);
 
-// Rota para atualizar um lote de compra
-router.put('/lotesdecompra/:id', LotesDeCompraController.updateLoteDeCompra);
+// Rota para atualizar o número de um lote de compra
+router.put('/lotesdecompra/:id', LotesDeCompraController.updateNumero);
+
+// Rota para atualizar os itens vinculádos a um lote de compra
+router.put('/lotesdecompra/itensvinculados/:id', LotesDeCompraController.updateItensVinculados); 
+//TODO remover esta rota e jogar a lógica para o controller de ItensMovimentação
 
 module.exports = router;

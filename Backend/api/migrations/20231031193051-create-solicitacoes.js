@@ -9,13 +9,10 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			data: {
-				allowNull: false,
-				type: Sequelize.DATEONLY,
-			},
 			status: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
+        defaultValue: 1,
 			},
 			comentario: {
 				type: Sequelize.STRING(500),

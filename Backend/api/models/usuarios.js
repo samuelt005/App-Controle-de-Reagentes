@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 			});
       Usuarios.belongsTo(models.Perfis, {
 				foreignKey: 'id_perfil_fk',
+        as: 'perfil',
 			});
 		}
 	}

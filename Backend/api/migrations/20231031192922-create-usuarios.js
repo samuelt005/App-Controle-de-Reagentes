@@ -34,9 +34,9 @@ module.exports = {
 				type: Sequelize.BIGINT,
 			},
 			id_perfil_fk: {
-				allowNull: false,
 				type: Sequelize.INTEGER,
 				references: { model: 'Perfis', key: 'id' },
+        defaultValue: null,
 			},
 			createdAt: {
 				allowNull: false,

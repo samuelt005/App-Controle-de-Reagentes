@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Solicitacoes.init(
 		{
-			data: DataTypes.DATEONLY,
 			status: DataTypes.INTEGER,
 			comentario: DataTypes.STRING,
 		},

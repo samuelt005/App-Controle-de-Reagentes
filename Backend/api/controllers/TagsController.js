@@ -1,10 +1,12 @@
 const database = require('../models');
 
 class TagsController {
-  	// Método para pegar todas as tags cadastradas
+	// Método para pegar todas as tags cadastradas
 	static async getAllTags(req, res) {
 		try {
-			const allTags = await database.Tags.findAll();
+			const allTags = await database.Tags.findAll({
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
+			});
 			return res.status(200).json(allTags);
 		} catch (error) {
 			return res.status(500).json(error.message);

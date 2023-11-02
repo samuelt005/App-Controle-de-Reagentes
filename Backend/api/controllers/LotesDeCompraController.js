@@ -8,6 +8,7 @@ class LotesDeCompraController {
 		try {
 			const lotedecompra = await database.LotesDeCompra.findOne({
 				where: { id: Number(id) },
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 			return res.status(200).json(lotedecompra);
 		} catch (error) {
@@ -19,7 +20,7 @@ class LotesDeCompraController {
 	static async getLotesDeCompra(req, res) {
 		const { page } = req.params;
 
-		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
+		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
 
 		const offset = (pageNumber - 1) * itemsPerPage;
@@ -29,6 +30,7 @@ class LotesDeCompraController {
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 
 			return res.status(200).json(lotesdecompra);
@@ -39,12 +41,12 @@ class LotesDeCompraController {
 
 	// Método para criar um lote de compra
 	static async createLoteDeCompra(req, res) {
-		const newLoteDeCompra = req.body;
+		const { numero } = req.body;
 
 		try {
 			const existingLoteDeCompra = await LotesDeCompra.findOne({
 				where: {
-					numero: newLoteDeCompra.numero,
+					numero,
 				},
 			});
 
@@ -54,36 +56,67 @@ class LotesDeCompraController {
 				});
 			}
 
-			const createdLoteDeCompra = await database.LotesDeCompra.create(
-				newLoteDeCompra
-			);
+			const createdLoteDeCompra = await database.LotesDeCompra.create({
+				numero,
+			});
 			return res.status(200).json(createdLoteDeCompra);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
 	}
 
-	// Método para atualizar um lote de compra
-	static async updateLoteDeCompra(req, res) {
+	// Método para atualizar o número do lote de compra
+	static async updateNumero(req, res) {
 		const { id } = req.params;
-		const newInfo = req.body;
+		const { numero } = req.body;
 
 		try {
-      const existingLoteDeCompra = await LotesDeCompra.findOne({
+			const existingLoteDeCompra = await LotesDeCompra.findOne({
 				where: {
-					numero: newInfo.numero,
+					numero,
 				},
 			});
 
-			if (existingLoteDeCompra) {
+			if (existingLoteDeCompra && existingLoteDeCompra.id !== parseInt(id)) {
 				return res.status(400).json({
 					message: 'Já existe um lote de compra com o mesmo número.',
 				});
 			}
 
-			await database.LotesDeCompra.update(newInfo, {
+			await database.LotesDeCompra.update(
+				{ numero },
+				{
+					where: { id: Number(id) },
+				}
+			);
+			const updatedLoteDeCompra = await database.LotesDeCompra.findOne({
 				where: { id: Number(id) },
 			});
+			return res.status(200).json(updatedLoteDeCompra);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Método para atualizar a quantidade de itens vinculados ao lote de compra
+	static async updateItensVinculados(req, res) { //TODO remover esta rota e jogar a lógica para o controller de ItensMovimentação
+		const { id } = req.params;
+		const { soma } = req.body;
+
+		try {
+			const loteDeCompra = await LotesDeCompra.findOne({
+				where: { id: Number(id) },
+			});
+
+			const newValue = soma
+				? loteDeCompra.itens_vinculados + 1
+				: loteDeCompra.itens_vinculados - 1;
+
+			await database.LotesDeCompra.update(
+				{ itens_vinculados: newValue },
+				{ where: { id: Number(id) } }
+			);
+
 			const updatedLoteDeCompra = await database.LotesDeCompra.findOne({
 				where: { id: Number(id) },
 			});

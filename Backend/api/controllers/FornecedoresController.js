@@ -8,6 +8,7 @@ class FornecedoresController {
 		try {
 			const fornecedor = await database.Fornecedores.findOne({
 				where: { id: Number(id) },
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 			return res.status(200).json(fornecedor);
 		} catch (error) {
@@ -19,7 +20,7 @@ class FornecedoresController {
 	static async getFornecedores(req, res) {
 		const { page } = req.params;
 
-		const pageNumber = !isNaN(page) ? parseInt(page) : 1;
+		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
 
 		const offset = (pageNumber - 1) * itemsPerPage;
@@ -29,6 +30,7 @@ class FornecedoresController {
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 
 			return res.status(200).json(fornecedores);
@@ -39,12 +41,12 @@ class FornecedoresController {
 
 	// Método para criar um fornecedor
 	static async createFornecedor(req, res) {
-		const newFornecedor = req.body;
+		const { razao_social, cnpj } = req.body;
 
 		try {
 			const existingFornecedor = await Fornecedores.findOne({
 				where: {
-					cnpj: newFornecedor.cnpj,
+					cnpj,
 				},
 			});
 
@@ -54,9 +56,10 @@ class FornecedoresController {
 				});
 			}
 
-			const createdFornecedor = await database.Fornecedores.create(
-				newFornecedor
-			);
+			const createdFornecedor = await database.Fornecedores.create({
+				razao_social,
+				cnpj,
+			});
 			return res.status(200).json(createdFornecedor);
 		} catch (error) {
 			return res.status(500).json(error.message);
@@ -66,24 +69,27 @@ class FornecedoresController {
 	// Método para atualizar um fornecedor
 	static async updateFornecedor(req, res) {
 		const { id } = req.params;
-		const newInfo = req.body;
+		const { razao_social, cnpj } = req.body;
 
 		try {
 			const existingFornecedor = await Fornecedores.findOne({
 				where: {
-					cnpj: newInfo.cnpj,
+					cnpj,
 				},
 			});
 
-			if (existingFornecedor) {
+			if (existingFornecedor && existingFornecedor.id !== parseInt(id)) {
 				return res.status(400).json({
 					message: 'Já existe um fornecedor com o mesmo CNPJ.',
 				});
 			}
 
-			await database.Fornecedores.update(newInfo, {
-				where: { id: Number(id) },
-			});
+			await database.Fornecedores.update(
+				{ razao_social, cnpj },
+				{
+					where: { id: Number(id) },
+				}
+			);
 			const updatedFornecedor = await database.Fornecedores.findOne({
 				where: { id: Number(id) },
 			});

@@ -18,4 +18,7 @@ router.post('/tiposdereagente', TiposDeReagenteController.createTipoDeReagente);
 // Rota para atualizar um tipo de reagente
 router.put('/tiposdereagente/:id', TiposDeReagenteController.updateTipoDeReagente);
 
+// Rota para atualizar um tipo de reagente
+router.put('/tiposdereagente/:id/ativo', TiposDeReagenteController.updateAtivo);
+
 module.exports = router;
