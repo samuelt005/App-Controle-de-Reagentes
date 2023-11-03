@@ -24,7 +24,7 @@ export class LoginComponent {
       alert('Usuário ou senha inválido!');
     }
     setTimeout(() => {
-      this.router.navigate(['/listing']);
+      this.router.navigate(['/listing/page/1']);
     }, 500);
   }
 }

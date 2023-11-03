@@ -15,7 +15,7 @@
       <div *ngFor="let row of tableRow" class="table-row">
         <p class="cod body-medium">{{ row.cod }}</p>
         <p class="desc body-medium">{{ row.desc }}</p>
-        <app-tags [tags]="row.tags"></app-tags>
+        <!-- <app-tags [tags]="row.tags"></app-tags> -->
         <p class="localizacao body-medium">{{ row.localizacao }}</p>
         <p class="un body-medium">{{ row.un.toString() | uppercase }}</p>
         <p class="valor-estoque body-medium">R$ {{ row.valor_estoque }}</p>

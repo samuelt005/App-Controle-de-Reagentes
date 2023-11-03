@@ -3,35 +3,42 @@
   <div class="page-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="cards-container">
-      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+      <app-info-card
+        *ngFor="let card of infoCards"
+        [card]="card"
+      />
     </div>
-    <div class="table-container">
-      <div class="table-header">
-        <p class="cod body-medium">Código</p>
-        <p class="desc body-medium">Descrição</p>
-        <p class="tags body-medium">Tags</p>
-        <p class="estoque body-medium">Estoque Atual</p>
-        <p class="un body-medium">Un</p>
-        <p class="localizacao body-medium">Loc. no Estoque</p>
-        <p class="valor-un body-medium">Valor Unitário</p>
-        <p class="valor-tot body-medium">Valor Total</p>
-      </div>
-      <div
-        *ngFor="let row of tableRow"
-        class="table-row"
-        (click)="openHistory()"
-        matRipple
-      >
-        <p class="cod body-medium">{{ row.cod }}</p>
-        <p class="desc body-medium">{{ row.desc }}</p>
-        <app-tags [tags]="row.tags"></app-tags>
-        <p class="estoque body-medium">{{ row.estoque }}</p>
-        <p class="un body-medium">{{ row.un }}</p>
-        <p class="localizacao body-medium">{{ row.localizacao }}</p>
-        <p class="valor-un body-medium">R$ {{ row.valor_un }}</p>
-        <p class="valor-tot body-medium">R$ {{ row.valor_tot }}</p>
+    <div class="table-spacer">
+      <div class="table-container">
+        <div class="table-header">
+          <p class="cod body-medium">Código</p>
+          <p class="desc body-medium">Descrição</p>
+          <p class="tags body-medium">Tags</p>
+          <p class="estoque body-medium">Estoque Atual</p>
+          <p class="un body-medium">Un</p>
+          <p class="localizacao body-medium">Loc. no Estoque</p>
+          <p class="valor-un body-medium">Valor Unitário</p>
+          <p class="valor-tot body-medium">Valor Total</p>
+        </div>
+        <div
+          *ngFor="let row of tableData"
+          class="table-row"
+          (click)="openHistory()"
+          matRipple
+        >
+          <p class="cod body-medium">{{ row.cod }}</p>
+          <p class="desc body-medium">{{ row.descricao }}</p>
+          <app-tags [tags]="row.Tags"></app-tags>
+          <p class="estoque body-medium">{{ row.estoque_atual }}</p>
+          <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
+          <p class="localizacao body-medium">{{ row.loc_estoque }}</p>
+          <p class="valor-un body-medium">R$ {{
+            (+(row.estoque_atual) !== 0) ? (+(row.vlr_estoque) / +(row.estoque_atual)).toFixed(2) : '0.00'
+            }}</p>
+          <p class="valor-tot body-medium">R$ {{ row.vlr_estoque }}</p>
+        </div>
       </div>
     </div>
-    <app-paginator />
+    <app-paginator [isHomePage]="true" [page]="page" [table]="'TiposDeReagente'"/>
   </div>
 </div>

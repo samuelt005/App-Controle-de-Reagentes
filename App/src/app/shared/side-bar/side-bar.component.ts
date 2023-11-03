@@ -105,7 +105,7 @@ export class SideBarComponent {
 
   returnPage() {
     setTimeout(() => {
-      this.router.navigate(['/listing']);
+      this.router.navigate(['/listing/page/1']);
     }, 500);
   }
 

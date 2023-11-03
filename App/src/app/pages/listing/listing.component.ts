@@ -1,8 +1,10 @@
-import { ListingRow } from '../../interfaces/tables/listing-row';
 import { InfoCard } from 'src/app/interfaces/info-card';
 import { PageTitle } from './../../interfaces/page-title';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TiposDeReagente } from 'src/app/interfaces/tables/tipos-de-reagente';
+import { TiposDeReagenteService } from 'src/app/services/tipos-de-reagente/tipos-de-reagente.service';
+import { InfoCardsService } from 'src/app/services/info-cards/info-cards.service';
 
 @Component({
   templateUrl: './listing.component.html',
@@ -14,7 +16,7 @@ export class ListingComponent {
     icon: 'inventory_2',
     title: 'Inventário de Reagentes e Materiais',
     searchBox: true,
-    adjustButton: false
+    adjustButton: false,
   };
 
   infoCards: InfoCard[] = [
@@ -38,234 +40,55 @@ export class ListingComponent {
     },
   ];
 
-  tableRow: ListingRow[] = [
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: false, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: false, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: false, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: false },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      estoque: 12,
-      un: 'Kg',
-      localizacao: '2345A',
-      valor_un: 20,
-      valor_tot: 12,
-      prod_id: 1,
-    },
-  ];
+  tableData: TiposDeReagente[] = [];
+  totalItems: string = '-';
+  totalValue: string = '-';
+  mostUsed: string = '-';
+  page: number = 1;
 
-  constructor(private router: Router) {}
+  constructor(
+    private tiposDeReagenteService: TiposDeReagenteService,
+    private infoCardsService: InfoCardsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   openHistory() {
     setTimeout(() => {
       this.router.navigate(['/history']);
     }, 500);
+  }
+
+  updateInfoCards() {
+    this.infoCards[0].data = this.totalItems.toString();
+    this.infoCards[1].data = 'R$' + this.totalValue;
+    this.infoCards[2].data = this.mostUsed;
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.page = Number(params.get('page'));
+
+      this.tiposDeReagenteService.listPerPage(this.page).subscribe((data) => {
+        this.tableData = data;
+      });
+
+      this.infoCardsService
+        .getItemsSum('TiposDeReagente', 'vlr_estoque')
+        .subscribe((data) => {
+          this.totalValue = data.toString();
+          this.updateInfoCards();
+        });
+
+      this.infoCardsService.getActiveTypesCount().subscribe((data) => {
+        this.totalItems = data.toString();
+        this.updateInfoCards();
+      });
+
+      this.infoCardsService.getMostUsedCount().subscribe((data) => {
+        this.mostUsed = data.toString();
+        this.updateInfoCards();
+      });
+    });
   }
 }

@@ -24,6 +24,9 @@
     margin: 0;
     color: var(--cinza-1);
     text-align: center;
+    user-select: none;
+    border-radius: 5px;
+    padding: 2px 4px;
   }
 
   .active {

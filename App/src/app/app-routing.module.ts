@@ -21,7 +21,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'listing',
+    path: 'listing/page/:page',
     component: ListingComponent,
   },
   {

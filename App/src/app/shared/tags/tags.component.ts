@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Tags } from 'src/app/interfaces/tables/tags';
+import { NewTags } from 'src/app/interfaces/tables/new-tags';
 
 @Component({
   selector: 'app-tags',
@@ -7,7 +7,7 @@ import { Tags } from 'src/app/interfaces/tables/tags';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent {
-  @Input() tags: Tags = {};
+  @Input() tags: NewTags[] = [];
 
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
