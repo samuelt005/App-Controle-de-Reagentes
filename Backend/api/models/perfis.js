@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
 	class Perfis extends Model {
 		static associate(models) {
 			Perfis.hasMany(models.Usuarios, {
-				foreignKey: 'id_perfil_fk',
         as: 'perfil',
+				foreignKey: 'id_perfil_fk',
 			});
 		}
 	}

@@ -1,5 +1,4 @@
 const database = require('../models');
-const { TiposDeReagente } = require('../models');
 
 class CardsController {
 	static async getItemsSum(req, res) {

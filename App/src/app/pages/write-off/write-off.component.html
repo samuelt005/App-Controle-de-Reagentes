@@ -1,16 +1,18 @@
 <div class="page-container">
   <app-side-bar [filtersHidden]="true"/>
-  <div class="page-content">
+  <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
-    <div class="content-container">
-      <app-data-inputs [noDeleteButton]="true"></app-data-inputs>
-      <div *ngFor="let dataInput of dataInputs; let i = index">
-        <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
-      </div>
-      <div class="button-container">
-        <button class="add-button body-medium" (click)="addNewSection()">
-          <mat-icon class="material-icons-outlined"> add </mat-icon>
-        </button>
+    <div class="content-spacer">
+      <div class="content-container">
+        <app-data-inputs [noDeleteButton]="true"></app-data-inputs>
+        <div *ngFor="let dataInput of dataInputs; let i = index">
+          <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
+        </div>
+        <div class="button-container">
+          <button class="add-button body-medium" (click)="addNewSection()">
+            <mat-icon class="material-icons-outlined"> add </mat-icon>
+          </button>
+        </div>
       </div>
     </div>
     <div class="button-container">

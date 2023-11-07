@@ -4,11 +4,12 @@ module.exports = (sequelize, DataTypes) => {
 	class Usuarios extends Model {
 		static associate(models) {
 			Usuarios.hasMany(models.Solicitacoes, {
+        as: 'responsavel',
 				foreignKey: 'id_usuario_fk',
 			});
       Usuarios.belongsTo(models.Perfis, {
-				foreignKey: 'id_perfil_fk',
         as: 'perfil',
+				foreignKey: 'id_perfil_fk',
 			});
 		}
 	}

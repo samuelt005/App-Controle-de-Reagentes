@@ -10,7 +10,6 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
 			operacao: {
-				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
 			qtd_mov: {
@@ -37,6 +36,9 @@ module.exports = {
 			comentario: {
 				allowNull: false,
 				type: Sequelize.STRING(200),
+			},
+      resp_ajuste: {
+				type: Sequelize.STRING(50),
 			},
 			id_solicitacao_fk: {
 				allowNull: true,

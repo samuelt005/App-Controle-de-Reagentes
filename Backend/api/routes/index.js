@@ -8,13 +8,22 @@ const tags = require('./tagsRoutes');
 const tiposdereagente = require('./tiposdereagenteRoutes');
 const unsdemedida = require('./unsdemedidaRoutes');
 const usuarios = require('./usuariosRoutes');
-
-
-const paginator = require('./paginatorRoutes');
+const itensmovimentacao = require('./itensmovimentacaoRoutes');
 const cards = require('./cardsRoutes');
 
 module.exports = (app) => {
-  app.use(bodyParser.json()); // Converte os dados de body recebidos por métodos em JSON
-  app.use(fornecedores, lotesdecompra, nfes, perfis, solicitacoes, tags, tiposdereagente, unsdemedida, usuarios);
-  app.use(paginator, cards);
+	app.use(bodyParser.json()); // Converte os dados de body recebidos por métodos em JSON
+	app.use(
+		fornecedores,
+		lotesdecompra,
+		nfes,
+		perfis,
+		solicitacoes,
+		tags,
+		tiposdereagente,
+		unsdemedida,
+		usuarios,
+		itensmovimentacao,
+		cards
+	);
 };

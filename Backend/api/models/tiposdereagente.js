@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	class TiposDeReagente extends Model {
 		static associate(models) {
 			TiposDeReagente.hasMany(models.ItensMovimentacao, {
+        as: 'tipo',
 				foreignKey: 'id_tipo_de_reagente_fk',
 			});
 			TiposDeReagente.belongsToMany(models.Tags, {
@@ -12,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
 				otherKey: 'id_tag_tipo_de_reagente_fk',
 			});
       TiposDeReagente.belongsTo(models.UnsDeMedida, {
-				foreignKey: 'id_un_de_medida_fk',
         as: 'un_de_medida',
+				foreignKey: 'id_un_de_medida_fk',
 			});
 		}
 	}

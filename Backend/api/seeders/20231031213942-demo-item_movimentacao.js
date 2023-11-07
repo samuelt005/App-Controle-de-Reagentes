@@ -78,8 +78,9 @@ module.exports = {
 				recusado: randomOperation == 1 ? 0 : null,
 				validade: randomOperation == 1 ? randomDate : null,
 				comentario: generateRandomLorem(10),
+        resp_ajuste: randomOperation == 3 ? 'Administrador' : null,
 				id_solicitacao_fk:
-					randomOperation == 1 ? Math.floor(Math.random() * 36) + 1 : null,
+					randomOperation != 3 ? Math.floor(Math.random() * 36) + 1 : null,
 				id_lote_fk:
 					randomOperation == 1 ? Math.floor(Math.random() * 58) + 1 : null,
 				id_nfe_fk:

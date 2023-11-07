@@ -13,13 +13,9 @@ export class EditTypeComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public injectedData: any, private _formBuilder: FormBuilder) {
     this.typeData = this._formBuilder.group({
       cod: injectedData.rowData.cod,
-      desc: injectedData.rowData.desc,
-      localizacao: injectedData.rowData.localizacao,
-      un: injectedData.rowData.un,
+      desc: injectedData.rowData.descricao,
+      localizacao: injectedData.rowData.loc_estoque,
+      un: injectedData.rowData.un_de_medida.sigla,
     });
-  }
-
-  ngOnInit() {
-    console.log(this.injectedData.rowData.un)
   }
 }

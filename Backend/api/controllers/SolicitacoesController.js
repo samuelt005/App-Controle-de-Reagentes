@@ -1,5 +1,4 @@
 const database = require('../models');
-const { Solicitacoes } = require('../models');
 
 class SolicitacoesController {
 	// Método para pegar um solicitação específico
@@ -30,10 +29,28 @@ class SolicitacoesController {
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
-				attributes: { exclude: ['updatedAt'] },
+				attributes: { exclude: ['updatedAt', 'id_usuario_fk'] },
+				include: [
+					{
+						model: database.Usuarios,
+						as: 'responsavel',
+						attributes: ['nome'],
+					},
+				],
 			});
 
-			return res.status(200).json(solicitacoes);
+			const totalItems = await database.Solicitacoes.count();
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: solicitacoes.rows,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

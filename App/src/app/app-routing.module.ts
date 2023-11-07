@@ -25,7 +25,7 @@ const routes: Routes = [
     component: ListingComponent,
   },
   {
-    path: 'history',
+    path: 'history/item/:id/page/:page',
     component: HistoryComponent,
   },
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
     component: RequestComponent,
   },
   {
-    path: 'requestlisting',
+    path: 'requestlisting/page/:page',
     component: RequestListingComponent,
   },
   {
@@ -45,7 +45,7 @@ const routes: Routes = [
     component: ReportsComponent,
   },
   {
-    path: 'materialtypes',
+    path: 'materialtypes/page/:page',
     component: MaterialTypesComponent,
   },
   {

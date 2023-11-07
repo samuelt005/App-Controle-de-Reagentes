@@ -9,8 +9,11 @@ router.get('/tiposdereagente/:id', TiposDeReagenteController.getTipoDeReagente);
 // Rota para listar tipos de reagente com paginação
 router.get('/tiposdereagente/page/:page', TiposDeReagenteController.getTiposDeReagente);
 
+// Rota para listar tipos de reagente com paginação
+router.get('/tiposdereagente/page/:page/active', TiposDeReagenteController.getTiposDeReagenteActive);
+
 // Rota para listar tipos de reagente com paginação, ativos e filtrados
-router.get('/tiposdereagente/page/:page/filtered', TiposDeReagenteController.getTiposDeReagenteFiltered);
+// router.get('/tiposdereagente/page/:page/filtered', TiposDeReagenteController.getTiposDeReagenteFiltered);
 
 // Rota para criar um tipo de reagente
 router.post('/tiposdereagente', TiposDeReagenteController.createTipoDeReagente);

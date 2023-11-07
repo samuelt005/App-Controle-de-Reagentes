@@ -1,7 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle } from 'src/app/interfaces/page-title';
-import { RequestRow } from 'src/app/interfaces/tables/request-row';
+import { PaginatorData } from 'src/app/interfaces/paginator-data';
+import { RequestListingRow } from 'src/app/interfaces/tables/request-listing-row';
+import { RequestListingService } from 'src/app/services/requestlisting/request-listing.service';
 
 @Component({
   templateUrl: './request-listing.component.html',
@@ -12,137 +16,29 @@ export class RequestListingComponent {
     iconColor: 'var(--sucesso-2)',
     icon: 'file_download',
     title: 'Gerir Solicitações de Compra',
-    searchBox: false,
+    searchBox: true,
     adjustButton: false,
   };
 
-  tableRow: RequestRow[] = [
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 1,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 2,
-        solicitante: "Fulano de Tal"
-    },
-    {
-        numero: 123,
-        data: "30/12/2021",
-        status: 3,
-        solicitante: "Fulano de Tal"
-    },
-  ];
+  tableData: RequestListingRow[] = [];
 
-  constructor(private router: Router) {}
+  paginatorData: PaginatorData = {
+    currentPage: 0,
+    totalPages: 0,
+    totalItems: 0,
+  };
+
+  page: number = 1;
+
+  constructor(
+    private requestListingService: RequestListingService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   getStatus(i: number): string {
-    switch (this.tableRow[i].status) {
+    switch (this.tableData[i].status) {
       case 1:
         return 'Aguardando Liberação';
       case 2:
@@ -155,7 +51,7 @@ export class RequestListingComponent {
   }
 
   getStatusColor(i: number): string {
-    switch (this.tableRow[i].status) {
+    switch (this.tableData[i].status) {
       case 1:
         return 'var(--aviso-2)';
       case 2:
@@ -167,9 +63,37 @@ export class RequestListingComponent {
     }
   }
 
+  formatDate(dateTimeStr: String): String {
+    console.log(dateTimeStr);
+    const parts = dateTimeStr.split('T')[0].split('-');
+    const day = parts[2];
+    const month = parts[1];
+    const year = parts[0];
+    return `${day}/${month}/${year}`;
+  }
+
   openDetails() {
     setTimeout(() => {
-      this.router.navigate(['/requestlisting']);
+      this.router.navigate(['/requestlisting/page/1']);
     }, 500);
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.page = Number(params.get('page'));
+
+      this.requestListingService
+        .listPerPage(this.page)
+        .subscribe((responseData) => {
+          const { currentPage, totalPages, totalItems } = responseData;
+          this.paginatorData = {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            totalItems: totalItems,
+          };
+          this.tableData = responseData.data;
+          console.log(this.tableData);
+        });
+    });
   }
 }

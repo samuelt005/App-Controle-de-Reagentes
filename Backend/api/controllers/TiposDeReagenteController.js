@@ -1,5 +1,5 @@
 const database = require('../models');
-const { Op, DECIMAL } = require('sequelize');
+const { Op } = require('sequelize');
 const { TiposDeReagente } = require('../models');
 
 class TiposDeReagenteController {
@@ -34,14 +34,12 @@ class TiposDeReagenteController {
 	// Método para pegar 20 tipos de reagente
 	static async getTiposDeReagente(req, res) {
 		const { page } = req.params;
-
 		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
-
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const tiposdereagente = await database.TiposDeReagente.findAndCountAll({
+			const tiposDeReagente = await database.TiposDeReagente.findAll({
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
@@ -52,24 +50,84 @@ class TiposDeReagenteController {
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
-						attributes: { exclude: ['createdAt', 'updatedAt'] },
-					},
-					{
-						model: database.Tags,
-						through: { attributes: [] },
-						attributes: { exclude: ['createdAt', 'updatedAt'] },
+						attributes: ['sigla'],
 					},
 				],
 			});
 
-			return res.status(200).json(tiposdereagente);
+			for (const tipoDeReagente of tiposDeReagente) {
+				tipoDeReagente.dataValues.tags = await tipoDeReagente.getTags({
+					attributes: ['sigla'],
+				});
+			}
+			const totalItems = await database.TiposDeReagente.count();
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: tiposDeReagente,
+			};
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Método para pegar 20 tipos de reagente ativos
+	static async getTiposDeReagenteActive(req, res) {
+		const { page } = req.params;
+		const pageNumber = parseInt(page) || 1;
+		const itemsPerPage = 20;
+		const offset = (pageNumber - 1) * itemsPerPage;
+
+		try {
+			const tiposDeReagente = await database.TiposDeReagente.findAll({
+				where: { ativo: true },
+				limit: itemsPerPage,
+				offset: offset,
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_un_de_medida_fk'],
+				},
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						attributes: ['sigla'],
+					},
+				],
+			});
+
+			for (const tipoDeReagente of tiposDeReagente) {
+				tipoDeReagente.dataValues.tags = await tipoDeReagente.getTags({
+					attributes: ['sigla'],
+				});
+			}
+			const totalItems = await database.TiposDeReagente.count({
+				where: { ativo: true },
+			});
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: tiposDeReagente,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
 	}
 
 	// Método para pegar 20 tipos de reagente, ativos e filtrado
-	static async getTiposDeReagenteFiltered(req, res) {
+	// TODO criar outro método de filtragem
+	/*static async getTiposDeReagenteFiltered(req, res) {
 		const {
 			page,
 			searchInput,
@@ -168,11 +226,21 @@ class TiposDeReagenteController {
 				],
 			});
 
-			return res.status(200).json(tiposdereagente);
+			const totalItems = tiposdereagente.count;
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: tiposdereagente.rows,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
-	}
+	}*/
 
 	// Método para criar um tipo de reagente
 	static async createTipoDeReagente(req, res) {

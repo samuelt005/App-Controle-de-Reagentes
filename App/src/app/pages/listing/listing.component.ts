@@ -1,10 +1,11 @@
+import { ListingService } from './../../services/listing/listing.service';
 import { InfoCard } from 'src/app/interfaces/info-card';
 import { PageTitle } from './../../interfaces/page-title';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TiposDeReagente } from 'src/app/interfaces/tables/tipos-de-reagente';
-import { TiposDeReagenteService } from 'src/app/services/tipos-de-reagente/tipos-de-reagente.service';
+import { ListingRow } from 'src/app/interfaces/tables/listing-row';
 import { InfoCardsService } from 'src/app/services/info-cards/info-cards.service';
+import { PaginatorData } from 'src/app/interfaces/paginator-data';
 
 @Component({
   templateUrl: './listing.component.html',
@@ -40,28 +41,34 @@ export class ListingComponent {
     },
   ];
 
-  tableData: TiposDeReagente[] = [];
+  tableData: ListingRow[] = [];
   totalItems: string = '-';
   totalValue: string = '-';
   mostUsed: string = '-';
   page: number = 1;
 
+  paginatorData: PaginatorData = {
+    currentPage: 0,
+    totalPages: 0,
+    totalItems: 0,
+  };
+
   constructor(
-    private tiposDeReagenteService: TiposDeReagenteService,
+    private listingService: ListingService,
     private infoCardsService: InfoCardsService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
-  openHistory() {
+  openHistory(id: number) {
     setTimeout(() => {
-      this.router.navigate(['/history']);
+      this.router.navigate([`history/item/${id}/page/1`]);
     }, 500);
   }
 
   updateInfoCards() {
     this.infoCards[0].data = this.totalItems.toString();
-    this.infoCards[1].data = 'R$' + this.totalValue;
+    this.infoCards[1].data = 'R$ ' + this.totalValue;
     this.infoCards[2].data = this.mostUsed;
   }
 
@@ -69,8 +76,14 @@ export class ListingComponent {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
 
-      this.tiposDeReagenteService.listPerPage(this.page).subscribe((data) => {
-        this.tableData = data;
+      this.listingService.listPerPage(this.page).subscribe((responseData) => {
+        const { currentPage, totalPages, totalItems } = responseData;
+        this.paginatorData = {
+          currentPage: currentPage,
+          totalPages: totalPages,
+          totalItems: totalItems,
+        };
+        this.tableData = responseData.data;
       });
 
       this.infoCardsService

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PaginatorService } from './paginator.service';
+import { HistoryService } from './history.service';
 
-describe('PaginatorService', () => {
-  let service: PaginatorService;
+describe('HistoryService', () => {
+  let service: HistoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PaginatorService);
+    service = TestBed.inject(HistoryService);
   });
 
   it('should be created', () => {

@@ -1,28 +1,33 @@
 <div class="page-container">
-  <app-side-bar [filtersHidden]="true"/>
-  <div class="page-content">
+  <app-side-bar [filtersHidden]="true" />
+  <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
-    <div class="table-container">
-      <div class="table-header body-medium">
-        <p class="numero body-medium">Nº Pedido</p>
-        <p class="data body-medium">Data</p>
-        <p class="status body-medium">Status</p>
-        <p class="solicitante body-medium">Solicitante</p>
-      </div>
-      <div
-        *ngFor="let row of tableRow; let i = index"
-        class="table-row"
-        (click)="openDetails()"
-        matRipple
-      >
-        <p class="numero body-medium">{{ row.numero }}</p>
-        <p class="data body-medium">{{ row.data }}</p>
-        <p class="status body-medium" [style.color]="getStatusColor(i)">
-          {{ getStatus(i) }}
-        </p>
-        <p class="solicitante body-medium">{{ row.solicitante }}</p>
+    <div class="table-spacer">
+      <div class="table-container">
+        <div class="table-header body-medium">
+          <p class="numero body-medium">Nº Pedido</p>
+          <p class="data body-medium">Data</p>
+          <p class="status body-medium">Status</p>
+          <p class="solicitante body-medium">Solicitante</p>
+        </div>
+        <div
+          *ngFor="let row of tableData; let i = index"
+          class="table-row"
+          (click)="openDetails()"
+          matRipple
+        >
+          <p class="numero body-medium">{{ row.id }}</p>
+          <p class="data body-medium">{{ formatDate(row.createdAt) }}</p>
+          <p
+            class="status body-medium"
+            [style.color]="getStatusColor(i)"
+          >
+            {{ getStatus(i) }}
+          </p>
+          <p class="solicitante body-medium">{{ row.responsavel.nome }}</p>
+        </div>
       </div>
     </div>
-    <app-paginator />
+    <app-paginator [data]="paginatorData" />
   </div>
 </div>

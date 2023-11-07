@@ -42,7 +42,7 @@ export class SideBarComponent {
     },
     {
       title: 'Solicitações de Compra',
-      page: '/requestlisting',
+      page: '/requestlisting/page/1',
       authorized: [1]
     },
     {
@@ -52,7 +52,7 @@ export class SideBarComponent {
     },
     {
       title: 'Registro de Materiais',
-      page: '/materialtypes',
+      page: '/materialtypes/page/1',
       authorized: [1]
     },
   ];
@@ -90,7 +90,6 @@ export class SideBarComponent {
 
   toggleMenusDrawer() {
     this.menusDrawer = !this.menusDrawer;
-    console.log(this.menusDrawer);
     if (this.filtersDrawer) {
       this.filtersDrawer = false;
     }
@@ -123,7 +122,6 @@ export class SideBarComponent {
   }
 
   applyFilters() {
-    console.log(this.filtersValue)
   }
 
   cleanFilters() {

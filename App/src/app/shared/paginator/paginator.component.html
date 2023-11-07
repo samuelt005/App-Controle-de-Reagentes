@@ -1,21 +1,21 @@
 <div class="paginator-container">
   <div
     class="back-button body-small"
-    [ngClass]="page == 1 ? '' : 'active'"
+    [ngClass]="this.data.currentPage == 1 ? '' : 'active'"
     (click)="goToPage('back')"
     matRipple
-    [matRippleDisabled]="page == 1"
+    [matRippleDisabled]="this.data.currentPage == 1"
   >
     <mat-icon class="material-icons-outlined"> arrow_back </mat-icon>
     <p>Anterior</p>
   </div>
-  <p class="pages body-small">{{minItem}} - {{maxItem}} de {{totalRows}}</p>
+  <p class="pages body-small">{{minItem}} - {{maxItem}} de {{this.data.totalItems}}</p>
   <div
     class="forward-button body-small"
-    [ngClass]="totalRows/page <= 20 ? '' : 'active'"
+    [ngClass]="this.data.totalItems/this.data.currentPage <= 20 ? '' : 'active'"
     (click)="goToPage('forward')"
     matRipple
-    [matRippleDisabled]="totalRows/page <= 20"
+    [matRippleDisabled]="this.data.totalItems/this.data.currentPage <= 20"
   >
     <p>Próximo</p>
     <mat-icon class="material-icons-outlined"> arrow_forward </mat-icon>

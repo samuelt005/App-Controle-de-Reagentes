@@ -3,7 +3,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 40px;
 
   p {
     margin: 0;
@@ -13,6 +12,7 @@
   .pages {
     color: var(--base-preto);
     text-align: center;
+    width: 120px;
   }
 
   .back-button,

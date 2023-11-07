@@ -1,4 +1,3 @@
-import { Tags } from './../../interfaces/tables/tags';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageTitle } from 'src/app/interfaces/page-title';
@@ -7,6 +6,11 @@ import { EditTagsComponent } from './dialogs/edit-tags/edit-tags.component';
 import { NewTypeComponent } from './dialogs/new-type/new-type.component';
 import { EditTypeComponent } from './dialogs/edit-type/edit-type.component';
 import { ConfirmInactivationComponent } from './dialogs/confirm-inactivation/confirm-inactivation.component';
+import { ListingRow } from 'src/app/interfaces/tables/listing-row';
+import { PaginatorData } from 'src/app/interfaces/paginator-data';
+import { MaterialTypesService } from 'src/app/services/material-types/material-types.service';
+import { ActivatedRoute } from '@angular/router';
+import { NewTags } from 'src/app/interfaces/tables/new-tags';
 
 @Component({
   templateUrl: './material-types.component.html',
@@ -21,195 +25,25 @@ export class MaterialTypesComponent {
     adjustButton: false,
   };
 
-  tableRow: TypesRow[] = [
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: false, pf: false, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'lt',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 0,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 0,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '123',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-    {
-      cod: '12312414',
-      desc: 'lorem ipsum',
-      tags: { em: true, pf: true, pc: true, eb: true },
-      localizacao: '2345A',
-      un: 'kg',
-      valor_estoque: 12,
-      prod_id: 1,
-    },
-  ];
+  tableData: ListingRow[] = [];
+  page: number = 1;
 
-  constructor(public dialog: MatDialog) {}
+  paginatorData: PaginatorData = {
+    currentPage: 0,
+    totalPages: 0,
+    totalItems: 0,
+  };
+
+  constructor(
+    private dialog: MatDialog,
+    private materialTypesService: MaterialTypesService,
+    private route: ActivatedRoute
+  ) {}
 
   openTags(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
-    tags: Tags,
+    tags: NewTags[]
   ): void {
     this.dialog.open(EditTagsComponent, {
       enterAnimationDuration,
@@ -221,7 +55,7 @@ export class MaterialTypesComponent {
   openEditItem(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
-    rowData: TypesRow,
+    rowData: ListingRow
   ): void {
     this.dialog.open(EditTypeComponent, {
       enterAnimationDuration,
@@ -233,7 +67,7 @@ export class MaterialTypesComponent {
   confirmInactivation(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
-    valor_estoque: number,
+    valor_estoque: number
   ): void {
     if (valor_estoque === 0) {
       this.dialog.open(ConfirmInactivationComponent, {
@@ -245,7 +79,7 @@ export class MaterialTypesComponent {
 
   openNewItem(
     enterAnimationDuration: string,
-    exitAnimationDuration: string,
+    exitAnimationDuration: string
   ): void {
     this.dialog.open(NewTypeComponent, {
       enterAnimationDuration,
@@ -255,5 +89,23 @@ export class MaterialTypesComponent {
 
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.page = Number(params.get('page'));
+
+      this.materialTypesService
+        .listPerPage(this.page)
+        .subscribe((responseData) => {
+          const { currentPage, totalPages, totalItems } = responseData;
+          this.paginatorData = {
+            currentPage: currentPage,
+            totalPages: totalPages,
+            totalItems: totalItems,
+          };
+          this.tableData = responseData.data;
+        });
+    });
   }
 }

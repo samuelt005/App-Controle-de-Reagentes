@@ -1,6 +1,6 @@
 <div class="page-container">
   <app-side-bar [filtersHidden]="false" />
-  <div class="page-content">
+  <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="cards-container">
       <app-info-card
@@ -23,12 +23,12 @@
         <div
           *ngFor="let row of tableData"
           class="table-row"
-          (click)="openHistory()"
+          (click)="openHistory(row.id)"
           matRipple
         >
           <p class="cod body-medium">{{ row.cod }}</p>
           <p class="desc body-medium">{{ row.descricao }}</p>
-          <app-tags [tags]="row.Tags"></app-tags>
+          <app-tags [tags]="row.tags"></app-tags>
           <p class="estoque body-medium">{{ row.estoque_atual }}</p>
           <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
           <p class="localizacao body-medium">{{ row.loc_estoque }}</p>
@@ -39,6 +39,6 @@
         </div>
       </div>
     </div>
-    <app-paginator [isHomePage]="true" [page]="page" [table]="'TiposDeReagente'"/>
+    <app-paginator [data]="paginatorData" />
   </div>
 </div>

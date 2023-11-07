@@ -1,42 +1,44 @@
 <div class="page-container">
   <app-side-bar [filtersHidden]="true"/>
-  <div class="page-content">
+  <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="cards-container">
       <app-info-card *ngFor="let card of infoCards" [card]="card" />
     </div>
-    <div class="table-container">
-      <div class="table-header">
-        <mat-icon class="table-icon-header material-icons-outlined">
-          info
-        </mat-icon>
-        <p class="data body-medium">Data</p>
-        <p class="forn-resp body-medium">Fornecedor/Responsável</p>
-        <p class="nfe body-medium">Nº NF-e</p>
-        <p class="valor-tot body-medium">Valor Total</p>
-        <p class="quant body-medium">Quantidade</p>
-        <p class="un body-medium">Un</p>
-      </div>
-      <div
-        *ngFor="let row of tableRow; let i = index"
-        class="table-row"
-        (click)="openCommentary('100ms', '100ms', row.commentary)"
-        matRipple
-      >
-        <mat-icon
-          class="table-icon-type material-icons-outlined"
-          [style.color]="getIconColor(i)"
+    <div class="table-spacer">
+      <div class="table-container">
+        <div class="table-header">
+          <mat-icon class="table-icon-header material-icons-outlined">
+            info
+          </mat-icon>
+          <p class="data body-medium">Data</p>
+          <p class="forn-resp body-medium">Fornecedor/Responsável</p>
+          <p class="nfe body-medium">Nº NF-e</p>
+          <p class="valor-tot body-medium">Valor Total</p>
+          <p class="quant body-medium">Quantidade</p>
+          <p class="un body-medium">Un</p>
+        </div>
+        <div
+          *ngFor="let row of tableData; let i = index"
+          class="table-row"
+          (click)="openCommentary('100ms', '100ms', row.comentario)"
+          matRipple
         >
-          {{ getIconType(i) }}
-        </mat-icon>
-        <p class="data body-medium">{{ row.data }}</p>
-        <p class="forn-resp body-medium">{{ row.forn_resp }}</p>
-        <p class="nfe body-medium">{{ row.tipo == "entrada" ? row.nfe : "-" }}</p>
-        <p class="valor-tot body-medium">R$ {{ row.valor_tot }}</p>
-        <p class="quant body-medium">{{ row.quant }}</p>
-        <p class="un body-medium">{{ row.un }}</p>
+          <mat-icon
+            class="table-icon-type material-icons-outlined"
+            [style.color]="getIconColor(i)"
+          >
+            {{ getIconType(i) }}
+          </mat-icon>
+          <p class="data body-medium">{{ row.data }}</p>
+          <p class="forn-resp body-medium">{{ row.operacao == 3 ? row.resp_ajuste : row.solicitacao.responsavel.nome }}</p>
+          <p class="nfe body-medium">{{ row.operacao == 1 ? row.nfe.numero : "-" }}</p>
+          <p class="valor-tot body-medium">R$ {{ (+(row.valor_unit) * row.qtd_mov).toFixed(2) }}</p>
+          <p class="quant body-medium">{{ row.qtd_mov }}</p>
+          <p class="un body-medium">{{ row.tipo.un_de_medida.sigla | uppercase }}</p>
+        </div>
       </div>
     </div>
-    <app-paginator />
+    <app-paginator [data]="paginatorData" />
   </div>
 </div>

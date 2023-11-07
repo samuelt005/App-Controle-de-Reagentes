@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
-import { PaginatorService } from 'src/app/services/paginator/paginator.service';
+import { PaginatorData } from 'src/app/interfaces/paginator-data';
 
 @Component({
   selector: 'app-paginator',
@@ -8,21 +8,24 @@ import { PaginatorService } from 'src/app/services/paginator/paginator.service';
   styleUrls: ['./paginator.component.scss'],
 })
 export class PaginatorComponent {
-  @Input() isHomePage: boolean = false;
-  @Input() page: number = 1;
-  @Input() table: string = '';
-
-  totalRows: number = 0;
-  minItem: number = (this.page - 1) * 20 + 1;
+  @Input() data: PaginatorData = {
+    currentPage: 0,
+    totalPages: 0,
+    totalItems: 0,
+  };
+  
+  minItem: number = 0;
   maxItem: number = 0;
 
-  constructor(private service: PaginatorService, private router: Router) {}
+  constructor(private router: Router) {}
 
   goToPage(button: string) {
-    if (button === 'back' && this.page > 1) {
-      this.navigateAndSetPage(this.page - 1);
-    } else if (button === 'forward' && this.page * 20 < this.totalRows) {
-      this.navigateAndSetPage(this.page + 1);
+    const { currentPage, totalItems } = this.data;
+
+    if (button === 'back' && currentPage > 1) {
+      this.navigateAndSetPage(currentPage - 1);
+    } else if (button === 'forward' && currentPage * 20 < totalItems) {
+      this.navigateAndSetPage(currentPage + 1);
     }
   }
 
@@ -30,33 +33,27 @@ export class PaginatorComponent {
     const currentRoute: string = this.router.routerState.snapshot.url;
     const updatedRoute = currentRoute.replace(/\/(\d+)$/, '/' + newPage);
     this.router.navigate([updatedRoute]);
-    this.page = newPage; // Atualiza o número da página
+    this.data.currentPage = newPage;
   }
 
   calculateMinMaxItems() {
-    if (this.totalRows < 20) {
-      this.maxItem = this.totalRows;
+    const { currentPage, totalItems } = this.data;
+    
+    if (totalItems < 20) {
+      this.maxItem = totalItems;
       this.minItem = 1;
     } else {
-      this.minItem = (this.page - 1) * 20 + 1;
-      this.maxItem = this.page * 20;
-      if (this.maxItem > this.totalRows) {
-        this.maxItem = this.totalRows;
+      this.minItem = (currentPage - 1) * 20 + 1;
+      this.maxItem = currentPage * 20;
+      if (this.maxItem > totalItems) {
+        this.maxItem = totalItems;
       }
     }
   }
 
-  ngOnInit(): void {
-    if (this.isHomePage) {
-      this.service.getActiveTypesCount().subscribe((data) => {
-        this.totalRows = parseInt(data);
-        this.calculateMinMaxItems();
-      });
-    } else {
-      this.service.getItemsCount(this.table).subscribe((data) => {
-        this.totalRows = parseInt(data);
-        this.calculateMinMaxItems();
-      });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data']) {
+      this.calculateMinMaxItems();
     }
   }
 }

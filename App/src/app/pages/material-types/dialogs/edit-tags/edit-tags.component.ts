@@ -9,13 +9,21 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class EditTagsComponent {
   tagsOptions: FormGroup;
+
+  isTagPresent(tagSigla: string): boolean {
+    return this.injectedData.tags.some((tag) => tag.sigla === tagSigla);
+  }
   
-  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: any, private _formBuilder: FormBuilder) {
+  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: { tags: { sigla: string }[] }, private _formBuilder: FormBuilder) {
     this.tagsOptions = this._formBuilder.group({
-      em: injectedData.tags.em,
-      pf: injectedData.tags.pf,
-      pc: injectedData.tags.pc,
-      eb: injectedData.tags.eb,
+      em: this.isTagPresent('em'),
+      pf: this.isTagPresent('pf'),
+      pc: this.isTagPresent('pc'),
+      eb: this.isTagPresent('eb'),
     });
+  }
+
+  ngOnInit() {
+    console.log(JSON.stringify(this.injectedData))
   }
 }
