@@ -8,7 +8,7 @@ module.exports = {
 		for (let i = 1; i <= 50; i++) {
 			objects.push({
 				razao_social: `Empresa ${i}`,
-				cnpj: `11111111${i.toString().padStart(4, '0')}`,
+				cnpj: `1111111111${i.toString().padStart(4, '0')}`,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});

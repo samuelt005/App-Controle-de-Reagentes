@@ -17,7 +17,7 @@
           matRipple
         >
           <p class="numero body-medium">{{ row.id }}</p>
-          <p class="data body-medium">{{ formatDate(row.createdAt) }}</p>
+          <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
           <p
             class="status body-medium"
             [style.color]="getStatusColor(i)"

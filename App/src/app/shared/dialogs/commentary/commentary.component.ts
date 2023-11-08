@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Commentary } from 'src/app/interfaces/dialogs/edit-type/commentary';
 
 @Component({
   selector: 'app-commentary',
@@ -7,5 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./commentary.component.scss']
 })
 export class CommentaryComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: Commentary) {
+      console.log(data)
+    }
 }

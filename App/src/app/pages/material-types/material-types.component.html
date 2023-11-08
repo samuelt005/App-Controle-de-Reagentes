@@ -28,9 +28,9 @@
               >Editar</app-small-button
             >
             <app-small-button
-              [inactive]="+(row.vlr_estoque) != 0"
-              [redColor]="+(row.vlr_estoque) == 0"
-              [matRippleDisabled]="+(row.vlr_estoque) != 0"
+              [inactive]="+(row.vlr_estoque) !== 0"
+              [redColor]="+(row.vlr_estoque) === 0"
+              [matRippleDisabled]="+(row.vlr_estoque) !== 0"
               (click)="confirmInactivation('100ms', '100ms', +(row.vlr_estoque))"
               >Inativar</app-small-button
             >

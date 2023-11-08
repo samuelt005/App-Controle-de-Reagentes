@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageTitle } from 'src/app/interfaces/page-title';
-import { TypesRow } from 'src/app/interfaces/tables/types-row';
 import { EditTagsComponent } from './dialogs/edit-tags/edit-tags.component';
 import { NewTypeComponent } from './dialogs/new-type/new-type.component';
 import { EditTypeComponent } from './dialogs/edit-type/edit-type.component';
@@ -16,17 +15,18 @@ import { NewTags } from 'src/app/interfaces/tables/new-tags';
   templateUrl: './material-types.component.html',
   styleUrls: ['./material-types.component.scss'],
 })
-export class MaterialTypesComponent {
+export class MaterialTypesComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'assignment',
     title: 'Manter Reagentes e Materiais',
+    searchLabel: 'Pesquisar por Código ou Descrição',
     searchBox: true,
     adjustButton: false,
   };
 
   tableData: ListingRow[] = [];
-  page: number = 1;
+  page = 1;
 
   paginatorData: PaginatorData = {
     currentPage: 0,
@@ -87,7 +87,7 @@ export class MaterialTypesComponent {
     });
   }
 
-  getObjectKeys(obj: any): string[] {
+  getObjectKeys(obj: object): string[] {
     return Object.keys(obj);
   }
 

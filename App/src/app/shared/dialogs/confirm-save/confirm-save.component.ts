@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
 
@@ -7,8 +7,8 @@ import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
   templateUrl: './confirm-save.component.html',
   styleUrls: ['./confirm-save.component.scss'],
 })
-export class ConfirmSaveComponent {
-  warningText: string = '';
+export class ConfirmSaveComponent implements OnInit {
+  warningText = '';
 
   constructor(
     public dialog: MatDialog,

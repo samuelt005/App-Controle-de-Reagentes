@@ -5,7 +5,7 @@ export interface TypesRow {
     desc: string
     tags: Tags
     localizacao: string
-    un: String
+    un: string
     valor_estoque: number
     prod_id: number
 }

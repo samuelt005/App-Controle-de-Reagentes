@@ -1,5 +1,4 @@
-import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle } from 'src/app/interfaces/page-title';
@@ -11,11 +10,12 @@ import { RequestListingService } from 'src/app/services/requestlisting/request-l
   templateUrl: './request-listing.component.html',
   styleUrls: ['./request-listing.component.scss'],
 })
-export class RequestListingComponent {
+export class RequestListingComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--sucesso-2)',
     icon: 'file_download',
     title: 'Gerir Solicitações de Compra',
+    searchLabel: 'Pesquisar por Solicitante',
     searchBox: true,
     adjustButton: false,
   };
@@ -28,7 +28,7 @@ export class RequestListingComponent {
     totalItems: 0,
   };
 
-  page: number = 1;
+  page = 1;
 
   constructor(
     private requestListingService: RequestListingService,
@@ -63,8 +63,7 @@ export class RequestListingComponent {
     }
   }
 
-  formatDate(dateTimeStr: String): String {
-    console.log(dateTimeStr);
+  getFormattedDate(dateTimeStr: string): string {
     const parts = dateTimeStr.split('T')[0].split('-');
     const day = parts[2];
     const month = parts[1];
@@ -92,7 +91,6 @@ export class RequestListingComponent {
             totalItems: totalItems,
           };
           this.tableData = responseData.data;
-          console.log(this.tableData);
         });
     });
   }

@@ -1,7 +1,8 @@
 export interface PageTitle {
-    title: string
-    icon: string
-    iconColor: string
-    searchBox: boolean
-    adjustButton: boolean
+  title: string;
+  searchLabel?: string;
+  icon: string;
+  iconColor: string;
+  searchBox: boolean;
+  adjustButton: boolean;
 }

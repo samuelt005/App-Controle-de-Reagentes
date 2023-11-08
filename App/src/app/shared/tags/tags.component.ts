@@ -9,7 +9,7 @@ import { NewTags } from 'src/app/interfaces/tables/new-tags';
 export class TagsComponent {
   @Input() tags: NewTags[] = [];
 
-  getObjectKeys(obj: any): string[] {
+  getObjectKeys(obj: object): string[] {
     return Object.keys(obj);
   }
 }

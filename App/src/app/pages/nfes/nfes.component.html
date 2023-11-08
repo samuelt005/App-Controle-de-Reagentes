@@ -1,0 +1,38 @@
+<div class="page-container">
+  <app-side-bar [filtersHidden]="true" />
+  <div class="main-content">
+    <app-header [pageTitle]="pageTitle" />
+    <div class="table-spacer">
+      <div class="table-container">
+        <div class="table-header">
+          <p class="numero body-medium">Nº NF-e</p>
+          <p class="razao body-medium">Fornecedor</p>
+          <p class="cnpj body-medium">CNPJ</p>
+          <p class="data body-medium">Data de Emissão</p>
+          <p class="vinculados body-medium">Itens Vinculados</p>
+        </div>
+        <div
+          *ngFor="let row of tableData"
+          class="table-row"
+          (click)="openEditItem('100ms', '100ms', row)"
+        >
+          <p class="numero body-medium">{{ row.numero }}</p>
+          <p class="razao body-medium">{{ row.emitente.razao_social }}</p>
+          <p class="cnpj body-medium">{{ getFormattedCnpj(row.emitente.cnpj) }}</p>
+          <p class="data body-medium">{{ getFormattedDate(row.data_emissao) }}</p>
+          <p class="vinculados body-medium">{{ row.itens_vinculados }}</p>
+        </div>
+      </div>
+    </div>
+    <app-paginator [data]="paginatorData" />
+
+    <div class="button-container">
+      <app-normal-button
+        (click)="openNewItem('100ms', '100ms')"
+        [filled]="true"
+      >
+        Incluir Novo
+      </app-normal-button>
+    </div>
+  </div>
+</div>

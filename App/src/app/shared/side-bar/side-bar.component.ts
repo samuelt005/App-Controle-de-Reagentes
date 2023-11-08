@@ -10,12 +10,12 @@ import { MenuOptions } from 'src/app/interfaces/menu-options';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
-  role: number = 1; //TODO remover depois
+  role = 1; //TODO remover depois
   //TODO arrumar responsívidade
-  menusDrawer: boolean = false;
-  filtersDrawer: boolean = false;
-  isChecked: boolean = false;
-  @Input() filtersHidden: boolean = false;
+  menusDrawer = false;
+  filtersDrawer = false;
+  isChecked = false;
+  @Input() filtersHidden = false;
 
   filtersValue: FiltersValue = {
     un: '',
@@ -27,33 +27,43 @@ export class SideBarComponent {
     vlrTotMin: null,
     vlrTotMax: null,
     loc: '',
-  }
+  };
 
   menuOptions: MenuOptions[] = [
     {
       title: 'Cadastrar Baixa',
       page: '/writeoff',
-      authorized: [1, 2, 3]
+      authorized: [1, 2, 3],
     },
     {
       title: 'Solicitar Compra',
       page: '/request',
-      authorized: [1, 2]
+      authorized: [1, 2],
     },
     {
       title: 'Solicitações de Compra',
       page: '/requestlisting/page/1',
-      authorized: [1]
+      authorized: [1],
     },
     {
       title: 'Gerar Relatórios',
       page: '/reports',
-      authorized: [1]
+      authorized: [1],
     },
     {
       title: 'Registro de Materiais',
       page: '/materialtypes/page/1',
-      authorized: [1]
+      authorized: [1],
+    },
+    {
+      title: 'Notas Fiscais',
+      page: 'nfes/page/1',
+      authorized: [1],
+    },
+    {
+      title: 'Fornecedores e Lotes',
+      page: 'supplierslots/page/1&1',
+      authorized: [1],
     },
   ];
 
@@ -75,7 +85,7 @@ export class SideBarComponent {
 
       case 2:
         return 'Professor';
-        
+
       case 3:
         return 'Aluno';
 
@@ -122,6 +132,7 @@ export class SideBarComponent {
   }
 
   applyFilters() {
+    this.cleanFilters();
   }
 
   cleanFilters() {

@@ -5,28 +5,29 @@
   align-items: center;
 
   p {
+    user-select: none;
     margin: 0;
     margin-top: 2px;
   }
 
   .pages {
+    width: 120px;
     color: var(--base-preto);
     text-align: center;
-    width: 120px;
   }
 
   .back-button,
   .forward-button {
+    user-select: none;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px;
     margin: 0;
+    padding: 2px 4px;
+    border-radius: 5px;
     color: var(--cinza-1);
     text-align: center;
-    user-select: none;
-    border-radius: 5px;
-    padding: 2px 4px;
   }
 
   .active {

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -7,15 +7,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './edit-tags.component.html',
   styleUrls: ['./edit-tags.component.scss']
 })
-export class EditTagsComponent {
+export class EditTagsComponent implements OnInit {
   tagsOptions: FormGroup;
 
   isTagPresent(tagSigla: string): boolean {
     return this.injectedData.tags.some((tag) => tag.sigla === tagSigla);
   }
   
-  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: { tags: { sigla: string }[] }, private _formBuilder: FormBuilder) {
-    this.tagsOptions = this._formBuilder.group({
+  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: { tags: { sigla: string }[] }, private formBuilder: FormBuilder) {
+    this.tagsOptions = this.formBuilder.group({
       em: this.isTagPresent('em'),
       pf: this.isTagPresent('pf'),
       pc: this.isTagPresent('pc'),

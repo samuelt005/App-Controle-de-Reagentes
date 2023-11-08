@@ -6,8 +6,8 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./normal-button.component.scss']
 })
 export class NormalButtonComponent {
-    @Input() filled: boolean = false;
-    @Input() inactive: boolean = false;
-    @Input() matRippleDisabled: boolean = false;
-    @Input() customWidth: string = '150px';
+    @Input() filled = false;
+    @Input() inactive = false;
+    @Input() matRippleDisabled = false;
+    @Input() customWidth = '150px';
 }

@@ -13,11 +13,12 @@ export class HeaderComponent {
     iconColor: '',
     icon: '',
     title: 'PLACEHOLDER',
+    searchLabel: 'Pesquisar por Código ou Descrição',
     searchBox: false,
     adjustButton: false,
   };
 
-  searchInput: string = '';
+  searchInput = '';
 
   constructor(public dialog: MatDialog) {}
 

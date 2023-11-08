@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./icon-button.component.scss']
 })
 export class IconButtonComponent {
-  @Input() activated: boolean = false;
+  @Input() activated = false;
 }

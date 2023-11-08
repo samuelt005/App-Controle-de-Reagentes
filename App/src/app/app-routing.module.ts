@@ -6,9 +6,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { RequestListingComponent } from './pages/request-listing/request-listing.component';
 import { RequestComponent } from './pages/request/request.component';
 import { WriteOffComponent } from './pages/write-off/write-off.component';
-import { TestsComponent } from './pages/tests/tests.component';
 import { MaterialTypesComponent } from './pages/material-types/material-types.component';
 import { ReportsComponent } from './pages/reports/reports.component';
+import { NfesComponent } from './pages/nfes/nfes.component';
+import { SuppliersLotsComponent } from './pages/suppliers-lots/suppliers-lots.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -49,8 +51,17 @@ const routes: Routes = [
     component: MaterialTypesComponent,
   },
   {
-    path: 'tests',
-    component: TestsComponent,
+    path: 'nfes/page/:page',
+    component: NfesComponent,
+  },
+  {
+    path: 'supplierslots/page/:page1&:page2',
+    component: SuppliersLotsComponent,
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: NotFoundComponent,
   },
 ];
 

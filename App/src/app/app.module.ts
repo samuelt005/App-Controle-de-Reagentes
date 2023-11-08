@@ -28,7 +28,6 @@ import { MaterialTypesComponent } from './pages/material-types/material-types.co
 import { ReportsComponent } from './pages/reports/reports.component';
 import { RequestListingComponent } from './pages/request-listing/request-listing.component';
 import { RequestComponent } from './pages/request/request.component';
-import { TestsComponent } from './pages/tests/tests.component';
 import { WriteOffComponent } from './pages/write-off/write-off.component';
 import { IconButtonComponent } from './shared/buttons/icon-button/icon-button.component';
 import { NormalButtonComponent } from './shared/buttons/normal-button/normal-button.component';
@@ -44,6 +43,11 @@ import { MenuOptionComponent } from './shared/side-bar/menu-option/menu-option.c
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { ConfirmInactivationComponent } from './pages/material-types/dialogs/confirm-inactivation/confirm-inactivation.component';
 import { TagsComponent } from './shared/tags/tags.component';
+import { NfesComponent } from './pages/nfes/nfes.component';
+import { SuppliersLotsComponent } from './pages/suppliers-lots/suppliers-lots.component';
+import { NewNfeComponent } from './pages/nfes/dialogs/new-nfe/new-nfe.component';
+import { EditNfeComponent } from './pages/nfes/dialogs/edit-nfe/edit-nfe.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +67,6 @@ import { TagsComponent } from './shared/tags/tags.component';
     ConfirmSaveComponent,
     RequestComponent,
     RequestListingComponent,
-    TestsComponent,
     NormalButtonComponent,
     IconButtonComponent,
     MenuOptionComponent,
@@ -74,7 +77,12 @@ import { TagsComponent } from './shared/tags/tags.component';
     NewTypeComponent,
     EditTypeComponent,
     ConfirmInactivationComponent,
-    TagsComponent
+    TagsComponent,
+    NfesComponent,
+    SuppliersLotsComponent,
+    NewNfeComponent,
+    EditNfeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

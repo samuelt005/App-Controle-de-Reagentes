@@ -39,6 +39,21 @@ class FornecedoresController {
 		}
 	}
 
+	// Método para pegar 20 fornecedores (paginação)
+	static async getAllFornecedores(req, res) {
+
+		try {
+			const fornecedores = await database.Fornecedores.findAll({
+				where: {},
+				attributes: { exclude: ['createdAt', 'updatedAt'] },
+			});
+
+			return res.status(200).json(fornecedores);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
 	// Método para criar um fornecedor
 	static async createFornecedor(req, res) {
 		const { razao_social, cnpj } = req.body;

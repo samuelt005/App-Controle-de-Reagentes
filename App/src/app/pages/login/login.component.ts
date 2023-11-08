@@ -15,16 +15,16 @@ export class LoginComponent {
 
   constructor(private AuthService: AuthService, private fb: FormBuilder, private router: Router) {}
 
-  login() {
-    let user = this.AuthService.login(
-      this.form.value.username,
-      this.form.value.password
-    );
-    if (!user) {
-      alert('Usuário ou senha inválido!');
-    }
-    setTimeout(() => {
-      this.router.navigate(['/listing/page/1']);
-    }, 500);
-  }
+  // login() {
+  //   const user = this.AuthService.login(
+  //     this.form.value.username,
+  //     this.form.value.password
+  //   );
+  //   if (!user) {
+  //     alert('Usuário ou senha inválido!');
+  //   }
+  //   setTimeout(() => {
+  //     this.router.navigate(['/listing/page/1']);
+  //   }, 500);
+  // }
 }

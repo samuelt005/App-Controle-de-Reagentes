@@ -30,9 +30,9 @@
           >
             {{ getIconType(i) }}
           </mat-icon>
-          <p class="data body-medium">{{ row.data }}</p>
-          <p class="forn-resp body-medium">{{ row.operacao == 3 ? row.resp_ajuste : row.solicitacao.responsavel.nome }}</p>
-          <p class="nfe body-medium">{{ row.operacao == 1 ? row.nfe.numero : "-" }}</p>
+          <p class="data body-medium">{{ getFormattedDate(row.data) }}</p>
+          <p class="forn-resp body-medium">{{ row.operacao === 3 ? row.resp_ajuste : row.solicitacao.responsavel.nome }}</p>
+          <p class="nfe body-medium">{{ row.operacao === 1 ? row.nfe.numero : "-" }}</p>
           <p class="valor-tot body-medium">R$ {{ (+(row.valor_unit) * row.qtd_mov).toFixed(2) }}</p>
           <p class="quant body-medium">{{ row.qtd_mov }}</p>
           <p class="un body-medium">{{ row.tipo.un_de_medida.sigla | uppercase }}</p>

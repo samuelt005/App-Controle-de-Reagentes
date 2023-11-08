@@ -2,7 +2,7 @@ export interface RequestListingRow {
   id: number;
   status: number;
   comentario: string;
-  createdAt: String;
+  createdAt: string;
   responsavel: {
     nome: string;
   };

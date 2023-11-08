@@ -11,10 +11,11 @@
     gap: 15px;
     width: 100%;
     min-width: 700px;
-    max-width: 1200px;
-    height: auto;
-    margin: 22px auto;
-    padding: 0px 80px;
+    max-width: 1360px;
+    box-sizing: border-box;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 22px 80px;
 
     .table-spacer {
       height: 100%;

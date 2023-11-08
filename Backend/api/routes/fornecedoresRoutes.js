@@ -9,6 +9,9 @@ router.get('/fornecedores/:id', FornecedoresController.getFornecedor);
 // Rota para listar fornecedores com paginação
 router.get('/fornecedores/page/:page', FornecedoresController.getFornecedores);
 
+// Rota para listar todos os fornecedores
+router.get('/fornecedores', FornecedoresController.getAllFornecedores);
+
 // Rota para criar um fornecedor
 router.post('/fornecedores', FornecedoresController.createFornecedor);
 

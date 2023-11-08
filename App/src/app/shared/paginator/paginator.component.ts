@@ -1,5 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { PaginatorData } from 'src/app/interfaces/paginator-data';
 
 @Component({
@@ -7,15 +7,15 @@ import { PaginatorData } from 'src/app/interfaces/paginator-data';
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
 })
-export class PaginatorComponent {
+export class PaginatorComponent implements OnChanges {
   @Input() data: PaginatorData = {
     currentPage: 0,
     totalPages: 0,
     totalItems: 0,
   };
   
-  minItem: number = 0;
-  maxItem: number = 0;
+  minItem = 0;
+  maxItem = 0;
 
   constructor(private router: Router) {}
 

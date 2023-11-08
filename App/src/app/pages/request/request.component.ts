@@ -15,7 +15,7 @@ export class RequestComponent {
     searchBox: false,
     adjustButton: false,
   };
-  dataInputs: any[] = [];
+  dataInputs: object[] = [];
 
   constructor(public dialog: MatDialog) {}
 

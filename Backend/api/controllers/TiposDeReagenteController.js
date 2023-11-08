@@ -106,6 +106,7 @@ class TiposDeReagenteController {
 					attributes: ['sigla'],
 				});
 			}
+      
 			const totalItems = await database.TiposDeReagente.count({
 				where: { ativo: true },
 			});

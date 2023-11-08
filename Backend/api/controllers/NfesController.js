@@ -33,7 +33,7 @@ class NfesController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const nfes = await database.Nfes.findAndCountAll({
+			const result = await database.Nfes.findAndCountAll({
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
@@ -45,9 +45,29 @@ class NfesController {
 					},
 				],
 				attributes: { exclude: ['createdAt', 'updatedAt', 'id_fornecedor_fk'] },
+        order: [['data_emissao', 'DESC']],
 			});
 
-			return res.status(200).json(nfes);
+      const nfes = result.rows;
+
+      for (const nfe of nfes) {
+				nfe.dataValues.itens_vinculados = await database.ItensMovimentacao.count({
+					where:{ id_nfe_fk: nfe.id },
+				});
+			}
+
+			const totalItems = await database.Nfes.count();
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: nfes,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

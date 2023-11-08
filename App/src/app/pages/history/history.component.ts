@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { InfoCard } from 'src/app/interfaces/info-card';
@@ -12,7 +12,7 @@ import { CommentaryComponent } from 'src/app/shared/dialogs/commentary/commentar
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'history',
@@ -55,10 +55,10 @@ export class HistoryComponent {
     totalPages: 0,
     totalItems: 0,
   };
-  
-  page: number = 1;
-  id: number = 1;
-  
+
+  page = 1;
+  id = 1;
+
   constructor(
     private historyService: HistoryService,
     public dialog: MatDialog,
@@ -91,7 +91,15 @@ export class HistoryComponent {
     }
   }
 
-  updateInfoCards() {
+  getFormattedDate(dateTimeStr: string): string {
+    const parts = dateTimeStr.split('-');
+    const year = parts[0];
+    const month = parts[1];
+    const day = parts[2];
+    return `${day}/${month}/${year}`;
+  }
+
+  updateInfoCards(): void {
     // TODO dinamizar
     this.infoCards[0].data = 'teste';
     this.infoCards[1].data = 'R$ ' + 1;

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditType } from 'src/app/interfaces/dialogs/edit-type/edit-type';
 
 @Component({
   selector: 'app-edit-type',
@@ -10,8 +11,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EditTypeComponent {
   typeData: FormGroup;
   
-  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: any, private _formBuilder: FormBuilder) {
-    this.typeData = this._formBuilder.group({
+  constructor(@Inject(MAT_DIALOG_DATA) public injectedData: EditType, private formBuilder: FormBuilder) {
+    this.typeData = this.formBuilder.group({
       cod: injectedData.rowData.cod,
       desc: injectedData.rowData.descricao,
       localizacao: injectedData.rowData.loc_estoque,
