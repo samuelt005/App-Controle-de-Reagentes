@@ -5,9 +5,9 @@ module.exports = {
 		await queryInterface.createTable('Usuarios', {
 			id: {
 				allowNull: false,
-				autoIncrement: true,
 				primaryKey: true,
-				type: Sequelize.INTEGER,
+				type: Sequelize.UUID,
+				defaultValue: Sequelize.UUID,
 			},
 			nome: {
 				allowNull: false,
@@ -17,11 +17,7 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING(100),
 			},
-			senha_hash: {
-				allowNull: false,
-				type: Sequelize.STRING(100),
-			},
-			salt: {
+			senha: {
 				allowNull: false,
 				type: Sequelize.STRING(100),
 			},
@@ -36,7 +32,7 @@ module.exports = {
 			id_perfil_fk: {
 				type: Sequelize.INTEGER,
 				references: { model: 'Perfis', key: 'id' },
-        defaultValue: null,
+				defaultValue: null,
 			},
 			createdAt: {
 				allowNull: false,

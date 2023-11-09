@@ -1,5 +1,7 @@
 const database = require('../models');
 const { Usuarios } = require('../models');
+const { hash } = require('bcryptjs');
+const uuid = require('uuid');
 
 // TODO melhorar a segurança
 
@@ -9,8 +11,10 @@ class UsuariosController {
 		const { id } = req.params;
 		try {
 			const usuario = await database.Usuarios.findOne({
-				where: { id: Number(id) },
-				attributes: { exclude: ['createdAt', 'updatedAt', 'id_perfil_fk'] },
+				where: { id: id },
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_perfil_fk', 'senha'],
+				},
 				include: [
 					{
 						model: database.Perfis,
@@ -27,27 +31,41 @@ class UsuariosController {
 
 	// Método para criar um usuario
 	static async createUsuario(req, res) {
-		const { nome, email, senha_hash, salt, ra, cpf } = req.body;
+		const { nome, email, nova_senha, ra, cpf } = req.body;
 
 		try {
 			// TODO validar CPF também?
-			const existingUsuario = await Usuarios.findOne({
+			const existingRa = await Usuarios.findOne({
 				where: {
 					ra,
 				},
 			});
 
-			if (existingUsuario) {
+			if (existingRa) {
 				return res.status(400).json({
 					message: 'Já existe um Usuário com o mesmo RA.',
 				});
 			}
 
+			const existingCpf = await Usuarios.findOne({
+				where: {
+					cpf,
+				},
+			});
+
+			if (existingCpf) {
+				return res.status(400).json({
+					message: 'Já existe um Usuário com o mesmo CPF.',
+				});
+			}
+
+			const senha = await hash(nova_senha, 8);
+
 			const createdUsuario = await Usuarios.create({
+				id: uuid.v4(),
 				nome,
 				email,
-				senha_hash,
-				salt,
+				senha,
 				ra,
 				cpf,
 			});
@@ -60,22 +78,26 @@ class UsuariosController {
 	// Método para atualizar um usuario
 	static async updateUsuario(req, res) {
 		const { id } = req.params;
-		const { nome, email, senha_hash, salt } = req.body;
+		const { nome, email, nova_senha } = req.body;
 
 		try {
+			const senha = await hash(nova_senha, 8);
+
 			await database.Usuarios.update(
 				{
 					nome,
 					email,
-					senha_hash,
-					salt,
+					senha,
 				},
 				{
-					where: { id: Number(id) },
+					where: { id: id },
 				}
 			);
 			const updatedUsuario = await database.Usuarios.findOne({
-				where: { id: Number(id) },
+				where: { id: id },
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'id_perfil_fk', 'senha'],
+				},
 			});
 			return res.status(200).json(updatedUsuario);
 		} catch (error) {
@@ -83,21 +105,24 @@ class UsuariosController {
 		}
 	}
 
-  static async updatePerfil(req, res) {
+	static async updatePerfil(req, res) {
 		const { id } = req.params;
 		const { id_perfil } = req.body;
 
 		try {
 			await database.Usuarios.update(
 				{
-					id_perfil_fk: Number(id_perfil)
+					id_perfil_fk: Number(id_perfil),
 				},
 				{
-					where: { id: Number(id) },
+					where: { id: id },
 				}
 			);
 			const updatedUsuario = await database.Usuarios.findOne({
-				where: { id: Number(id) },
+				where: { id: id },
+				attributes: {
+					exclude: ['createdAt', 'updatedAt', 'senha'],
+				},
 			});
 			return res.status(200).json(updatedUsuario);
 		} catch (error) {

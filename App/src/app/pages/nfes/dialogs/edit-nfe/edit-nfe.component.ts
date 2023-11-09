@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditNfe } from 'src/app/interfaces/dialogs/edit-type/edit-nfe';
-import { fornecedoresRow } from 'src/app/interfaces/tables/fornecedores-row';
-import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.service';
+import { Component, OnInit, Inject } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { SuppliersRow, EditNfe } from "src/app/interfaces";
+import { SuppliersService } from "src/app/services";
 
 @Component({
   selector: 'app-edit-nfe',
@@ -11,13 +10,13 @@ import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.
   styleUrls: ['./edit-nfe.component.scss'],
 })
 export class EditNfeComponent implements OnInit {
-  selectData: fornecedoresRow[] = [];
+  selectData: SuppliersRow[] = [];
   nfeData: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public injectedData: EditNfe,
     private formBuilder: FormBuilder,
-    private fornecedoresService: FornecedoresService
+    private fornecedoresService: SuppliersService
   ) {
     console.log(injectedData);
     this.nfeData = this.formBuilder.group({
@@ -41,7 +40,7 @@ export class EditNfeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fornecedoresService.listAll().subscribe((responseData) => {
-      this.selectData = responseData;
+      this.selectData = responseData.data;
     });
   }
 }

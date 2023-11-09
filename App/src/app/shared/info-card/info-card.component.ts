@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { InfoCard } from 'src/app/interfaces/info-card';
+import { Component, Input } from "@angular/core";
+import { InfoCard } from "src/app/interfaces";
 
 @Component({
   selector: 'app-info-card',

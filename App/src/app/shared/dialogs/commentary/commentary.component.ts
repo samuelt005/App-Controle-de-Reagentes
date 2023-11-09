@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Commentary } from 'src/app/interfaces/dialogs/edit-type/commentary';
+import { Component, Inject } from "@angular/core";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Commentary } from "src/app/interfaces";
 
 @Component({
   selector: 'app-commentary',

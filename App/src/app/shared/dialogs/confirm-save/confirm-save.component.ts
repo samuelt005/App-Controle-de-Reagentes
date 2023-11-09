@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router, RouterStateSnapshot } from "@angular/router";
 
 @Component({
   selector: 'app-confirm-save',

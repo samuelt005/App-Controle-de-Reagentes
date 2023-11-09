@@ -1,5 +1,5 @@
-import { NewTags } from './new-tags';
-import { UnsDeMedida } from './uns-de-medida';
+import { NewTags } from "../dialogs/new-tags";
+import { UnsDeMedida } from "./uns-de-medida";
 
 export interface ListingRow {
   id: number;
@@ -13,4 +13,11 @@ export interface ListingRow {
   ativo: boolean;
   un_de_medida: UnsDeMedida;
   tags: NewTags[];
+}
+
+export interface ListingData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  data: ListingRow[];
 }

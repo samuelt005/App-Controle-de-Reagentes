@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { NewCommentaryComponent } from 'src/app/shared/dialogs/new-commentary/new-commentary.component';
+import { PageTitle } from 'src/app/interfaces';
+import { NewCommentaryComponent, PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './request.component.html',
   styleUrls: ['./request.component.scss'],
 })
-export class RequestComponent {
+export class RequestComponent extends PageComponent {
   pageTitle: PageTitle = {
     iconColor: 'var(--sucesso-2)',
     icon: 'file_download',
@@ -15,16 +15,9 @@ export class RequestComponent {
     searchBox: false,
     adjustButton: false,
   };
-  dataInputs: object[] = [];
 
-  constructor(public dialog: MatDialog) {}
-
-  addNewSection() {
-    this.dataInputs.push({});
-  }
-
-  deleteSection(index: number) {
-    this.dataInputs.splice(index, 1);
+  constructor(public dialog: MatDialog) {
+    super();
   }
 
   saveRequest(

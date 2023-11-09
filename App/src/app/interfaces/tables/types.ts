@@ -9,3 +9,10 @@ export interface TypesRow {
     valor_estoque: number
     prod_id: number
 }
+
+export interface TypesData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  data: TypesRow[];
+}

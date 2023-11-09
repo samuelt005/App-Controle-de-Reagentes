@@ -1,0 +1,32 @@
+<div class="page-container">
+  <app-side-bar [filtersHidden]="true" />
+  <div class="main-content">
+    <app-header [pageTitle]="pageTitle" />
+    <div class="table-spacer">
+      <div class="table-container">
+        <div class="table-header">
+          <p class="data body-medium">Data de Criação</p>
+          <p class="cnpj body-medium">CNPJ</p>
+          <p class="razao body-medium">Razão Social</p>
+        </div>
+        <div
+          *ngFor="let row of suppliersTableData"
+          class="table-row"
+          >
+          <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
+          <p class="cnpj body-medium">{{ getFormattedCnpj(row.cnpj) }}</p>
+          <p class="razao body-medium">{{ row.razao_social }}</p>
+        </div>
+      </div>
+    </div>
+    <app-paginator [data]="suppliersPaginatorData" />
+    <div class="button-container">
+      <app-normal-button
+        (click)="openNewItem('100ms', '100ms')"
+        [filled]="true"
+      >
+        Incluir Novo
+      </app-normal-button>
+    </div>
+  </div>
+</div>

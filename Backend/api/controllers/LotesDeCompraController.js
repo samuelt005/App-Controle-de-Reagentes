@@ -26,14 +26,34 @@ class LotesDeCompraController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const lotesdecompra = await database.LotesDeCompra.findAndCountAll({
+			const result = await database.LotesDeCompra.findAndCountAll({
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
-				attributes: { exclude: ['createdAt', 'updatedAt'] },
+				attributes: { exclude: ['updatedAt'] },
 			});
 
-			return res.status(200).json(lotesdecompra);
+			const lotesdecompra = result.rows;
+
+			for (const lotedecompra of lotesdecompra) {
+				lotedecompra.dataValues.itens_vinculados =
+					await database.ItensMovimentacao.count({
+						where: { id_lote_fk: lotedecompra.id },
+					});
+			}
+
+			const totalItems = await database.LotesDeCompra.count();
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: lotesdecompra,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
@@ -99,7 +119,8 @@ class LotesDeCompraController {
 	}
 
 	// Método para atualizar a quantidade de itens vinculados ao lote de compra
-	static async updateItensVinculados(req, res) { //TODO remover esta rota e jogar a lógica para o controller de ItensMovimentação
+	static async updateItensVinculados(req, res) {
+		//TODO remover esta rota e jogar a lógica para o controller de ItensMovimentação
 		const { id } = req.params;
 		const { soma } = req.body;
 

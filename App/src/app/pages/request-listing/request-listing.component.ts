@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
-import { RequestListingRow } from 'src/app/interfaces/tables/request-listing-row';
-import { RequestListingService } from 'src/app/services/requestlisting/request-listing.service';
+import {
+  PageTitle,
+  RequestListingRow,
+} from 'src/app/interfaces';
+import { RequestListingService } from 'src/app/services';
+import { PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './request-listing.component.html',
   styleUrls: ['./request-listing.component.scss'],
 })
-export class RequestListingComponent implements OnInit {
+export class RequestListingComponent extends PageComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--sucesso-2)',
     icon: 'file_download',
@@ -22,20 +24,14 @@ export class RequestListingComponent implements OnInit {
 
   tableData: RequestListingRow[] = [];
 
-  paginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
-
-  page = 1;
-
   constructor(
     private requestListingService: RequestListingService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   getStatus(i: number): string {
     switch (this.tableData[i].status) {
@@ -61,14 +57,6 @@ export class RequestListingComponent implements OnInit {
       default:
         return 'black';
     }
-  }
-
-  getFormattedDate(dateTimeStr: string): string {
-    const parts = dateTimeStr.split('T')[0].split('-');
-    const day = parts[2];
-    const month = parts[1];
-    const year = parts[0];
-    return `${day}/${month}/${year}`;
   }
 
   openDetails() {

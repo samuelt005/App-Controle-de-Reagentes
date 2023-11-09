@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { EditTagsComponent } from './dialogs/edit-tags/edit-tags.component';
-import { NewTypeComponent } from './dialogs/new-type/new-type.component';
-import { EditTypeComponent } from './dialogs/edit-type/edit-type.component';
-import { ConfirmInactivationComponent } from './dialogs/confirm-inactivation/confirm-inactivation.component';
-import { ListingRow } from 'src/app/interfaces/tables/listing-row';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
-import { MaterialTypesService } from 'src/app/services/material-types/material-types.service';
 import { ActivatedRoute } from '@angular/router';
-import { NewTags } from 'src/app/interfaces/tables/new-tags';
+import { PageTitle, ListingRow, NewTags } from 'src/app/interfaces';
+import { MaterialTypesService } from 'src/app/services';
+import { ConfirmInactivationComponent } from './dialogs/confirm-inactivation/confirm-inactivation.component';
+import { EditTagsComponent } from './dialogs/edit-tags/edit-tags.component';
+import { EditTypeComponent } from './dialogs/edit-type/edit-type.component';
+import { NewTypeComponent } from './dialogs/new-type/new-type.component';
+import { PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './material-types.component.html',
   styleUrls: ['./material-types.component.scss'],
 })
-export class MaterialTypesComponent implements OnInit {
+export class MaterialTypesComponent extends PageComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'assignment',
@@ -26,19 +24,14 @@ export class MaterialTypesComponent implements OnInit {
   };
 
   tableData: ListingRow[] = [];
-  page = 1;
-
-  paginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
 
   constructor(
     private dialog: MatDialog,
     private materialTypesService: MaterialTypesService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   openTags(
     enterAnimationDuration: string,

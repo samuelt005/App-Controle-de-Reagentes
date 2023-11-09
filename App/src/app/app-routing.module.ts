@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HistoryComponent } from './pages/history/history.component';
-import { ListingComponent } from './pages/listing/listing.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RequestListingComponent } from './pages/request-listing/request-listing.component';
-import { RequestComponent } from './pages/request/request.component';
-import { WriteOffComponent } from './pages/write-off/write-off.component';
-import { MaterialTypesComponent } from './pages/material-types/material-types.component';
-import { ReportsComponent } from './pages/reports/reports.component';
-import { NfesComponent } from './pages/nfes/nfes.component';
-import { SuppliersLotsComponent } from './pages/suppliers-lots/suppliers-lots.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { Routes, RouterModule } from '@angular/router';
+import {
+  LoginComponent,
+  ListingComponent,
+  HistoryComponent,
+  WriteOffComponent,
+  RequestComponent,
+  RequestListingComponent,
+  ReportsComponent,
+  MaterialTypesComponent,
+  NfesComponent,
+  SuppliersComponent,
+  PurchaseLotsComponent,
+  NotFoundComponent,
+} from './pages';
 
 const routes: Routes = [
   {
@@ -55,8 +58,12 @@ const routes: Routes = [
     component: NfesComponent,
   },
   {
-    path: 'supplierslots/page/:page1&:page2',
-    component: SuppliersLotsComponent,
+    path: 'suppliers/page/:page',
+    component: SuppliersComponent,
+  },
+  {
+    path: 'purchaselots/page/:page',
+    component: PurchaseLotsComponent,
   },
   {
     path: '**',

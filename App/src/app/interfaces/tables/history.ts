@@ -30,3 +30,10 @@ export interface HistoryRow {
     };
   };
 }
+
+export interface HistoryData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  data: HistoryRow[];
+}

@@ -7,3 +7,10 @@ export interface RequestListingRow {
     nome: string;
   };
 }
+
+export interface RequestListingData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  data: RequestListingRow[];
+}

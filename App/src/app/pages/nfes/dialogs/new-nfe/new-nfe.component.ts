@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { fornecedoresRow } from 'src/app/interfaces/tables/fornecedores-row';
-import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.service';
+import { Component, OnInit } from "@angular/core";
+import { SuppliersRow } from "src/app/interfaces";
+import { SuppliersService } from "src/app/services";
 
 @Component({
   selector: 'app-new-nfe',
@@ -8,9 +8,9 @@ import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.
   styleUrls: ['./new-nfe.component.scss'],
 })
 export class NewNfeComponent implements OnInit {
-  selectData: fornecedoresRow[] = [];
+  selectData: SuppliersRow[] = [];
 
-  constructor(private fornecedoresService: FornecedoresService) {}
+  constructor(private fornecedoresService: SuppliersService) {}
 
   getFormattedCnpj(cnpj: string): string {
     if (cnpj.length == 14) {
@@ -26,7 +26,7 @@ export class NewNfeComponent implements OnInit {
 
   ngOnInit(): void {
     this.fornecedoresService.listAll().subscribe((responseData) => {
-      this.selectData = responseData;
+      this.selectData = responseData.data;
     });
   }
 }

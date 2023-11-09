@@ -10,6 +10,7 @@ const unsdemedida = require('./unsdemedidaRoutes');
 const usuarios = require('./usuariosRoutes');
 const itensmovimentacao = require('./itensmovimentacaoRoutes');
 const cards = require('./cardsRoutes');
+const auth = require('./authRoutes');
 
 module.exports = (app) => {
 	app.use(bodyParser.json()); // Converte os dados de body recebidos por métodos em JSON
@@ -24,6 +25,7 @@ module.exports = (app) => {
 		unsdemedida,
 		usuarios,
 		itensmovimentacao,
-		cards
+		cards,
+    auth
 	);
 };

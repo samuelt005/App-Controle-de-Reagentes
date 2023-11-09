@@ -8,7 +8,6 @@ module.exports = {
 		for (let i = 1; i <= 58; i++) {
 			objects.push({
 				numero: Math.floor(Math.random() * 1000) + 1,
-				itens_vinculados: Math.floor(Math.random() * 20) + 1,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});

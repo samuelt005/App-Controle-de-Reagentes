@@ -30,10 +30,21 @@ class FornecedoresController {
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
-				attributes: { exclude: ['createdAt', 'updatedAt'] },
+				attributes: { exclude: ['updatedAt'] },
 			});
 
-			return res.status(200).json(fornecedores);
+			const totalItems = await database.Fornecedores.count();
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: fornecedores.rows,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
@@ -41,7 +52,6 @@ class FornecedoresController {
 
 	// Método para pegar 20 fornecedores (paginação)
 	static async getAllFornecedores(req, res) {
-
 		try {
 			const fornecedores = await database.Fornecedores.findAll({
 				where: {},

@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditType } from 'src/app/interfaces/dialogs/edit-type/edit-type';
+import { Component, Inject } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { EditType } from "src/app/interfaces";
 
 @Component({
   selector: 'app-edit-type',

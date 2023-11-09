@@ -19,7 +19,7 @@ module.exports = {
 			},
 			id_usuario_fk: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.UUID,
 				references: { model: 'Usuarios', key: 'id' },
 			},
 			createdAt: {

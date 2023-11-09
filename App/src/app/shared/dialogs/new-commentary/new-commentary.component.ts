@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmSaveComponent } from 'src/app/shared/dialogs/confirm-save/confirm-save.component';
+import { Component } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmSaveComponent } from "../confirm-save/confirm-save.component";
 
 @Component({
   selector: 'app-new-commentary',

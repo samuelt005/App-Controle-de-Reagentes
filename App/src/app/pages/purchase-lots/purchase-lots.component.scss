@@ -70,43 +70,14 @@
           border-bottom: 0.5px solid var(--cinza-2);
         }
 
-        .cod {
-          width: 60px;
-        }
-
-        .desc {
-          width: 350px;
-        }
-
-        .tags,
-        app-tags {
-          width: 200px;
-        }
-
-        .valor-estoque {
-          width: 115px;
-        }
-
-        .un {
-          width: 50px;
-        }
-
-        .localizacao {
+        .data {
           width: 120px;
         }
 
-        .valor-estoque,
-        .un,
-        .localizacao,
-        .tags {
+        .lot,
+        .qtd {
+          width: 200px;
           text-align: center;
-        }
-
-        .buttons {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 10px;
         }
       }
     }

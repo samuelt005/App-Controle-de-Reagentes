@@ -2,7 +2,7 @@
   <div
     class="back-button body-small"
     [ngClass]="this.data.currentPage === 1 ? '' : 'active'"
-    (click)="goToPage('back')"
+    (click)="this.data.currentPage === 1 ? null : goToPage('back')"
     matRipple
     [matRippleDisabled]="this.data.currentPage === 1"
   >
@@ -13,7 +13,7 @@
   <div
     class="forward-button body-small"
     [ngClass]="this.data.totalItems/this.data.currentPage <= 20 ? '' : 'active'"
-    (click)="goToPage('forward')"
+    (click)="this.data.totalItems/this.data.currentPage <= 20 ? null : goToPage('forward')"
     matRipple
     [matRippleDisabled]="this.data.totalItems/this.data.currentPage <= 20"
   >

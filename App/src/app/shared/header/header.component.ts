@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { AdjustmentComponent } from '../../pages/history/adjustment/adjustment.component';
+import { Component, Input } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { PageTitle } from "src/app/interfaces";
+import { AdjustmentComponent } from "src/app/pages";
 
 @Component({
   selector: 'app-header',

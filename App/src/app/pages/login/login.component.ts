@@ -1,7 +1,7 @@
-import { AuthService } from './../../auth/auth.service';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services';
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,7 +13,11 @@ export class LoginComponent {
     password: ['', Validators.required], //TODO add more validatos
   });
 
-  constructor(private AuthService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private AuthService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   // login() {
   //   const user = this.AuthService.login(

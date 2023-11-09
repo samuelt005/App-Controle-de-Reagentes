@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NewTags } from 'src/app/interfaces/tables/new-tags';
+import { NewTags } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-tags',

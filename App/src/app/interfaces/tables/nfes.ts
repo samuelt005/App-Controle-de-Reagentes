@@ -9,3 +9,10 @@ export interface NfesRow {
   };
   itens_vinculados: number;
 }
+
+export interface NfesData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  data: NfesRow[];
+}

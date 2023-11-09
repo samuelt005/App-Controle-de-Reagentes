@@ -1,8 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { FiltersOptions } from 'src/app/interfaces/filters-option';
-import { FiltersValue } from 'src/app/interfaces/filters-value';
-import { MenuOptions } from 'src/app/interfaces/menu-options';
+import { Component, Input } from "@angular/core";
+import { Router } from "@angular/router";
+import { FiltersValue, MenuOptions, FiltersOptions } from "src/app/interfaces";
 
 @Component({
   selector: 'app-side-bar',
@@ -61,8 +59,13 @@ export class SideBarComponent {
       authorized: [1],
     },
     {
-      title: 'Fornecedores e Lotes',
-      page: 'supplierslots/page/1&1',
+      title: 'Fornecedores',
+      page: 'suppliers/page/1',
+      authorized: [1],
+    },
+    {
+      title: 'Lotes de Compra',
+      page: 'purchaselots/page/1',
       authorized: [1],
     },
   ];

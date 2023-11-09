@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListingRow } from 'src/app/interfaces/tables/listing-row';
+import { ListingData } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { ListingRow } from 'src/app/interfaces/tables/listing-row';
 export class ListingService {
   constructor(private http: HttpClient) {}
 
-  listPerPage(page: number): Observable<any> {
-    return this.http.get<ListingRow[]>(`http://localhost:3000/tiposdereagente/page/${page}/active`);
+  listPerPage(page: number): Observable<ListingData> {
+    return this.http.get<ListingData>(`http://localhost:3000/tiposdereagente/page/${page}/active`);
   }
 }

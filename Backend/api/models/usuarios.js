@@ -17,15 +17,19 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			nome: DataTypes.STRING,
 			email: DataTypes.STRING,
-			senha_hash: DataTypes.STRING,
-			salt: DataTypes.STRING,
+			senha: DataTypes.STRING,
 			ra: DataTypes.STRING,
 			cpf: DataTypes.BIGINT,
 		},
 		{
 			sequelize,
 			modelName: 'Usuarios',
-      tableName: 'usuarios'
+      tableName: 'usuarios',
+      defaultScope: {
+        attributes: {
+          exclude: ['senha']
+        }
+      }
 		}
 	);
 	return Usuarios;

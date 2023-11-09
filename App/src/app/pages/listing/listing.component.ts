@@ -1,17 +1,14 @@
-import { ListingService } from './../../services/listing/listing.service';
-import { InfoCard } from 'src/app/interfaces/info-card';
-import { PageTitle } from './../../interfaces/page-title';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ListingRow } from 'src/app/interfaces/tables/listing-row';
-import { InfoCardsService } from 'src/app/services/info-cards/info-cards.service';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PageTitle, InfoCard, ListingRow } from 'src/app/interfaces';
+import { ListingService, InfoCardsService } from 'src/app/services';
+import { PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './listing.component.html',
   styleUrls: ['./listing.component.scss'],
 })
-export class ListingComponent implements OnInit {
+export class ListingComponent extends PageComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'inventory_2',
@@ -46,20 +43,15 @@ export class ListingComponent implements OnInit {
   totalItems = '-';
   totalValue = '-';
   mostUsed = '-';
-  page = 1;
-
-  paginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
 
   constructor(
     private listingService: ListingService,
     private infoCardsService: InfoCardsService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   openHistory(id: number): void {
     setTimeout(() => {

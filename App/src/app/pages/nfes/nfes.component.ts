@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
-import { NfesRow } from 'src/app/interfaces/tables/nfes-row';
-import { NfesService } from 'src/app/services/nfes/nfes.service';
+import { PageTitle, NfesRow } from 'src/app/interfaces';
+import { NfesService } from 'src/app/services';
 import { EditNfeComponent } from './dialogs/edit-nfe/edit-nfe.component';
 import { NewNfeComponent } from './dialogs/new-nfe/new-nfe.component';
+import { PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './nfes.component.html',
   styleUrls: ['./nfes.component.scss'],
 })
-export class NfesComponent implements OnInit {
+export class NfesComponent extends PageComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'paid',
@@ -23,19 +22,14 @@ export class NfesComponent implements OnInit {
   };
 
   tableData: NfesRow[] = [];
-  page = 1;
-
-  paginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
 
   constructor(
     private dialog: MatDialog,
     private nfesService: NfesService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   openEditItem(
     enterAnimationDuration: string,
@@ -57,26 +51,6 @@ export class NfesComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
-  }
-
-  getFormattedDate(dateTimeStr: string): string {
-    const parts = dateTimeStr.split('-');
-    const year = parts[0];
-    const month = parts[1];
-    const day = parts[2];
-    return `${day}/${month}/${year}`;
-  }
-
-  getFormattedCnpj(cnpj: string): string {
-    if (cnpj.length == 14) {
-      const formattedCnpj = cnpj.replace(
-        /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
-        '$1.$2.$3/$4-$5'
-      );
-      return formattedCnpj;
-    } else {
-      return 'CNPJ inválido';
-    }
   }
 
   ngOnInit(): void {

@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 	LotesDeCompra.init(
 		{
 			numero: DataTypes.INTEGER,
-			itens_vinculados: DataTypes.INTEGER,
 		},
 		{
 			sequelize,

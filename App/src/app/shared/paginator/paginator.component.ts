@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
+import { Component, OnChanges, Input, SimpleChanges } from "@angular/core";
+import { Router } from "@angular/router";
+import { PaginatorData } from "src/app/interfaces";
 
 @Component({
   selector: 'app-paginator',

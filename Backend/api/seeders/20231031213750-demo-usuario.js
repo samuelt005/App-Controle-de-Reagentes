@@ -1,15 +1,17 @@
 'use strict';
 
+const uuid = require('uuid');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
 		const objects = [];
 
 		objects.push({
+			id: uuid.v4(),
 			nome: 'Admin',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
-			salt: 'PLACEHOLDER', //TODO Mudar isso depois
+			senha: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 1,
@@ -18,10 +20,10 @@ module.exports = {
 		});
 
 		objects.push({
+			id: uuid.v4(),
 			nome: 'Professor Teste',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
-			salt: 'PLACEHOLDER', //TODO Mudar isso depois
+			senha: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 2,
@@ -30,10 +32,10 @@ module.exports = {
 		});
 
 		objects.push({
+			id: uuid.v4(),
 			nome: 'Aluno Teste',
 			email: 'test@email.com',
-			senha_hash: 'PLACEHOLDER', //TODO Mudar isso depois
-			salt: 'PLACEHOLDER', //TODO Mudar isso depois
+			senha: 'PLACEHOLDER', //TODO Mudar isso depois
 			ra: '12345678',
 			cpf: 12345678901,
 			id_perfil_fk: 3,

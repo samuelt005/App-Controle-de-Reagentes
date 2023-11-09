@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { InfoCard } from 'src/app/interfaces/info-card';
-import { PageTitle } from 'src/app/interfaces/page-title';
-import { PaginatorData } from 'src/app/interfaces/paginator-data';
-import { HistoryRow } from 'src/app/interfaces/tables/history-row';
-import { HistoryService } from 'src/app/services/history/history.service';
-import { CommentaryComponent } from 'src/app/shared/dialogs/commentary/commentary.component';
+import { PageTitle, InfoCard, HistoryRow } from 'src/app/interfaces';
+import { HistoryService } from 'src/app/services';
+import { PageComponent } from 'src/app/shared';
+import { CommentaryComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent extends PageComponent implements OnInit {
   pageTitle: PageTitle = {
     iconColor: 'var(--secundaria-2)',
     icon: 'history',
@@ -50,20 +48,15 @@ export class HistoryComponent implements OnInit {
 
   tableData: HistoryRow[] = [];
 
-  paginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
-
-  page = 1;
   id = 1;
 
   constructor(
-    private historyService: HistoryService,
     public dialog: MatDialog,
+    private historyService: HistoryService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   getIconType(i: number): string {
     switch (this.tableData[i].operacao) {
@@ -91,12 +84,18 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  getFormattedDate(dateTimeStr: string): string {
-    const parts = dateTimeStr.split('-');
-    const year = parts[0];
-    const month = parts[1];
-    const day = parts[2];
-    return `${day}/${month}/${year}`;
+  openCommentary(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string,
+    commentary: string
+  ): void {
+    if (this.dialog != null) {
+      this.dialog.open(CommentaryComponent, {
+        enterAnimationDuration,
+        exitAnimationDuration,
+        data: { commentary },
+      });
+    }
   }
 
   updateInfoCards(): void {
@@ -105,18 +104,6 @@ export class HistoryComponent implements OnInit {
     this.infoCards[1].data = 'R$ ' + 1;
     this.infoCards[2].data = '20';
     this.infoCards[3].data = '1';
-  }
-
-  openCommentary(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string,
-    commentary: string
-  ): void {
-    this.dialog.open(CommentaryComponent, {
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: { commentary },
-    });
   }
 
   ngOnInit(): void {
