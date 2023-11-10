@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditSupplier } from 'src/app/interfaces';
 import { SuppliersService } from 'src/app/services';
-import { DialogComponent } from 'src/app/shared';
+import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-edit-supplier',
@@ -29,17 +29,31 @@ export class EditSupplierComponent extends DialogComponent {
     });
   }
 
-  saveData() {
-    this.suppliersService
-      .edit(this.SupplierData.value, this.SupplierData.value.id)
-      .subscribe({
-        complete: () => {
-          this.openSnackBar('Salvo com sucesso.', false, true);
-        },
-        error: (e) => {
-          console.error('Ocorreu um erro:', e);
-          this.openSnackBar('Erro ao salvar. Tente novamente.', true, false);
-        },
-      });
+  saveData(enterAnimationDuration = '100ms', exitAnimationDuration = '100ms') {
+    const dialogRef = this.dialog.open(ConfirmSaveComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.suppliersService
+          .edit(this.SupplierData.value, this.SupplierData.value.id)
+          .subscribe({
+            complete: () => {
+              this.openSnackBar('Salvo com sucesso.', false, true);
+            },
+            error: (e) => {
+              console.error('Ocorreu um erro:', e);
+              this.openSnackBar(
+                'Erro ao salvar. Tente novamente.',
+                true,
+                false
+              );
+            },
+          });
+      } else {
+        this.dialog.closeAll();
+      }
+    });
   }
 }

@@ -57,6 +57,7 @@ import {
   TagsComponent,
   SnackbarComponent,
 } from './shared';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -116,8 +117,10 @@ import {
     MatRippleModule,
     MatSelectModule,
     MatSnackBarModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, provideNgxMask()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
