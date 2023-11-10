@@ -37,6 +37,8 @@ import {
   NotFoundComponent,
   SuppliersComponent,
   PurchaseLotsComponent,
+  NewSupplierComponent,
+  EditSupplierComponent,
 } from './pages';
 import {
   SideBarComponent,
@@ -89,6 +91,8 @@ import {
     NotFoundComponent,
     SuppliersComponent,
     PurchaseLotsComponent,
+    NewSupplierComponent,
+    EditSupplierComponent,
   ],
   imports: [
     BrowserModule,

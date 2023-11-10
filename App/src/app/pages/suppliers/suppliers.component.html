@@ -12,7 +12,8 @@
         <div
           *ngFor="let row of suppliersTableData"
           class="table-row"
-          >
+          (click)="openEditItem('100ms', '100ms', row)"
+        >
           <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
           <p class="cnpj body-medium">{{ getFormattedCnpj(row.cnpj) }}</p>
           <p class="razao body-medium">{{ row.razao_social }}</p>

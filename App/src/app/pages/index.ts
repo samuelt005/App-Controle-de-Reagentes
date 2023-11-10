@@ -8,9 +8,10 @@ export * from './purchase-lots/purchase-lots.component';
 export * from './reports/reports.component';
 export * from './request-listing/request-listing.component';
 export * from './request/request.component';
-export * from './suppliers/suppliers.component';
 export * from './write-off/write-off.component';
-
+export * from './suppliers/suppliers.component';
+export * from './suppliers/dialogs/edit-supplier/edit-supplier.component';
+export * from './suppliers/dialogs/new-supplier/new-supplier.component';
 export * from './history/adjustment/adjustment.component';
 export * from './material-types/dialogs/confirm-inactivation/confirm-inactivation.component';
 export * from './material-types/dialogs/edit-tags/edit-tags.component';

@@ -11,6 +11,7 @@ export * from './tables/uns-de-medida';
 export * from './dialogs/commentary';
 
 export * from './dialogs/edit-nfe';
+export * from './dialogs/edit-supplier';
 export * from './dialogs/edit-type';
 
 export * from './dialogs/new-tags';

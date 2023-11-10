@@ -1,3 +1,9 @@
+export interface Supplier {
+  id?: number;
+  razao_social: string;
+  cnpj: string;
+}
+
 export interface SuppliersRow {
   id: number;
   razao_social: string;

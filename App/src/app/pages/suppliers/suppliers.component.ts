@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import {
-  PageTitle,
-  SuppliersRow,
-  PaginatorData,
-  ListingRow,
-} from 'src/app/interfaces';
+import { PageTitle, SuppliersRow, PaginatorData } from 'src/app/interfaces';
 import { SuppliersService } from 'src/app/services';
-import { EditTypeComponent } from '../material-types/dialogs/edit-type/edit-type.component';
-import { NewTypeComponent } from '../material-types/dialogs/new-type/new-type.component';
 import { PageComponent } from 'src/app/shared';
+import { NewSupplierComponent } from './dialogs/new-supplier/new-supplier.component';
+import { EditSupplierComponent } from './dialogs/edit-supplier/edit-supplier.component';
 
 @Component({
   templateUrl: './suppliers.component.html',
@@ -46,9 +41,9 @@ export class SuppliersComponent extends PageComponent implements OnInit {
   openEditItem(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
-    rowData: ListingRow
+    rowData: SuppliersRow
   ): void {
-    this.dialog.open(EditTypeComponent, {
+    this.dialog.open(EditSupplierComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
       data: { rowData },
@@ -59,7 +54,7 @@ export class SuppliersComponent extends PageComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(NewTypeComponent, {
+    this.dialog.open(NewSupplierComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
     });

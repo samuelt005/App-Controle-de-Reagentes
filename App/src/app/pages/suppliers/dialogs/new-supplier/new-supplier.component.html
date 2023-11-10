@@ -1,8 +1,11 @@
 <div class="item-container">
   <h3 class="title-large">
-    Nova Nota Fiscal
+    Novo Fornecedor
   </h3>
-  <div class="inputs">
+  <div
+    class="inputs"
+    [formGroup]="SupplierData"
+  >
     <mat-form-field
       class="input"
       appearance="outline"
@@ -11,10 +14,10 @@
         matInput
         type="string"
         class="number-input body-large"
-        placeholder="Número da Nota"
+        placeholder="CNPJ"
+        formControlName="cnpj"
       />
     </mat-form-field>
-    <!-- TODO trocar o date input por datepicker -->
     <mat-form-field
       class="input"
       appearance="outline"
@@ -23,26 +26,16 @@
         matInput
         type="string"
         class="number-input body-large"
-        placeholder="Data de Emissão"
+        placeholder="Razão Social"
+        formControlName="razao_social"
       />
-    </mat-form-field>
-    <mat-form-field
-      class="input"
-      appearance="outline"
-    >
-      <mat-select placeholder="Fornecedor">
-        <!-- TODO Incluir pesquisa neste select -->
-        <mat-option
-          *ngFor="let item of selectData"
-          [value]="item.id"
-        >{{ getFormattedCnpj(item.cnpj) + " - " + item.razao_social }}</mat-option>
-      </mat-select>
     </mat-form-field>
   </div>
   <div class="buttons">
     <app-normal-button
       mat-dialog-close
       [filled]="true"
+      (click)="saveData()"
     >
       Salvar
     </app-normal-button>
