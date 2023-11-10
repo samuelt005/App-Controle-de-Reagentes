@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -54,6 +55,7 @@ import {
   MenuOptionComponent,
   SmallButtonComponent,
   TagsComponent,
+  SnackbarComponent,
 } from './shared';
 
 @NgModule({
@@ -93,6 +95,7 @@ import {
     PurchaseLotsComponent,
     NewSupplierComponent,
     EditSupplierComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,7 @@ import {
     MatDialogModule,
     MatRippleModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

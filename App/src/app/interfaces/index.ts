@@ -22,4 +22,5 @@ export * from './info-card';
 export * from './menu-options';
 export * from './page-title';
 export * from './paginator-data';
+export * from './snackbar-data';
 

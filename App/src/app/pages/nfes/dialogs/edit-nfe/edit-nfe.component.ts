@@ -1,23 +1,28 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { SuppliersRow, EditNfe } from "src/app/interfaces";
-import { SuppliersService } from "src/app/services";
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SuppliersRow, EditNfe } from 'src/app/interfaces';
+import { SuppliersService } from 'src/app/services';
+import { DialogComponent } from 'src/app/shared';
 
 @Component({
   selector: 'app-edit-nfe',
   templateUrl: './edit-nfe.component.html',
   styleUrls: ['./edit-nfe.component.scss'],
 })
-export class EditNfeComponent implements OnInit {
+export class EditNfeComponent extends DialogComponent implements OnInit {
   selectData: SuppliersRow[] = [];
   nfeData: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public injectedData: EditNfe,
     private formBuilder: FormBuilder,
-    private fornecedoresService: SuppliersService
+    private fornecedoresService: SuppliersService,
+    public dialog: MatDialog,
+    public override snackBar: MatSnackBar
   ) {
+    super(snackBar);
     console.log(injectedData);
     this.nfeData = this.formBuilder.group({
       numero: injectedData.rowData.numero,

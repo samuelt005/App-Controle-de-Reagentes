@@ -1,0 +1,13 @@
+.snackbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .success {
+    color: var(--sucesso-1);
+  }
+
+  .error {
+    color: var(--erro-1);
+  }
+}

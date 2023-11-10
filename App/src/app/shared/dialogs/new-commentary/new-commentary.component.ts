@@ -1,25 +1,9 @@
-import { Component } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { ConfirmSaveComponent } from "../confirm-save/confirm-save.component";
+import { Component } from '@angular/core';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-new-commentary',
   templateUrl: './new-commentary.component.html',
   styleUrls: ['./new-commentary.component.scss'],
 })
-export class NewCommentaryComponent {
-  constructor(public dialog: MatDialog) {}
-
-  confirm(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
-    this.dialog.closeAll();
-    this.dialog.open(ConfirmSaveComponent, {
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
-
-
-}
+export class NewCommentaryComponent extends DialogComponent {}

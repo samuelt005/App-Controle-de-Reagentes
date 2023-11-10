@@ -13,5 +13,7 @@ export * from './paginator/paginator.component';
 export * from './side-bar/side-bar.component';
 export * from './side-bar/menu-option/menu-option.component';
 export * from './tags/tags.component';
+export * from './snackbar/snackbar.component';
 
 export * from './page/page.component';
+export * from './dialogs/dialog/dialog.component';

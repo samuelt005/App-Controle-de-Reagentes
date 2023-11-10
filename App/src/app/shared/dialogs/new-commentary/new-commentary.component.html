@@ -1,6 +1,9 @@
 <div class="new-commentary-container">
   <div class="inputs">
-    <mat-form-field class="textarea" appearance="outline">
+    <mat-form-field
+      class="textarea"
+      appearance="outline"
+    >
       <textarea
         matInput
         placeholder="Insira um comentário (opcional)"
@@ -11,7 +14,9 @@
     </mat-form-field>
   </div>
   <div class="buttons">
-    <app-normal-button (click)="confirm('100ms', '100ms')" [filled]="true"> 
+    <app-normal-button
+      [filled]="true"
+    >
       Salvar
     </app-normal-button>
     <app-normal-button mat-dialog-close> Cancelar </app-normal-button>

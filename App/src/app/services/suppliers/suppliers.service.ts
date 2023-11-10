@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Supplier, SuppliersData } from 'src/app/interfaces';
 
 @Injectable({
@@ -24,8 +24,7 @@ export class SuppliersService {
     return this.http.get<SuppliersData>(`http://localhost:3000/fornecedores`);
   }
 
-  addNew(supplier: Supplier): Observable<Supplier> {
-    const body = JSON.stringify(supplier);
+  addNew(body: Supplier): Observable<Supplier> {
     return this.http.post<Supplier>(
       `http://localhost:3000/fornecedores`,
       body,
@@ -33,11 +32,13 @@ export class SuppliersService {
     );
   }
 
-  edit(supplier: Supplier, id: number): Observable<Supplier> {
-    const body = JSON.stringify(supplier);
-    return this.http.put<Supplier>(
-      `http://localhost:3000/fornecedores/${id}`,
-      body
-    );
+  edit(body: Supplier, id: number): Observable<Supplier> {
+    return this.http
+      .put<Supplier>(`http://localhost:3000/fornecedores/${id}`, body)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(): Observable<never> {
+    return throwError(() => new Error());
   }
 }

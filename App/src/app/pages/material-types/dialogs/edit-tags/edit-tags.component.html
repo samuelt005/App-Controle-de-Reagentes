@@ -1,5 +1,8 @@
 <div class="edit-tags-container">
-  <s class="checkboxes" [formGroup]="tagsOptions">
+  <s
+    class="checkboxes"
+    [formGroup]="tagsOptions"
+  >
     <p class="body-large">
       <mat-checkbox formControlName="em">Material com Estoque Mínimo</mat-checkbox>
     </p>
@@ -14,7 +17,10 @@
     </p>
   </s>
   <div class="buttons">
-    <app-normal-button mat-dialog-close [filled]="true">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+    >
       Salvar
     </app-normal-button>
     <app-normal-button mat-dialog-close> Cancelar </app-normal-button>

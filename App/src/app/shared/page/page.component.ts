@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PaginatorData } from 'src/app/interfaces';
 
 @Component({
-  templateUrl: './page.component.html',
+  template: '',
 })
 export abstract class PageComponent {
   paginatorData: PaginatorData = {
