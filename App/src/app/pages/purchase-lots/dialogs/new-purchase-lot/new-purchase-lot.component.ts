@@ -1,24 +1,25 @@
+import { PurchaseLotsService } from 'src/app/services';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SuppliersService } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
-import { cnpjValidator } from 'src/app/utils';
 
 @Component({
-  selector: 'app-new-supplier',
-  templateUrl: './new-supplier.component.html',
-  styleUrls: ['./new-supplier.component.scss'],
+  selector: 'app-new-purchase-lots',
+  templateUrl: './new-purchase-lot.component.html',
+  styleUrls: ['./new-purchase-lot.component.scss'],
 })
-export class NewSupplierComponent extends DialogComponent {
+export class NewPurchaseLotComponent extends DialogComponent {
   form = new FormGroup({
-    cnpj: new FormControl('', [cnpjValidator()]),
-    razao_social: new FormControl('', [Validators.required]),
+    numero: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
   });
 
   constructor(
-    private suppliersService: SuppliersService,
+    private purchaseLotsService: PurchaseLotsService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar
   ) {
@@ -33,11 +34,10 @@ export class NewSupplierComponent extends DialogComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const formData = this.form.value as unknown as {
-          cnpj: string;
-          razao_social: string;
+          numero: number;
         };
 
-        this.suppliersService.addNew(formData).subscribe({
+        this.purchaseLotsService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar('Salvo com sucesso.', false);
           },

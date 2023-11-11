@@ -58,6 +58,8 @@ import {
   SnackbarComponent,
 } from './shared';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { NewPurchaseLotComponent } from './pages/purchase-lots/dialogs/new-purchase-lot/new-purchase-lot.component';
+import { EditPurchaseLotComponent } from './pages/purchase-lots/dialogs/edit-purchase-lot/edit-purchase-lot.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     NewSupplierComponent,
     EditSupplierComponent,
     SnackbarComponent,
+    NewPurchaseLotComponent,
+    EditPurchaseLotComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +122,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     MatSelectModule,
     MatSnackBarModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
   ],
   providers: [DatePipe, provideNgxMask()],
   bootstrap: [AppComponent],

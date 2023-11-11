@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
-import { PageTitle, LotsRow, ListingRow } from "src/app/interfaces";
-import { LotsService } from "src/app/services";
-import { EditTypeComponent } from "../material-types/dialogs/edit-type/edit-type.component";
-import { NewTypeComponent } from "../material-types/dialogs/new-type/new-type.component";
+import { PageTitle, PurchaseLotsRow } from "src/app/interfaces";
+import { PurchaseLotsService } from "src/app/services";
 import { PageComponent } from "src/app/shared";
+import { NewPurchaseLotComponent } from "./dialogs/new-purchase-lot/new-purchase-lot.component";
+import { EditPurchaseLotComponent } from "./dialogs/edit-purchase-lot/edit-purchase-lot.component";
 
 @Component({
   templateUrl: './purchase-lots.component.html',
@@ -21,11 +21,11 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
     adjustButton: false,
   };
 
-  lotsTableData: LotsRow[] = [];
+  lotsTableData: PurchaseLotsRow[] = [];
 
   constructor(
     public dialog: MatDialog,
-    private lotsService: LotsService,
+    private lotsService: PurchaseLotsService,
     private route: ActivatedRoute
   ) {
     super();
@@ -34,9 +34,9 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
   openEditItem(
     enterAnimationDuration: string,
     exitAnimationDuration: string,
-    rowData: ListingRow
+    rowData: PurchaseLotsRow
   ): void {
-    this.dialog.open(EditTypeComponent, {
+    this.dialog.open(EditPurchaseLotComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
       data: { rowData },
@@ -47,7 +47,7 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(NewTypeComponent, {
+    this.dialog.open(NewPurchaseLotComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
     });

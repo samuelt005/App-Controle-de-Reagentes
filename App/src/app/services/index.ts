@@ -2,7 +2,7 @@ export * from './auth/auth.service';
 export * from './history/history.service';
 export * from './info-cards/info-cards.service';
 export * from './listing/listing.service';
-export * from './lots/lots.service';
+export * from './purchase-lots/lots.service';
 export * from './material-types/material-types.service';
 export * from './nfes/nfes.service';
 export * from './requestlisting/request-listing.service';

@@ -12,6 +12,7 @@
         <div
           *ngFor="let row of lotsTableData"
           class="table-row"
+          (click)="openEditItem('100ms', '100ms', row)"
         >
           <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
           <p class="lot body-medium">{{ row.numero }}</p>

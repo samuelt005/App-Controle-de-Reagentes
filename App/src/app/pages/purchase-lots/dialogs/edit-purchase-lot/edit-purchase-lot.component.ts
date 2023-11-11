@@ -1,33 +1,33 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditSupplier } from 'src/app/interfaces';
-import { SuppliersService } from 'src/app/services';
-import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
-import { cnpjValidator } from 'src/app/utils';
+import { EditPurchaseLot } from 'src/app/interfaces';
+import { PurchaseLotsService } from 'src/app/services';
+import { DialogComponent, ConfirmSaveComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-edit-supplier',
-  templateUrl: './edit-supplier.component.html',
-  styleUrls: ['./edit-supplier.component.scss'],
+  selector: 'app-edit-purchase-lot',
+  templateUrl: './edit-purchase-lot.component.html',
+  styleUrls: ['./edit-purchase-lot.component.scss'],
 })
-export class EditSupplierComponent extends DialogComponent {
+export class EditPurchaseLotComponent extends DialogComponent {
   form = new FormGroup({
-    cnpj: new FormControl('', [cnpjValidator()]),
-    razao_social: new FormControl('', [Validators.required]),
+    numero: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
   });
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public injectedData: EditSupplier,
-    private suppliersService: SuppliersService,
+    @Inject(MAT_DIALOG_DATA) public injectedData: EditPurchaseLot,
+    private purchaseLotsService: PurchaseLotsService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar
   ) {
     super(snackBar);
     this.form.setValue({
-      cnpj: injectedData.rowData.cnpj.toString(),
-      razao_social: injectedData.rowData.razao_social,
+      numero: injectedData.rowData.numero.toString(),
     });
   }
 
@@ -39,11 +39,10 @@ export class EditSupplierComponent extends DialogComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const formData = this.form.value as unknown as {
-          cnpj: string;
-          razao_social: string;
+          numero: number;
         };
 
-        this.suppliersService
+        this.purchaseLotsService
           .edit(formData, this.injectedData.rowData.id)
           .subscribe({
             complete: () => {

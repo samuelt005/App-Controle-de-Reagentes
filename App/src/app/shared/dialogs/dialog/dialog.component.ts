@@ -10,10 +10,10 @@ export abstract class DialogComponent {
 
 
 
-  openSnackBar(message: string, error: boolean, success: boolean) {
+  openSnackBar(message: string, error: boolean) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 2000,
-      data: { message, error, success },
+      data: { message, error },
     });
   }
 }
