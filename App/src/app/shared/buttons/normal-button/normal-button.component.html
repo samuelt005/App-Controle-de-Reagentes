@@ -1,10 +1,11 @@
-<div
+<button
   class="normal-button body-medium"
   [ngClass]="{ 'filled': filled, 'inactive': inactive }"
   [matRippleColor]=" filled ? 'rgba(255, 255, 255, 0.05)' : '' "
   [style.width]="customWidth"
   [matRippleDisabled]="matRippleDisabled"
   matRipple
+  [disabled]="disabled"
 >
   <ng-content />
-</div>
+</button>

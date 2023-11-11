@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SuppliersService } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
+import { cnpjValidator } from 'src/app/utils';
 
 @Component({
   selector: 'app-new-supplier',
@@ -11,19 +12,17 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
   styleUrls: ['./new-supplier.component.scss'],
 })
 export class NewSupplierComponent extends DialogComponent {
-  SupplierData: FormGroup;
+  form = new FormGroup({
+    cnpj: new FormControl('', [cnpjValidator()]),
+    razao_social: new FormControl('', [Validators.required]),
+  });
 
   constructor(
-    private formBuilder: FormBuilder,
     private suppliersService: SuppliersService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar
   ) {
     super(snackBar);
-    this.SupplierData = this.formBuilder.group({
-      cnpj: '',
-      razao_social: '',
-    });
   }
 
   saveData(enterAnimationDuration = '100ms', exitAnimationDuration = '100ms') {
@@ -33,7 +32,12 @@ export class NewSupplierComponent extends DialogComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.suppliersService.addNew(this.SupplierData.value).subscribe({
+        const formData = this.form.value as {
+          cnpj: string;
+          razao_social: string;
+        };
+
+        this.suppliersService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar('Salvo com sucesso.', false, true);
           },

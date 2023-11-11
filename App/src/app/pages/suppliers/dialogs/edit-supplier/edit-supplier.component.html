@@ -4,7 +4,7 @@
   </h3>
   <div
     class="inputs"
-    [formGroup]="SupplierData"
+    [formGroup]="form"
   >
     <mat-form-field
       class="input"
@@ -15,8 +15,16 @@
         type="string"
         class="number-input body-large"
         placeholder="CNPJ"
+        mask="00.000.000/0000-00"
+        [validation]="false"
         formControlName="cnpj"
       />
+      <mat-error *ngIf="form.get('cnpj')?.hasError('invalidLength')">
+        CNPJ esta incompleto.
+      </mat-error>
+      <mat-error *ngIf="form.get('cnpj')?.hasError('invalidRules') && !form.get('cnpj')?.hasError('invalidLength')">
+        CNPJ é inválido.
+      </mat-error>
     </mat-form-field>
     <mat-form-field
       class="input"
@@ -29,6 +37,9 @@
         placeholder="Razão Social"
         formControlName="razao_social"
       />
+      <mat-error *ngIf="form.get('razao_social')?.hasError('required')">
+        Insira a razão social.
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="buttons">
@@ -36,6 +47,8 @@
       mat-dialog-close
       [filled]="true"
       (click)="saveData()"
+      [inactive]="!form.valid ? true : false"
+      [disabled]="!form.valid ? true : false"
     >
       Salvar
     </app-normal-button>
