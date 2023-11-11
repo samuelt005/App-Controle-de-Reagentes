@@ -1,120 +1,44 @@
-.page-container {
+@import "../../shared/styles/pages";
+
+.buttons-spacer {
+  width: 188px;
+}
+
+.cod {
+  width: 60px;
+}
+
+.desc {
+  width: 350px;
+}
+
+.tags,
+app-tags {
+  width: 200px;
+}
+
+.valor-estoque {
+  width: 115px;
+}
+
+.un {
+  width: 50px;
+}
+
+.localizacao {
+  width: 120px;
+}
+
+.valor-estoque,
+.un,
+.localizacao,
+.tags {
+  text-align: center;
+}
+
+.buttons {
   display: flex;
   flex-direction: row;
-  max-height: 100vh;
-  padding-left: 80px;
-
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-    min-width: 700px;
-    max-width: 1360px;
-    box-sizing: border-box;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 22px 80px;
-
-    .table-spacer {
-      height: 100%;
-      min-height: 200px;
-      max-height: 664px;
-      overflow-y: auto;
-
-      .table-container {
-        border: 0.5px solid var(--cinza-2);
-        border-radius: 10px;
-
-        .table-header {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          padding: 10px;
-          border-bottom: 0.5px solid var(--cinza-2);
-
-          p {
-            margin: 0;
-          }
-
-          .buttons-spacer {
-            width: 188px;
-          }
-        }
-
-        .table-row {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          height: 30px;
-          padding: 0 10px;
-          transition: background-color 0.2s;
-          cursor: pointer;
-
-          p {
-            margin: 0;
-          }
-
-          &:hover {
-            background-color: #efefef;
-          }
-
-          &:last-child {
-            border-bottom-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-          }
-        }
-
-        .table-row:not(:last-child) {
-          border-bottom: 0.5px solid var(--cinza-2);
-        }
-
-        .cod {
-          width: 60px;
-        }
-
-        .desc {
-          width: 350px;
-        }
-
-        .tags,
-        app-tags {
-          width: 200px;
-        }
-
-        .valor-estoque {
-          width: 115px;
-        }
-
-        .un {
-          width: 50px;
-        }
-
-        .localizacao {
-          width: 120px;
-        }
-
-        .valor-estoque,
-        .un,
-        .localizacao,
-        .tags {
-          text-align: center;
-        }
-
-        .buttons {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 10px;
-        }
-      }
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
+  align-items: center;
+  gap: 10px;
 }

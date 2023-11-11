@@ -1,14 +1,6 @@
-.commentary-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 470px;
-  padding: 20px;
+@import "../../styles/dialogs";
 
-  .title {
-    margin: 0;
-  }
+.dialog-container {
 
   .commentary {
     overflow-y: auto;

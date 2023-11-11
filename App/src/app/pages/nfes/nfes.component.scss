@@ -1,103 +1,27 @@
-.page-container {
-  display: flex;
-  flex-direction: row;
-  max-height: 100vh;
-  padding-left: 80px;
+@import "../../shared/styles/pages";
 
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 700px;
-    max-width: 1360px;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 22px 80px;
+.numero {
+  width: 70px;
+}
 
-    .table-spacer {
-      overflow-y: auto;
-      height: 100%;
-      min-height: 200px;
-      max-height: 664px;
+.razao {
+  width: 200px;
+}
 
-      .table-container {
-        border: 0.5px solid var(--cinza-2);
-        border-radius: 10px;
+.cnpj {
+  width: 160px;
+}
 
-        .table-header {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          padding: 10px;
-          border-bottom: 0.5px solid var(--cinza-2);
+.data {
+  width: 110px;
+}
 
-          p {
-            margin: 0;
-          }
-        }
+.vinculados {
+  width: 200px;
+}
 
-        .table-row {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          height: 30px;
-          padding: 0 10px;
-          transition: background-color 0.2s;
-          cursor: pointer;
-
-          p {
-            margin: 0;
-          }
-
-          &:hover {
-            background-color: #efefef;
-          }
-
-          &:last-child {
-            border-bottom-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-          }
-        }
-
-        .table-row:not(:last-child) {
-          border-bottom: 0.5px solid var(--cinza-2);
-        }
-
-        .numero {
-          width: 70px;
-        }
-
-        .razao {
-          width: 200px;
-        }
-
-        .cnpj {
-          width: 160px;
-        }
-
-        .data {
-          width: 110px;
-        }
-
-        .vinculados {
-          width: 200px;
-        }
-
-        .data,
-        .cnpj,
-        .vinculados {
-          text-align: center;
-        }
-      }
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
+.data,
+.cnpj,
+.vinculados {
+  text-align: center;
 }

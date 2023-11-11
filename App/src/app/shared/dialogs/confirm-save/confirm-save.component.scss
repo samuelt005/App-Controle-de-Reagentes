@@ -1,20 +1,15 @@
-.confirm-save-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+@import "../../styles/dialogs";
+
+.dialog-container {
   gap: 5px;
-  padding: 20px;
+  width: auto;
 
   h2 {
     margin: 0;
   }
 
   .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    align-self: stretch;
+    @extend .buttons;
   }
 
   p {

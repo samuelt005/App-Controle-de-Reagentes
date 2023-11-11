@@ -1,130 +1,47 @@
-.page-container {
-  display: flex;
-  flex-direction: row;
-  max-height: 100vh;
-  padding-left: 80px;
+@import "../../shared/styles/pages";
 
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-    min-width: 700px;
-    max-width: 1360px;
-    box-sizing: border-box;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 22px 80px;
+.data {
+  width: 80px;
+}
 
-    .cards-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      align-self: stretch;
-    }
+.forn-resp {
+  width: 200px;
+}
 
-    .table-spacer {
-      height: 100%;
-      min-height: 200px;
-      max-height: 664px;
-      overflow-y: auto;
+.nfe {
+  width: 60px;
+}
 
-      .table-container {
-        border: 0.5px solid var(--cinza-2);
-        border-radius: 10px;
+.valor-tot {
+  width: 100px;
+}
 
-        .table-header {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          padding: 10px;
-          border-bottom: 0.5px solid var(--cinza-2);
+.quant {
+  width: 75px;
+}
 
-          p {
-            margin: 0;
-          }
-        }
+.un {
+  width: 50px;
+}
 
-        .table-row {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0 10px;
-          height: 30px;
-          transition: background-color 0.2s;
-          cursor: pointer;
+.nfe,
+.data,
+.valor-tot,
+.quant,
+.un {
+  text-align: center;
+}
 
-          p {
-            margin: 0;
-          }
+.table-icon-header {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  color: var(--cinza-3);
+}
 
-          &:hover {
-            background-color: #efefef;
-          }
-
-          &:last-child {
-            border-bottom-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-          }
-        }
-
-        .table-row:not(:last-child) {
-          border-bottom: 0.5px solid var(--cinza-2);
-        }
-
-        .selected-item {
-          background-color: #007bff;
-          color: #fff;
-        }
-
-        .data {
-          width: 80px;
-        }
-
-        .forn-resp {
-          width: 200px;
-        }
-
-        .nfe {
-          width: 60px;
-        }
-
-        .valor-tot {
-          width: 100px;
-        }
-
-        .quant {
-          width: 75px;
-        }
-
-        .un {
-          width: 50px;
-        }
-
-        .nfe,
-        .data,
-        .valor-tot,
-        .quant,
-        .un {
-          text-align: center;
-        }
-
-        .table-icon-header {
-          width: 18px;
-          height: 18px;
-          font-size: 18px;
-          color: var(--cinza-3);
-        }
-
-        .table-icon-type {
-          width: 18px;
-          height: 18px;
-          font-size: 18px;
-          color: var(--cinza-3);
-        }
-      }
-    }
-  }
+.table-icon-type {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  color: var(--cinza-3);
 }
