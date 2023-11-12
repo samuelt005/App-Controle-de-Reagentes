@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SuppliersRow, EditNfe } from 'src/app/interfaces';
-import { SuppliersService } from 'src/app/services';
-import { DialogComponent } from 'src/app/shared';
+import { NfesService, SuppliersService } from 'src/app/services';
+import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
+import { dateValidator } from 'src/app/utils';
 
 @Component({
   selector: 'app-edit-nfe',
@@ -12,35 +13,76 @@ import { DialogComponent } from 'src/app/shared';
   styleUrls: ['./edit-nfe.component.scss'],
 })
 export class EditNfeComponent extends DialogComponent implements OnInit {
+  form = new FormGroup({
+    numero: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
+    id_fornecedor: new FormControl('', [Validators.required]),
+  });
+
   selectData: SuppliersRow[] = [];
-  nfeData: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public injectedData: EditNfe,
-    private formBuilder: FormBuilder,
     private fornecedoresService: SuppliersService,
+    private nfesService: NfesService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar
   ) {
     super(snackBar);
-    console.log(injectedData);
-    this.nfeData = this.formBuilder.group({
-      numero: injectedData.rowData.numero,
-      data: injectedData.rowData.data_emissao,
-      fornecedor: 'teste',
+
+    this.form.setValue({
+      numero: injectedData.rowData.numero.toString(),
+      data_emissao: injectedData.rowData.data_emissao,
+      id_fornecedor: injectedData.rowData.emitente.id.toString(),
+    });
+
+    this.form.get('id_fornecedor')?.valueChanges.subscribe((value) => {
+      console.log('Valor de id_fornecedor:', value);
+      console.log('Valor de id_fornecedor:', typeof value);
     });
   }
 
-  getFormattedCnpj(cnpj: string): string {
-    if (cnpj.length == 14) {
-      const formattedCnpj = cnpj.replace(
-        /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
-        '$1.$2.$3/$4-$5'
-      );
-      return formattedCnpj;
-    } else {
-      return 'CNPJ inválido';
-    }
+  saveData(
+    enterAnimationDuration = '100ms',
+    exitAnimationDuration = '100ms',
+    message = ''
+  ) {
+    const dialogRef = this.dialog.open(ConfirmSaveComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: { message },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const formData = this.form.value as unknown as {
+          numero: number;
+          data_emissao: Date;
+          id_fornecedor: number;
+        };
+
+        this.nfesService
+          .edit(formData, this.injectedData.rowData.id)
+          .subscribe({
+            complete: () => {
+              this.openSnackBar(false);
+            },
+            error: (e) => {
+              console.log(e);
+              if (e.status === 409) {
+                this.openSnackBar(true, 'Esta nota fiscal já existe.');
+              } else {
+                this.openSnackBar(true);
+              }
+              console.error('Ocorreu um erro:', e);
+            },
+          });
+      } else {
+        this.dialog.closeAll();
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -12,11 +12,15 @@ export class SnackbarComponent {
   message = '';
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData) {
+    console.log(data)
     if (!data.error) {
       this.message = 'Salvo com sucesso.';
-    } else {
+    } else if (!data.message) {
       this.error = true;
       this.message = 'Erro ao salvar. Tente novamente.';
+    } else {
+      this.error = true;
+      this.message = data.message;
     }
   }
 }

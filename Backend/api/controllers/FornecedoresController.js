@@ -58,7 +58,16 @@ class FornecedoresController {
 				attributes: { exclude: ['createdAt', 'updatedAt'] },
 			});
 
-			return res.status(200).json(fornecedores);
+			const totalItems = await database.Fornecedores.count();
+
+			const resData = {
+				currentPage: 1,
+				totalPages: 1,
+				totalItems: totalItems,
+				data: fornecedores,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
@@ -76,7 +85,7 @@ class FornecedoresController {
 			});
 
 			if (existingFornecedor) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um fornecedor com o mesmo CNPJ.',
 				});
 			}
@@ -104,7 +113,7 @@ class FornecedoresController {
 			});
 
 			if (existingFornecedor && existingFornecedor.id !== parseInt(id)) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um fornecedor com o mesmo CNPJ.',
 				});
 			}

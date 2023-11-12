@@ -1,3 +1,10 @@
+export interface Nfe {
+  id?: number;
+  numero: number;
+  data_emissao: Date;
+  id_fornecedor: number;
+}
+
 export interface NfesRow {
   id: number;
   numero: number;

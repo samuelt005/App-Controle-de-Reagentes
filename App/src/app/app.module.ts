@@ -6,7 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRippleModule } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatDateFormats,
+  MatNativeDateModule,
+  MatRippleModule,
+} from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -18,6 +25,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   LoginComponent,
   ListingComponent,
@@ -40,6 +48,8 @@ import {
   PurchaseLotsComponent,
   NewSupplierComponent,
   EditSupplierComponent,
+  EditPurchaseLotComponent,
+  NewPurchaseLotComponent,
 } from './pages';
 import {
   SideBarComponent,
@@ -58,8 +68,22 @@ import {
   SnackbarComponent,
 } from './shared';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { NewPurchaseLotComponent } from './pages/purchase-lots/dialogs/new-purchase-lot/new-purchase-lot.component';
-import { EditPurchaseLotComponent } from './pages/purchase-lots/dialogs/edit-purchase-lot/edit-purchase-lot.component';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+
+export const CUSTOM_FORMAT: MatDateFormats = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @NgModule({
   declarations: [
@@ -121,10 +145,22 @@ import { EditPurchaseLotComponent } from './pages/purchase-lots/dialogs/edit-pur
     MatRippleModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     NgxMaskDirective,
     NgxMaskPipe,
   ],
-  providers: [DatePipe, provideNgxMask()],
+  providers: [
+    DatePipe,
+    provideNgxMask(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_FORMAT },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

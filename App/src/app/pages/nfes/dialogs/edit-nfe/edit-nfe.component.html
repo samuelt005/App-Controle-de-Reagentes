@@ -4,7 +4,7 @@
   </h3>
   <div
     class="inputs"
-    [formGroup]="nfeData"
+    [formGroup]="form"
   >
     <mat-form-field
       class="input"
@@ -12,24 +12,40 @@
     >
       <input
         matInput
-        type="string"
+        type="text"
         class="number-input body-large"
         placeholder="Número da Nota"
         formControlName="numero"
+        mask="999999999"
+        [specialCharacters]="[]"
       />
+      <mat-error *ngIf="form.get('numero')?.hasError('required')">
+        Insira o número da nota fiscal.
+      </mat-error>
     </mat-form-field>
-    <!-- TODO trocar o date input por datepicker -->
     <mat-form-field
       class="input"
       appearance="outline"
     >
       <input
         matInput
-        type="string"
-        class="number-input body-large"
+        minlength="10"
+        maxlength="10"
         placeholder="Data de Emissão"
-        formControlName="data"
-      />
+        [matDatepicker]="picker"
+        formControlName="data_emissao"
+      >
+      <mat-error
+        *ngIf="form.get('data_emissao')?.hasError('required') || form.get('data_emissao')?.hasError('invalidDate')"
+      >
+        Insira uma data válida.
+      </mat-error>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      >
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field
       class="input"
@@ -37,20 +53,26 @@
     >
       <mat-select
         placeholder="Fornecedor"
-        formControlName="fornecedor"
+        formControlName="id_fornecedor"
       >
         <!-- TODO Incluir pesquisa neste select -->
         <mat-option
           *ngFor="let item of selectData"
-          [value]="item.id"
+          [value]="item.id.toString()"
         >{{ getFormattedCnpj(item.cnpj) + " - " + item.razao_social }}</mat-option>
       </mat-select>
+      <mat-error *ngIf="form.get('id_fornecedor')?.hasError('required')">
+        Escolhar o emitente.
+      </mat-error>
     </mat-form-field>
   </div>
   <div class="buttons">
     <app-normal-button
       mat-dialog-close
       [filled]="true"
+      (click)="saveData()"
+      [inactive]="!form.valid ? true : false"
+      [disabled]="!form.valid ? true : false"
     >
       Salvar
     </app-normal-button>

@@ -45,15 +45,16 @@ class NfesController {
 					},
 				],
 				attributes: { exclude: ['createdAt', 'updatedAt', 'id_fornecedor_fk'] },
-        order: [['data_emissao', 'DESC']],
+				order: [['data_emissao', 'DESC']],
 			});
 
-      const nfes = result.rows;
+			const nfes = result.rows;
 
-      for (const nfe of nfes) {
-				nfe.dataValues.itens_vinculados = await database.ItensMovimentacao.count({
-					where:{ id_nfe_fk: nfe.id },
-				});
+			for (const nfe of nfes) {
+				nfe.dataValues.itens_vinculados =
+					await database.ItensMovimentacao.count({
+						where: { id_nfe_fk: nfe.id },
+					});
 			}
 
 			const totalItems = await database.Nfes.count();
@@ -86,7 +87,7 @@ class NfesController {
 			});
 
 			if (existingNfe) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe uma NFe com o mesmo número e fornecedor.',
 				});
 			}
@@ -116,7 +117,7 @@ class NfesController {
 			});
 
 			if (existingNfe && existingNfe.id !== parseInt(id)) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe uma NFe com o mesmo número e fornecedor.',
 				});
 			}

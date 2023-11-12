@@ -3,8 +3,12 @@ export * from './listing/listing.component';
 export * from './login/login.component';
 export * from './material-types/material-types.component';
 export * from './nfes/nfes.component';
+export * from './nfes/dialogs/edit-nfe/edit-nfe.component';
+export * from './nfes/dialogs/new-nfe/new-nfe.component';
 export * from './not-found/not-found.component';
 export * from './purchase-lots/purchase-lots.component';
+export * from './purchase-lots/dialogs/edit-purchase-lot/edit-purchase-lot.component';
+export * from './purchase-lots/dialogs/new-purchase-lot/new-purchase-lot.component';
 export * from './reports/reports.component';
 export * from './request-listing/request-listing.component';
 export * from './request/request.component';
@@ -17,5 +21,3 @@ export * from './material-types/dialogs/confirm-inactivation/confirm-inactivatio
 export * from './material-types/dialogs/edit-tags/edit-tags.component';
 export * from './material-types/dialogs/edit-type/edit-type.component';
 export * from './material-types/dialogs/new-type/new-type.component';
-export * from './nfes/dialogs/edit-nfe/edit-nfe.component';
-export * from './nfes/dialogs/new-nfe/new-nfe.component';

@@ -71,7 +71,7 @@ class LotesDeCompraController {
 			});
 
 			if (existingLoteDeCompra) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um lote de compra com o mesmo número.',
 				});
 			}
@@ -98,7 +98,7 @@ class LotesDeCompraController {
 			});
 
 			if (existingLoteDeCompra && existingLoteDeCompra.id !== parseInt(id)) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um lote de compra com o mesmo número.',
 				});
 			}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Supplier, SuppliersData } from 'src/app/interfaces';
 
 @Injectable({
@@ -33,12 +33,9 @@ export class SuppliersService {
   }
 
   edit(body: Supplier, id: number): Observable<Supplier> {
-    return this.http
-      .put<Supplier>(`http://localhost:3000/fornecedores/${id}`, body)
-      .pipe(catchError(this.handleError));
-  }
-
-  private handleError(): Observable<never> {
-    return throwError(() => new Error());
+    return this.http.put<Supplier>(
+      `http://localhost:3000/fornecedores/${id}`,
+      body
+    );
   }
 }

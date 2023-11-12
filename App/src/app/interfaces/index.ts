@@ -9,7 +9,7 @@ export * from './tables/types';
 export * from './tables/uns-de-medida';
 
 export * from './dialogs/commentary';
-
+export * from './dialogs/confirm-save';
 export * from './dialogs/new-tags';
 
 export * from './filters-option';

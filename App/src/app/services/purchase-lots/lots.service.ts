@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PurchaseLot, PurchaseLotsData } from 'src/app/interfaces';
 
 @Injectable({
@@ -34,12 +34,9 @@ export class PurchaseLotsService {
   }
 
   edit(body: PurchaseLot, id: number): Observable<PurchaseLot> {
-    return this.http
-      .put<PurchaseLot>(`http://localhost:3000/lotesdecompra/${id}`, body)
-      .pipe(catchError(this.handleError));
-  }
-
-  private handleError(): Observable<never> {
-    return throwError(() => new Error());
+    return this.http.put<PurchaseLot>(
+      `http://localhost:3000/lotesdecompra/${id}`,
+      body
+    );
   }
 }

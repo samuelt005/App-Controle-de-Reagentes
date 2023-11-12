@@ -31,10 +31,15 @@ export class EditSupplierComponent extends DialogComponent {
     });
   }
 
-  saveData(enterAnimationDuration = '100ms', exitAnimationDuration = '100ms') {
+  saveData(
+    enterAnimationDuration = '100ms',
+    exitAnimationDuration = '100ms',
+    message = ''
+  ) {
     const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { message },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -47,11 +52,16 @@ export class EditSupplierComponent extends DialogComponent {
           .edit(formData, this.injectedData.rowData.id)
           .subscribe({
             complete: () => {
-              this.openSnackBar('Salvo com sucesso.', false);
+              this.openSnackBar(false);
             },
             error: (e) => {
+              console.log(e);
+              if (e.status === 409) {
+                this.openSnackBar(true, 'Este fornecedor já existe.');
+              } else {
+                this.openSnackBar(true);
+              }
               console.error('Ocorreu um erro:', e);
-              this.openSnackBar('Erro ao salvar. Tente novamente.', true);
             },
           });
       } else {

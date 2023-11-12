@@ -26,10 +26,15 @@ export class NewPurchaseLotComponent extends DialogComponent {
     super(snackBar);
   }
 
-  saveData(enterAnimationDuration = '100ms', exitAnimationDuration = '100ms') {
+  saveData(
+    enterAnimationDuration = '100ms',
+    exitAnimationDuration = '100ms',
+    message = 'O item não poderá ser excluído!'
+  ) {
     const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { message },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -39,11 +44,16 @@ export class NewPurchaseLotComponent extends DialogComponent {
 
         this.purchaseLotsService.addNew(formData).subscribe({
           complete: () => {
-            this.openSnackBar('Salvo com sucesso.', false);
+            this.openSnackBar(false);
           },
           error: (e) => {
+            console.log(e);
+            if (e.status === 409) {
+              this.openSnackBar(true, 'Este lote de compra já existe.');
+            } else {
+              this.openSnackBar(true);
+            }
             console.error('Ocorreu um erro:', e);
-            this.openSnackBar('Erro ao salvar. Tente novamente.', true);
           },
         });
       } else {
