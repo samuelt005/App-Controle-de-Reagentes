@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { PageTitle, SuppliersRow, PaginatorData } from 'src/app/interfaces';
-import { SuppliersService } from 'src/app/services';
+import { PageTitle, SuppliersRow } from 'src/app/interfaces';
+import { SuppliersService, SuppliersUpdaterService } from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 import { NewSupplierComponent } from './dialogs/new-supplier/new-supplier.component';
 import { EditSupplierComponent } from './dialogs/edit-supplier/edit-supplier.component';
@@ -22,18 +22,12 @@ export class SuppliersComponent extends PageComponent implements OnInit {
   };
 
   suppliersTableData: SuppliersRow[] = [];
-  suppliersPage = 1;
-
-  suppliersPaginatorData: PaginatorData = {
-    currentPage: 0,
-    totalPages: 0,
-    totalItems: 0,
-  };
 
   constructor(
     private dialog: MatDialog,
     private suppliersService: SuppliersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tableUpdaterService: SuppliersUpdaterService
   ) {
     super();
   }
@@ -60,21 +54,30 @@ export class SuppliersComponent extends PageComponent implements OnInit {
     });
   }
 
+  private updateTableData(page: number): void {
+    this.suppliersService.listPerPage(page).subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.suppliersTableData = responseData.data;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page);
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.suppliersPage = Number(params.get('page'));
+      this.page = Number(params.get('page'));
+      this.updateTableData(this.page);
+    });
 
-      this.suppliersService
-        .listPerPage(this.suppliersPage)
-        .subscribe((responseData) => {
-          const { currentPage, totalPages, totalItems } = responseData;
-          this.suppliersPaginatorData = {
-            currentPage: currentPage,
-            totalPages: totalPages,
-            totalItems: totalItems,
-          };
-          this.suppliersTableData = responseData.data;
-        });
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

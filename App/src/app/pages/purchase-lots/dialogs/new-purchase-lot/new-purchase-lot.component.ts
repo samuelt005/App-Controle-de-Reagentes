@@ -1,4 +1,7 @@
-import { PurchaseLotsService } from 'src/app/services';
+import {
+  PurchaseLotsService,
+  PurchaseLotsUpdaterService,
+} from 'src/app/services';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,7 +24,8 @@ export class NewPurchaseLotComponent extends DialogComponent {
   constructor(
     private purchaseLotsService: PurchaseLotsService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    public override snackBar: MatSnackBar,
+    private tableUpdaterService: PurchaseLotsUpdaterService
   ) {
     super(snackBar);
   }
@@ -45,6 +49,7 @@ export class NewPurchaseLotComponent extends DialogComponent {
         this.purchaseLotsService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
+            this.tableUpdaterService.updateTable();
           },
           error: (e) => {
             console.log(e);

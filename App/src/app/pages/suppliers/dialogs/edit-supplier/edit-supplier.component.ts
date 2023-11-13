@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditSupplier } from 'src/app/interfaces';
-import { SuppliersService } from 'src/app/services';
+import { SuppliersService, SuppliersUpdaterService } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { cnpjValidator } from 'src/app/utils';
 
@@ -22,7 +22,8 @@ export class EditSupplierComponent extends DialogComponent {
     @Inject(MAT_DIALOG_DATA) public injectedData: EditSupplier,
     private suppliersService: SuppliersService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    public override snackBar: MatSnackBar,
+    private tableUpdaterService: SuppliersUpdaterService
   ) {
     super(snackBar);
     this.form.setValue({
@@ -53,6 +54,7 @@ export class EditSupplierComponent extends DialogComponent {
           .subscribe({
             complete: () => {
               this.openSnackBar(false);
+              this.tableUpdaterService.updateTable();
             },
             error: (e) => {
               console.log(e);

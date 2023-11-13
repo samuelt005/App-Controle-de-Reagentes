@@ -31,6 +31,7 @@ class LotesDeCompraController {
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
+        order: [['numero', 'DESC']],
 			});
 
 			const lotesdecompra = result.rows;

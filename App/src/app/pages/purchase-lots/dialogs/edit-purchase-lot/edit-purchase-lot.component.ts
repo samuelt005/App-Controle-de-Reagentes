@@ -3,7 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditPurchaseLot } from 'src/app/interfaces';
-import { PurchaseLotsService } from 'src/app/services';
+import {
+  PurchaseLotsService,
+  PurchaseLotsUpdaterService,
+} from 'src/app/services';
 import { DialogComponent, ConfirmSaveComponent } from 'src/app/shared';
 
 @Component({
@@ -23,7 +26,8 @@ export class EditPurchaseLotComponent extends DialogComponent {
     @Inject(MAT_DIALOG_DATA) public injectedData: EditPurchaseLot,
     private purchaseLotsService: PurchaseLotsService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    public override snackBar: MatSnackBar,
+    private tableUpdaterService: PurchaseLotsUpdaterService
   ) {
     super(snackBar);
     this.form.setValue({
@@ -52,6 +56,7 @@ export class EditPurchaseLotComponent extends DialogComponent {
           .subscribe({
             complete: () => {
               this.openSnackBar(false);
+              this.tableUpdaterService.updateTable();
             },
             error: (e) => {
               console.log(e);

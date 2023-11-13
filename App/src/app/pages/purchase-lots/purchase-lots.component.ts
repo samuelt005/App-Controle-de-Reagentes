@@ -1,11 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
-import { PageTitle, PurchaseLotsRow } from "src/app/interfaces";
-import { PurchaseLotsService } from "src/app/services";
-import { PageComponent } from "src/app/shared";
-import { NewPurchaseLotComponent } from "./dialogs/new-purchase-lot/new-purchase-lot.component";
-import { EditPurchaseLotComponent } from "./dialogs/edit-purchase-lot/edit-purchase-lot.component";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { PageTitle, PurchaseLotsRow } from 'src/app/interfaces';
+import {
+  PurchaseLotsService,
+  PurchaseLotsUpdaterService,
+} from 'src/app/services';
+import { PageComponent } from 'src/app/shared';
+import { NewPurchaseLotComponent } from './dialogs/new-purchase-lot/new-purchase-lot.component';
+import { EditPurchaseLotComponent } from './dialogs/edit-purchase-lot/edit-purchase-lot.component';
 
 @Component({
   templateUrl: './purchase-lots.component.html',
@@ -26,7 +29,8 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private lotsService: PurchaseLotsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tableUpdaterService: PurchaseLotsUpdaterService
   ) {
     super();
   }
@@ -53,19 +57,30 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
     });
   }
 
+  private updateTableData(page: number): void {
+    this.lotsService.listPerPage(page).subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.lotsTableData = responseData.data;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page);
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
+      this.updateTableData(this.page);
+    });
 
-      this.lotsService.listPerPage(this.page).subscribe((responseData) => {
-        const { currentPage, totalPages, totalItems } = responseData;
-        this.paginatorData = {
-          currentPage: currentPage,
-          totalPages: totalPages,
-          totalItems: totalItems,
-        };
-        this.lotsTableData = responseData.data;
-      });
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

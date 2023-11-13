@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { PageTitle, NfesRow } from 'src/app/interfaces';
-import { NfesService } from 'src/app/services';
+import { NfesService, NfesUpdaterService } from 'src/app/services';
 import { EditNfeComponent } from './dialogs/edit-nfe/edit-nfe.component';
 import { NewNfeComponent } from './dialogs/new-nfe/new-nfe.component';
 import { PageComponent } from 'src/app/shared';
@@ -26,7 +26,8 @@ export class NfesComponent extends PageComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private nfesService: NfesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tableUpdaterService: NfesUpdaterService
   ) {
     super();
   }
@@ -53,19 +54,30 @@ export class NfesComponent extends PageComponent implements OnInit {
     });
   }
 
+  private updateTableData(page: number): void {
+    this.nfesService.listPerPage(page).subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.tableData = responseData.data;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page);
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
+      this.updateTableData(this.page);
+    });
 
-      this.nfesService.listPerPage(this.page).subscribe((responseData) => {
-        const { currentPage, totalPages, totalItems } = responseData;
-        this.paginatorData = {
-          currentPage: currentPage,
-          totalPages: totalPages,
-          totalItems: totalItems,
-        };
-        this.tableData = responseData.data;
-      });
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

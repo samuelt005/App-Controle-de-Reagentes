@@ -3,7 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SuppliersRow } from 'src/app/interfaces';
-import { NfesService, SuppliersService } from 'src/app/services';
+import {
+  NfesService,
+  NfesUpdaterService,
+  SuppliersService,
+} from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
 
@@ -28,7 +32,8 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
     private fornecedoresService: SuppliersService,
     private nfesService: NfesService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    public override snackBar: MatSnackBar,
+    private tableUpdaterService: NfesUpdaterService
   ) {
     super(snackBar);
   }
@@ -54,6 +59,7 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
         this.nfesService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
+            this.tableUpdaterService.updateTable();
           },
           error: (e) => {
             if (e.status === 409) {

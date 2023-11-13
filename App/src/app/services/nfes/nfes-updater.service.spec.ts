@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PurchaseLotsService } from './lots.service';
+import { NfesUpdaterService } from './nfes-updater.service';
 
-describe('LotsService', () => {
-  let service: PurchaseLotsService;
+describe('NfesUpdaterService', () => {
+  let service: NfesUpdaterService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PurchaseLotsService);
+    service = TestBed.inject(NfesUpdaterService);
   });
 
   it('should be created', () => {

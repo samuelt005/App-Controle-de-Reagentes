@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SuppliersService } from 'src/app/services';
+import { SuppliersService, SuppliersUpdaterService } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { cnpjValidator } from 'src/app/utils';
 
@@ -20,7 +20,8 @@ export class NewSupplierComponent extends DialogComponent {
   constructor(
     private suppliersService: SuppliersService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    public override snackBar: MatSnackBar,
+    private tableUpdaterService: SuppliersUpdaterService
   ) {
     super(snackBar);
   }
@@ -45,6 +46,7 @@ export class NewSupplierComponent extends DialogComponent {
         this.suppliersService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
+            this.tableUpdaterService.updateTable();
           },
           error: (e) => {
             console.log(e);
