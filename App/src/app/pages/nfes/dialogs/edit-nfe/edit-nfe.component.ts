@@ -43,11 +43,6 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
       data_emissao: injectedData.rowData.data_emissao,
       id_fornecedor: injectedData.rowData.emitente.id.toString(),
     });
-
-    this.form.get('id_fornecedor')?.valueChanges.subscribe((value) => {
-      console.log('Valor de id_fornecedor:', value);
-      console.log('Valor de id_fornecedor:', typeof value);
-    });
   }
 
   saveData(
@@ -76,7 +71,6 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
               this.tableUpdaterService.updateTable();
             },
             error: (e) => {
-              console.log(e);
               if (e.status === 409) {
                 this.openSnackBar(true, 'Esta nota fiscal já existe.');
               } else {

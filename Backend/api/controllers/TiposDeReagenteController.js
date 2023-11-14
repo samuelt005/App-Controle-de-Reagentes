@@ -50,7 +50,7 @@ class TiposDeReagenteController {
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
-						attributes: ['sigla'],
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
@@ -96,7 +96,7 @@ class TiposDeReagenteController {
 					{
 						model: database.UnsDeMedida,
 						as: 'un_de_medida',
-						attributes: ['sigla'],
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
@@ -106,7 +106,7 @@ class TiposDeReagenteController {
 					attributes: ['sigla'],
 				});
 			}
-      
+
 			const totalItems = await database.TiposDeReagente.count({
 				where: { ativo: true },
 			});
@@ -255,7 +255,7 @@ class TiposDeReagenteController {
 			});
 
 			if (existingReagente) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um material com o mesmo código.',
 				});
 			}
@@ -290,7 +290,7 @@ class TiposDeReagenteController {
 				existingTipoDeReagente &&
 				existingTipoDeReagente.id !== parseInt(id)
 			) {
-				return res.status(400).json({
+				return res.status(409).json({
 					message: 'Já existe um tipo de reagente com o mesmo código.',
 				});
 			}

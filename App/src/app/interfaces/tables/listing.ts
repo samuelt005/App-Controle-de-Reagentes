@@ -1,4 +1,4 @@
-import { NewTags } from "../dialogs/new-tags";
+import { Tags } from "../dialogs/tags";
 import { UnsDeMedida } from "./uns-de-medida";
 
 export interface ListingRow {
@@ -6,13 +6,13 @@ export interface ListingRow {
   cod: number;
   descricao: string;
   loc_estoque: string;
-  estoque_atual: string;
+  estoque_atual: number;
   vlr_estoque: string;
   entradas: number;
   saidas: number;
   ativo: boolean;
   un_de_medida: UnsDeMedida;
-  tags: NewTags[];
+  tags: Tags[];
 }
 
 export interface ListingData {

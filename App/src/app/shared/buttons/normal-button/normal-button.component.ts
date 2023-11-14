@@ -11,4 +11,5 @@ export class NormalButtonComponent {
     @Input() matRippleDisabled = false;
     @Input() customWidth = '150px';
     @Input() disabled = false;
+    @Input() redColor = false;
 }

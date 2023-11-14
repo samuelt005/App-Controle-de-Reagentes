@@ -22,7 +22,6 @@ export class NfesService {
   }
 
   addNew(body: Nfe): Observable<Nfe> {
-    console.log(body);
     return this.http.post<Nfe>(`http://localhost:3000/nfes`, body);
   }
 

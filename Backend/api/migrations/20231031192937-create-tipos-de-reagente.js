@@ -20,30 +20,30 @@ module.exports = {
 			loc_estoque: {
 				type: Sequelize.STRING(10),
 			},
-      estoque_atual: {
+			estoque_atual: {
 				allowNull: false,
-				type: Sequelize.DECIMAL(10, 4),
-        defaultValue: "0",
+				type: Sequelize.DECIMAL(14, 4),
+				defaultValue: '0',
 			},
 			vlr_estoque: {
 				allowNull: false,
-				type: Sequelize.DECIMAL(10, 2),
-        defaultValue: "0",
+				type: Sequelize.DECIMAL(12, 2),
+				defaultValue: '0',
 			},
 			entradas: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
-        defaultValue: "0",
+				defaultValue: '0',
 			},
 			saidas: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
-        defaultValue: "0",
+				defaultValue: '0',
 			},
 			ativo: {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
-        defaultValue: true,
+				defaultValue: true,
 			},
 			id_un_de_medida_fk: {
 				allowNull: false,

@@ -1,5 +1,9 @@
 @import "../../shared/styles/pages";
 
+.inactive {
+  color: var(--cinza-2);
+}
+
 .buttons-spacer {
   width: 188px;
 }
@@ -21,6 +25,10 @@ app-tags {
   width: 115px;
 }
 
+.estoque {
+  width: 100px;
+}
+
 .un {
   width: 50px;
 }
@@ -30,6 +38,7 @@ app-tags {
 }
 
 .valor-estoque,
+.estoque,
 .un,
 .localizacao,
 .tags {

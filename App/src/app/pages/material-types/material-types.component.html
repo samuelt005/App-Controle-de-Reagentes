@@ -9,32 +9,27 @@
           <p class="desc body-medium">Descrição</p>
           <p class="tags body-medium">Tags</p>
           <p class="localizacao body-medium">Loc. no Estoque</p>
+          <p class="estoque body-medium">Estoque Atual</p>
           <p class="un body-medium">Un</p>
           <p class="valor-estoque body-medium">Valor em Estoque</p>
-          <span class="buttons-spacer"></span>
         </div>
-        <div *ngFor="let row of tableData" class="table-row">
+        <div
+          *ngFor="let row of tableData"
+          class="table-row"
+          [ngClass]="{'inactive': !row.ativo}"
+          (click)="openEditItem('100ms', '100ms', row)"
+        >
           <p class="cod body-medium">{{ row.cod }}</p>
           <p class="desc body-medium">{{ row.descricao }}</p>
           <app-tags [tags]="row.tags"></app-tags>
-          <p class="localizacao body-medium">{{ row.loc_estoque }}</p>
+          <p class="localizacao body-medium">{{ row.loc_estoque ? row.loc_estoque : '-' }}</p>
+          <p class="estoque body-medium">{{
+            (+(row.estoque_atual) / +(row.un_de_medida.peso))
+            .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            }}</p>
           <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
-          <p class="valor-estoque body-medium">R$ {{ row.vlr_estoque }}</p>
-          <div class="buttons">
-            <app-small-button (click)="openTags('100ms', '100ms', row.tags)"
-              >Tags</app-small-button
-            >
-            <app-small-button (click)="openEditItem('100ms', '100ms', row)"
-              >Editar</app-small-button
-            >
-            <app-small-button
-              [inactive]="+(row.vlr_estoque) !== 0"
-              [redColor]="+(row.vlr_estoque) === 0"
-              [matRippleDisabled]="+(row.vlr_estoque) !== 0"
-              (click)="confirmInactivation('100ms', '100ms', +(row.vlr_estoque))"
-              >Inativar</app-small-button
-            >
-          </div>
+          <p class="valor-estoque body-medium">R$ {{ (+row.vlr_estoque).toLocaleString('pt-BR', { minimumFractionDigits: 2,
+            maximumFractionDigits: 2 }) }}</p>
         </div>
       </div>
     </div>

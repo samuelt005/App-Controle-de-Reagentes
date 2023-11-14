@@ -10,7 +10,6 @@ describe('DialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DialogComponent]
     });
-    fixture = TestBed.createComponent(DialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,6 +13,14 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING(2),
 			},
+			nome: {
+				allowNull: false,
+				type: Sequelize.STRING(20),
+			},
+			peso: {
+				allowNull: false,
+				type: Sequelize.DECIMAL(10, 4),
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

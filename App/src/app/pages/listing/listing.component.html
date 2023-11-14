@@ -29,13 +29,18 @@
           <p class="cod body-medium">{{ row.cod }}</p>
           <p class="desc body-medium">{{ row.descricao }}</p>
           <app-tags [tags]="row.tags"></app-tags>
-          <p class="estoque body-medium">{{ row.estoque_atual }}</p>
+          <p class="estoque body-medium">{{
+            (+(row.estoque_atual) / +(row.un_de_medida.peso))
+            .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            }}</p>
           <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
           <p class="localizacao body-medium">{{ row.loc_estoque }}</p>
           <p class="valor-un body-medium">R$ {{
-            (+(row.estoque_atual) !== 0) ? (+(row.vlr_estoque) / +(row.estoque_atual)).toFixed(2) : '0.00'
+            (+(row.estoque_atual) !== 0) ? (+(row.vlr_estoque) / +(row.estoque_atual)).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0,00'
             }}</p>
-          <p class="valor-tot body-medium">R$ {{ row.vlr_estoque }}</p>
+          <p class="valor-tot body-medium">R$ {{ (+row.vlr_estoque).toLocaleString('pt-BR', { minimumFractionDigits: 2,
+            maximumFractionDigits: 2 }) }}</p>
         </div>
       </div>
     </div>

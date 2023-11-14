@@ -1,7 +1,7 @@
 <div class="edit-tags-container">
   <s
     class="checkboxes"
-    [formGroup]="tagsOptions"
+    [formGroup]="form"
   >
     <p class="body-large">
       <mat-checkbox formControlName="em">Material com Estoque Mínimo</mat-checkbox>
@@ -20,6 +20,7 @@
     <app-normal-button
       mat-dialog-close
       [filled]="true"
+      (click)="saveData()"
     >
       Salvar
     </app-normal-button>
