@@ -9,6 +9,7 @@ export interface SuppliersRow {
   razao_social: string;
   cnpj: string;
   createdAt: string;
+  notas_vinculadas: number;
 }
 
 export interface SuppliersData {

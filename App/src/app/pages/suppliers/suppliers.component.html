@@ -8,6 +8,7 @@
           <p class="data body-medium">Data de Criação</p>
           <p class="cnpj body-medium">CNPJ</p>
           <p class="razao body-medium">Razão Social</p>
+          <p class="nfes body-medium">Notas Fiscais</p>
         </div>
         <div
           *ngFor="let row of suppliersTableData"
@@ -17,6 +18,7 @@
           <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
           <p class="cnpj body-medium">{{ getFormattedCnpj(row.cnpj) }}</p>
           <p class="razao body-medium">{{ row.razao_social }}</p>
+          <p class="nfes body-medium">{{ row.notas_vinculadas }}</p>
         </div>
       </div>
     </div>

@@ -26,12 +26,21 @@ class FornecedoresController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const fornecedores = await database.Fornecedores.findAndCountAll({
+			const result = await database.Fornecedores.findAndCountAll({
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
 			});
+
+			const fornecedores = result.rows;
+
+			for (const fornecedor of fornecedores) {
+				fornecedor.dataValues.notas_vinculadas =
+					await database.Nfes.count({
+						where: { id_fornecedor_fk: fornecedor.id },
+					});
+			}
 
 			const totalItems = await database.Fornecedores.count();
 
@@ -41,7 +50,7 @@ class FornecedoresController {
 				currentPage: pageNumber,
 				totalPages: totalPages,
 				totalItems: totalItems,
-				data: fornecedores.rows,
+				data: fornecedores,
 			};
 
 			return res.status(200).json(resData);
