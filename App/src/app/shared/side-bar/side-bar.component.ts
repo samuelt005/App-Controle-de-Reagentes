@@ -1,13 +1,14 @@
-import { Component, Input } from "@angular/core";
-import { Router } from "@angular/router";
-import { FiltersValue, MenuOptions, FiltersOptions } from "src/app/interfaces";
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FiltersValue, MenuOptions, FiltersOptions } from 'src/app/interfaces';
+import { UserService } from 'src/app/services';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.scss'],
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
   role = 1; //TODO remover depois
   //TODO arrumar responsívidade
   menusDrawer = false;
@@ -79,7 +80,7 @@ export class SideBarComponent {
     localizacao: false,
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   getRoleName(role: number) {
     switch (role) {
@@ -129,6 +130,7 @@ export class SideBarComponent {
   }
 
   logOut() {
+    this.userService.logout();
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 500);
@@ -148,5 +150,11 @@ export class SideBarComponent {
     this.filtersValue.vlrTotMin = null;
     this.filtersValue.vlrTotMax = null;
     this.filtersValue.loc = '';
+  }
+
+  ngOnInit(): void {
+    if (!this.userService.isLogged()) {
+      this.router.navigate(['/login']);
+    }
   }
 }

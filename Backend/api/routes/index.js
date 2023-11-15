@@ -15,17 +15,17 @@ const auth = require('./authRoutes');
 module.exports = (app) => {
 	app.use(bodyParser.json()); // Converte os dados de body recebidos por métodos em JSON
 	app.use(
+		auth,
+		usuarios,
 		fornecedores,
 		lotesdecompra,
 		nfes,
-		perfis,
 		solicitacoes,
 		tags,
 		tiposdereagente,
 		unsdemedida,
-		usuarios,
 		itensmovimentacao,
 		cards,
-    auth
+		perfis
 	);
 };

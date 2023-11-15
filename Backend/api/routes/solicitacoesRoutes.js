@@ -1,18 +1,36 @@
 const { Router } = require('express');
+const autorizacao = require('../middleware/autorizacao');
 const SolicitacoesController = require('../controllers/SolicitacoesController');
 
 const router = Router();
 
-// Rota para listar um solicitação
-router.get('/Solicitacoes/:id', SolicitacoesController.getSolicitacao);
+router
+	// Rota para listar um solicitação
+	.get(
+		'/Solicitacoes/:id',
+		autorizacao(['Administrador']),
+		SolicitacoesController.getSolicitacao
+	)
 
-// Rota para listar solicitações com paginação
-router.get('/Solicitacoes/page/:page', SolicitacoesController.getSolicitacoes);
+	// Rota para listar solicitações com paginação
+	.get(
+		'/Solicitacoes/page/:page',
+		autorizacao(['Administrador']),
+		SolicitacoesController.getSolicitacoes
+	)
 
-// Rota para criar um solicitação
-router.post('/Solicitacoes', SolicitacoesController.createSolicitacao);
+	// Rota para criar um solicitação
+	.post(
+		'/Solicitacoes',
+		autorizacao(['Administrador']),
+		SolicitacoesController.createSolicitacao
+	)
 
-// Rota para atualizar o status de uma solicitação
-router.put('/Solicitacoes/:id', SolicitacoesController.updateStatus);
+	// Rota para atualizar o status de uma solicitação
+	.put(
+		'/Solicitacoes/:id',
+		autorizacao(['Administrador']),
+		SolicitacoesController.updateStatus
+	);
 
 module.exports = router;

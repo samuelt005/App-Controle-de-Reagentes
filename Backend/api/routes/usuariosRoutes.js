@@ -1,18 +1,24 @@
 const { Router } = require('express');
+const autorizacao = require('../middleware/autorizacao');
 const UsuariosController = require('../controllers/UsuariosController');
 
 const router = Router();
 
-// Rota para listar um usuario
-router.get('/usuarios/:id', UsuariosController.getUsuario);
+router
+	// Rota para listar um usuario
+	.get('/usuarios/:id', UsuariosController.getUsuario)
 
-// Rota para criar um usuario
-router.post('/usuarios', UsuariosController.createUsuario);
+	// Rota para criar um usuario
+	.post('/usuarios', UsuariosController.createUsuario)
 
-// Rota para atualizar um usuario
-router.put('/usuarios/:id', UsuariosController.updateUsuario);
+	// Rota para atualizar um usuario
+	.put('/usuarios/:id', UsuariosController.updateUsuario)
 
-// Rota para atualizar o perfil de um usuario
-router.put('/usuarios/:id/perfil', UsuariosController.updatePerfil);
+	// Rota para atualizar o perfil de um usuario
+	.put(
+		'/usuarios/:id/perfil',
+		autorizacao(['Administrador']),
+		UsuariosController.updatePerfil
+	);
 
 module.exports = router;

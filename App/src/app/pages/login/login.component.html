@@ -2,35 +2,55 @@
   <div class="container">
     <section class="login-container">
       <header class="login-header">
-        <img src="/assets/logos/colored.png" alt="Logo do Biopark" />
+        <img
+          src="/assets/logos/colored.png"
+          alt="Logo do Biopark"
+        />
       </header>
       <div class="login-content">
-        <div class="content" [formGroup]="form">
+        <div
+          class="content"
+          [formGroup]="form"
+        >
           <mat-form-field appearance="outline">
-            <mat-label>Usuário</mat-label>
-            <input matInput placeholder="Informe seu RA ou E-mail ou CPF" />
+            <mat-label>E-mail</mat-label>
+            <input
+              matInput
+              type="email"
+              placeholder="Informe seu E-mail"
+              formControlName="email"
+            />
+            <mat-error *ngIf="form.get('email')?.hasError('required')">
+              Insira seu e-mail.
+            </mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">
+              Formato inválido para e-mail.
+            </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Senha</mat-label>
-            <input matInput placeholder="Informe seu Senha" />
+            <input
+              matInput
+              type="password"
+              placeholder="Informe seu Senha"
+              formControlName="senha"
+            />
+            <mat-error *ngIf="form.get('senha')?.hasError('required')">
+              Insira sua senha.
+            </mat-error>
           </mat-form-field>
           <hr />
           <app-normal-button
+            (click)="login()"
             [filled]="true"
             [matRippleDisabled]="!form.valid"
-            [inactive]="!form.valid"
             customWidth="258px"
+            [inactive]="!form.valid ? true : false"
+            [disabled]="!form.valid ? true : false"
           >
-          <!-- <app-normal-button
-            (click)="form.valid ? login() : ''"
-            [filled]="true"
-            [matRippleDisabled]="!form.valid"
-            [inactive]="!form.valid"
-            customWidth="258px"
-          > -->
             Entrar
           </app-normal-button>
-          <app-normal-button customWidth="258px"> Cadastrar </app-normal-button>
+          <!-- <app-normal-button customWidth="258px"> Cadastrar </app-normal-button> -->
           <p>Esqueceu sua senha?</p>
         </div>
       </div>

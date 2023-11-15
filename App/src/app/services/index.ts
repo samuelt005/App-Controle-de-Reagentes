@@ -1,4 +1,7 @@
 export * from './auth/auth.service';
+export * from './token/token.service';
+export * from './user/user.service';
+
 export * from './history/history.service';
 export * from './info-cards/info-cards.service';
 export * from './listing/listing.service';

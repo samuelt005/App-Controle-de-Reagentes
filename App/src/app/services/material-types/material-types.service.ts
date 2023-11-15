@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { TokenService } from 'src/app/services';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListingData, Type } from 'src/app/interfaces';
@@ -7,45 +8,63 @@ import { ListingData, Type } from 'src/app/interfaces';
   providedIn: 'root',
 })
 export class MaterialTypesService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
-  headers = {
-    'content-type': 'application/json',
-    Authorization: 'TOKEN',
-  };
+  private getHeaders(): HttpHeaders {
+    const userToken = this.tokenService.returnToken();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${userToken}`
+    );
+    return headers;
+  }
 
   listPerPage(page: number): Observable<ListingData> {
+    const headers = this.getHeaders();
     return this.http.get<ListingData>(
-      `http://localhost:3000/tiposdereagente/page/${page}`
+      `http://localhost:3000/tiposdereagente/page/${page}`,
+      { headers }
     );
   }
 
   listAll(): Observable<ListingData> {
+    const headers = this.getHeaders();
     return this.http.get<ListingData>(
-      `http://localhost:3000/tiposdereagente/active`
+      `http://localhost:3000/tiposdereagente/active`,
+      { headers }
     );
   }
 
   updateActive(id: number): Observable<unknown> {
+    const headers = this.getHeaders();
     const body = {};
     return this.http.put<unknown>(
       `http://localhost:3000/tiposdereagente/${id}/ativo`,
-      body
+      body,
+      { headers }
     );
   }
 
   addNew(body: Type): Observable<Type> {
-    return this.http.post<Type>(`http://localhost:3000/tiposdereagente`, body);
+    const headers = this.getHeaders();
+    return this.http.post<Type>(`http://localhost:3000/tiposdereagente`, body, {
+      headers,
+    });
   }
 
   edit(body: Type, id: number): Observable<Type> {
+    const headers = this.getHeaders();
     return this.http.put<Type>(
       `http://localhost:3000/tiposdereagente/${id}`,
-      body
+      body,
+      { headers }
     );
   }
 
   updateTags(body: any, id: number): Observable<any> {
-    return this.http.put<any>(`http://localhost:3000/tags/${id}`, body);
+    const headers = this.getHeaders();
+    return this.http.put<any>(`http://localhost:3000/tags/${id}`, body, {
+      headers,
+    });
   }
 }

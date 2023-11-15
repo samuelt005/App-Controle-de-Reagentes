@@ -1,11 +1,14 @@
 const { Router } = require('express');
+const autorizacao = require('../middleware/autorizacao');
 const TagsController = require('../controllers/TagsController');
 
 const router = Router();
 
-// Rota para listar todas as tags
-router.get('/tags', TagsController.getAllTags);
+router
+	// Rota para listar todas as tags
+	.get('/tags', autorizacao(['Administrador']), TagsController.getAllTags)
 
-router.put('/tags/:id', TagsController.updateTags);
+	// Rota para atualizar tags vinculadas
+	.put('/tags/:id', autorizacao(['Administrador']), TagsController.updateTags);
 
 module.exports = router;

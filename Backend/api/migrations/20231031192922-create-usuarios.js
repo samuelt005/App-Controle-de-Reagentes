@@ -30,9 +30,9 @@ module.exports = {
 				type: Sequelize.BIGINT,
 			},
 			id_perfil_fk: {
-				type: Sequelize.INTEGER,
-				references: { model: 'Perfis', key: 'id' },
 				defaultValue: null,
+				type: Sequelize.UUID,
+				references: { model: 'Perfis', key: 'id' },
 			},
 			createdAt: {
 				allowNull: false,
