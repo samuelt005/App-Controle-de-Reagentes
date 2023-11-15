@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UnsDeMedida } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class UnsDeMedidaService {
 
   listAll(): Observable<UnsDeMedida[]> {
     const headers = this.getHeaders();
-    return this.http.get<UnsDeMedida[]>(`http://localhost:3000/unsdemedida`, {
+    return this.http.get<UnsDeMedida[]>(`${environment.apiUrl}/unsdemedida`, {
       headers,
     });
   }

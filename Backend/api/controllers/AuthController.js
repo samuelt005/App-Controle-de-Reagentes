@@ -7,8 +7,6 @@ class AuthController {
 	static async login(req, res) {
 		const { email, senha } = req.body;
 
-    console.log(email, senha)
-
 		try {
 			const usuario = await database.Usuarios.findOne({
 				where: {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PurchaseLot, PurchaseLotsData } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class PurchaseLotsService {
   listPerPage(page: number): Observable<PurchaseLotsData> {
     const headers = this.getHeaders();
     return this.http.get<PurchaseLotsData>(
-      `http://localhost:3000/lotesdecompra/page/${page}`,
+      `${environment.apiUrl}/lotesdecompra/page/${page}`,
       { headers }
     );
   }
@@ -30,7 +31,7 @@ export class PurchaseLotsService {
   listAll(): Observable<PurchaseLotsData> {
     const headers = this.getHeaders();
     return this.http.get<PurchaseLotsData>(
-      `http://localhost:3000/lotesdecompra`,
+      `${environment.apiUrl}/lotesdecompra`,
       { headers }
     );
   }
@@ -38,7 +39,7 @@ export class PurchaseLotsService {
   addNew(body: PurchaseLot): Observable<PurchaseLot> {
     const headers = this.getHeaders();
     return this.http.post<PurchaseLot>(
-      `http://localhost:3000/lotesdecompra`,
+      `${environment.apiUrl}/lotesdecompra`,
       body,
       { headers }
     );
@@ -47,7 +48,7 @@ export class PurchaseLotsService {
   edit(body: PurchaseLot, id: number): Observable<PurchaseLot> {
     const headers = this.getHeaders();
     return this.http.put<PurchaseLot>(
-      `http://localhost:3000/lotesdecompra/${id}`,
+      `${environment.apiUrl}/lotesdecompra/${id}`,
       body,
       { headers }
     );

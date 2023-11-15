@@ -1,9 +1,0 @@
-{
-  "env": {
-    "name": "Dev"
-  },
-
-  "apiServer": {
-    "baseUrl": "http://localhost:3000/"
-  }
-}

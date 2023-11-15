@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Supplier, SuppliersData } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +23,14 @@ export class SuppliersService {
   listPerPage(page: number): Observable<SuppliersData> {
     const headers = this.getHeaders();
     return this.http.get<SuppliersData>(
-      `http://localhost:3000/fornecedores/page/${page}`,
+      `${environment.apiUrl}/fornecedores/page/${page}`,
       { headers }
     );
   }
 
   listAll(): Observable<SuppliersData> {
     const headers = this.getHeaders();
-    return this.http.get<SuppliersData>(`http://localhost:3000/fornecedores`, {
+    return this.http.get<SuppliersData>(`${environment.apiUrl}/fornecedores`, {
       headers,
     });
   }
@@ -37,7 +38,7 @@ export class SuppliersService {
   addNew(body: Supplier): Observable<Supplier> {
     const headers = this.getHeaders();
     return this.http.post<Supplier>(
-      `http://localhost:3000/fornecedores`,
+      `${environment.apiUrl}/fornecedores`,
       body,
       { headers }
     );
@@ -46,7 +47,7 @@ export class SuppliersService {
   edit(body: Supplier, id: number): Observable<Supplier> {
     const headers = this.getHeaders();
     return this.http.put<Supplier>(
-      `http://localhost:3000/fornecedores/${id}`,
+      `${environment.apiUrl}/fornecedores/${id}`,
       body,
       { headers }
     );

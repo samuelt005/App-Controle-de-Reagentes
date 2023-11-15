@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InfoCard } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class InfoCardsService {
   getItemsSum(table: string, column: string): Observable<InfoCard> {
     const headers = this.getHeaders();
     return this.http.get<InfoCard>(
-      `http://localhost:3000/items/sum/${table}/${column}`,
+      `${environment.apiUrl}/items/sum/${table}/${column}`,
       { headers }
     );
   }
@@ -30,7 +31,7 @@ export class InfoCardsService {
   getActiveTypesCount(): Observable<InfoCard> {
     const headers = this.getHeaders();
     return this.http.get<InfoCard>(
-      'http://localhost:3000/tiposdereagente/count/actives',
+      `${environment.apiUrl}/tiposdereagente/count/actives`,
       { headers }
     );
   }
@@ -38,7 +39,7 @@ export class InfoCardsService {
   getMostUsedCount(): Observable<InfoCard> {
     const headers = this.getHeaders();
     return this.http.get<InfoCard>(
-      'http://localhost:3000/tiposdereagente/find/mostused',
+      `${environment.apiUrl}/tiposdereagente/find/mostused`,
       { headers }
     );
   }

@@ -323,8 +323,6 @@ class TiposDeReagenteController {
 				where: { id },
 			});
 
-			console.log(parseFloat(existingTipoDeReagente.vlr_estoque));
-
 			if (parseFloat(existingTipoDeReagente.vlr_estoque) !== 0) {
 				return res.status(400).json({
 					message: 'Não é possível inativar um tipo com valor em estoque.',

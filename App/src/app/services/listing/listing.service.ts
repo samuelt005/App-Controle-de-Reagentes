@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListingData } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class ListingService {
   listPerPage(page: number): Observable<ListingData> {
     const headers = this.getHeaders();
     return this.http.get<ListingData>(
-      `http://localhost:3000/tiposdereagente/page/${page}/active`,
+      `${environment.apiUrl}/tiposdereagente/page/${page}/active`,
       { headers }
     );
   }

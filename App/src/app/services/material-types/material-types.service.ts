@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListingData, Type } from 'src/app/interfaces';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class MaterialTypesService {
   listPerPage(page: number): Observable<ListingData> {
     const headers = this.getHeaders();
     return this.http.get<ListingData>(
-      `http://localhost:3000/tiposdereagente/page/${page}`,
+      `${environment.apiUrl}/tiposdereagente/page/${page}`,
       { headers }
     );
   }
@@ -30,7 +31,7 @@ export class MaterialTypesService {
   listAll(): Observable<ListingData> {
     const headers = this.getHeaders();
     return this.http.get<ListingData>(
-      `http://localhost:3000/tiposdereagente/active`,
+      `${environment.apiUrl}/tiposdereagente/active`,
       { headers }
     );
   }
@@ -39,7 +40,7 @@ export class MaterialTypesService {
     const headers = this.getHeaders();
     const body = {};
     return this.http.put<unknown>(
-      `http://localhost:3000/tiposdereagente/${id}/ativo`,
+      `${environment.apiUrl}/tiposdereagente/${id}/ativo`,
       body,
       { headers }
     );
@@ -47,7 +48,7 @@ export class MaterialTypesService {
 
   addNew(body: Type): Observable<Type> {
     const headers = this.getHeaders();
-    return this.http.post<Type>(`http://localhost:3000/tiposdereagente`, body, {
+    return this.http.post<Type>(`${environment.apiUrl}/tiposdereagente`, body, {
       headers,
     });
   }
@@ -55,7 +56,7 @@ export class MaterialTypesService {
   edit(body: Type, id: number): Observable<Type> {
     const headers = this.getHeaders();
     return this.http.put<Type>(
-      `http://localhost:3000/tiposdereagente/${id}`,
+      `${environment.apiUrl}/tiposdereagente/${id}`,
       body,
       { headers }
     );
@@ -63,7 +64,7 @@ export class MaterialTypesService {
 
   updateTags(body: any, id: number): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.put<any>(`http://localhost:3000/tags/${id}`, body, {
+    return this.http.put<any>(`${environment.apiUrl}/tags/${id}`, body, {
       headers,
     });
   }

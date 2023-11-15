@@ -4,10 +4,12 @@ const routes = require('./routes');
 const app = express();
 const port = 3000;
 
-app.use(cors({
-  origin: 'http://localhost:4200',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-}));
+app.use(
+	cors({
+		origin: 'http://localhost:4200',
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+	})
+);
 
 routes(app);
 
