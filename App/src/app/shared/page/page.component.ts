@@ -12,6 +12,7 @@ export abstract class PageComponent {
   };
 
   page = 1;
+  loading = true;
 
   dataInputs: object[] = [];
 

@@ -62,6 +62,7 @@ export class MaterialTypesComponent extends PageComponent implements OnInit {
   }
 
   private updateTableData(page: number): void {
+    this.loading = true;
     this.materialTypesService.listPerPage(page).subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
@@ -70,6 +71,7 @@ export class MaterialTypesComponent extends PageComponent implements OnInit {
         totalItems: totalItems,
       };
       this.tableData = responseData.data;
+      this.loading = false;
     });
   }
 

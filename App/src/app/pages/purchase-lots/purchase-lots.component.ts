@@ -24,7 +24,7 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
     adjustButton: false,
   };
 
-  lotsTableData: PurchaseLotsRow[] = [];
+  tableData: PurchaseLotsRow[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -58,6 +58,7 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
   }
 
   private updateTableData(page: number): void {
+    this.loading = true;
     this.lotsService.listPerPage(page).subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
@@ -65,7 +66,8 @@ export class PurchaseLotsComponent extends PageComponent implements OnInit {
         totalPages: totalPages,
         totalItems: totalItems,
       };
-      this.lotsTableData = responseData.data;
+      this.tableData = responseData.data;
+      this.loading = false;
     });
   }
 

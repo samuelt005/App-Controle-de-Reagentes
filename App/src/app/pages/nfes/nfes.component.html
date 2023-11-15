@@ -3,7 +3,10 @@
   <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="table-spacer">
-      <div class="table-container">
+      <div
+        *ngIf="tableData.length !== 0"
+        class="table-container"
+      >
         <div class="table-header">
           <p class="numero body-medium">Nº NF-e</p>
           <p class="razao body-medium">Fornecedor</p>
@@ -22,6 +25,19 @@
           <p class="data body-medium">{{ getFormattedDate(row.data_emissao) }}</p>
           <p class="vinculados body-medium">{{ row.itens_vinculados }}</p>
         </div>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">web_asset_off</mat-icon>
+        <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
+      </div>
+      <div
+        *ngIf="loading"
+        class="loading-container"
+      >
+        <mat-spinner [diameter]="40"></mat-spinner>
       </div>
     </div>
     <app-paginator [data]="paginatorData" />

@@ -79,6 +79,7 @@ export class RequestListingComponent extends PageComponent implements OnInit {
             totalItems: totalItems,
           };
           this.tableData = responseData.data;
+          this.loading = false;
         });
     });
   }

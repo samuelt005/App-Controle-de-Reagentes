@@ -122,6 +122,7 @@ export class HistoryComponent extends PageComponent implements OnInit {
           };
           this.tableData = responseData.data;
         });
+        this.loading = false;
 
       this.updateInfoCards();
     });

@@ -1,12 +1,18 @@
 <div class="page-container">
-  <app-side-bar [filtersHidden]="true"/>
+  <app-side-bar [filtersHidden]="true" />
   <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="cards-container">
-      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+      <app-info-card
+        *ngFor="let card of infoCards"
+        [card]="card"
+      />
     </div>
     <div class="table-spacer">
-      <div class="table-container">
+      <div
+        *ngIf="tableData.length !== 0"
+        class="table-container"
+      >
         <div class="table-header">
           <mat-icon class="table-icon-header material-icons-outlined">
             info
@@ -31,12 +37,27 @@
             {{ getIconType(i) }}
           </mat-icon>
           <p class="data body-medium">{{ getFormattedDate(row.data) }}</p>
-          <p class="forn-resp body-medium">{{ row.operacao === 3 ? row.resp_ajuste : row.solicitacao.responsavel.nome }}</p>
+          <p class="forn-resp body-medium">{{ row.operacao === 3 ? row.resp_ajuste : row.solicitacao.responsavel.nome }}
+          </p>
           <p class="nfe body-medium">{{ row.operacao === 1 ? row.nfe.numero : "-" }}</p>
           <p class="valor-tot body-medium">R$ {{ (+(row.valor_unit) * row.qtd_mov).toFixed(2) }}</p>
           <p class="quant body-medium">{{ row.qtd_mov }}</p>
           <p class="un body-medium">{{ row.tipo.un_de_medida.sigla | uppercase }}</p>
         </div>
+
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">history</mat-icon>
+        <h2 class="title-large">Este item ainda não possui histórico!</h2>
+      </div>
+      <div
+        *ngIf="loading"
+        class="loading-container"
+      >
+        <mat-spinner [diameter]="40"></mat-spinner>
       </div>
     </div>
     <app-paginator [data]="paginatorData" />

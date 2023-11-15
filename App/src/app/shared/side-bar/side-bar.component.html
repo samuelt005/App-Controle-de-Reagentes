@@ -1,8 +1,17 @@
 <div class="side-bar-container">
   <mat-toolbar class="mat-toolbar-column">
     <div class="top-content">
-      <img src="assets/logos/no-text-white.svg" alt="" />
-      <app-icon-button (click)="toggleMenusDrawer()" [activated]="menusDrawer">
+      <div>        
+        <img
+          src="assets/logos/no-text-white.svg"
+          alt=""
+          (click)="returnPage()"
+        />
+      </div>
+      <app-icon-button
+        (click)="toggleMenusDrawer()"
+        [activated]="menusDrawer"
+      >
         menu
       </app-icon-button>
       <app-icon-button
@@ -12,7 +21,10 @@
       >
         filter_alt
       </app-icon-button>
-      <app-icon-button (click)="returnPage()" *ngIf="filtersHidden">
+      <app-icon-button
+        (click)="returnPage()"
+        *ngIf="filtersHidden"
+      >
         arrow_back
       </app-icon-button>
     </div>
@@ -24,7 +36,12 @@
   </mat-toolbar>
 
   <mat-drawer-container class="drawer-container">
-    <mat-drawer #drawer1 class="drawer" mode="over" [opened]="menusDrawer">
+    <mat-drawer
+      #drawer1
+      class="drawer"
+      mode="over"
+      [opened]="menusDrawer"
+    >
       <div class="menus-drawer">
         <h2 class="drawer-title title-large">{{ getRoleName(this.role) }}</h2>
         <hr class="drawer-line" />
@@ -32,7 +49,7 @@
           <ng-container *ngIf="option.authorized.includes(role)">
             <app-menu-option (click)="goToPage(option.page)">{{
               option.title
-            }}</app-menu-option>
+              }}</app-menu-option>
           </ng-container>
         </ng-container>
       </div>
@@ -40,14 +57,22 @@
   </mat-drawer-container>
 
   <mat-drawer-container class="drawer-container">
-    <mat-drawer #drawer2 class="drawer" mode="over" [opened]="filtersDrawer">
+    <mat-drawer
+      #drawer2
+      class="drawer"
+      mode="over"
+      [opened]="filtersDrawer"
+    >
       <div class="filters-drawer">
         <h2 class="drawer-title title-large">Filtros</h2>
         <hr class="drawer-line" />
         <div class="menu-option">
           <div class="filter-option">
             <h3 class="body-large">Unidade de Medida</h3>
-            <mat-form-field class="select-input" appearance="outline">
+            <mat-form-field
+              class="select-input"
+              appearance="outline"
+            >
               <mat-label>Selecione</mat-label>
               <mat-select [(ngModel)]="filtersValue.un">
                 <mat-option selected></mat-option>
@@ -69,7 +94,10 @@
           <hr class="drawer-line" />
           <div class="filter-option">
             <h3 class="body-large">Tag</h3>
-            <mat-form-field class="select-input" appearance="outline">
+            <mat-form-field
+              class="select-input"
+              appearance="outline"
+            >
               <mat-label>Selecione</mat-label>
               <mat-select [(ngModel)]="filtersValue.tag">
                 <mat-option selected></mat-option>
@@ -92,7 +120,10 @@
           <div class="filter-option">
             <h3 class="body-large">Quantidade</h3>
             <div class="min-max">
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Min</mat-label>
                 <input
                   matInput
@@ -101,7 +132,10 @@
                   [(ngModel)]="filtersValue.qtdMin"
                 />
               </mat-form-field>
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Max</mat-label>
                 <input
                   matInput
@@ -116,7 +150,10 @@
           <div class="filter-option">
             <h3 class="body-large">Valor Unitário</h3>
             <div class="min-max">
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Min</mat-label>
                 <input
                   matInput
@@ -125,7 +162,10 @@
                   [(ngModel)]="filtersValue.vlrUnitMin"
                 />
               </mat-form-field>
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Max</mat-label>
                 <input
                   matInput
@@ -140,7 +180,10 @@
           <div class="filter-option">
             <h3 class="body-large">Valor Total</h3>
             <div class="min-max">
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Min</mat-label>
                 <input
                   matInput
@@ -149,7 +192,10 @@
                   [(ngModel)]="filtersValue.vlrTotMin"
                 />
               </mat-form-field>
-              <mat-form-field class="min-max-input" appearance="outline">
+              <mat-form-field
+                class="min-max-input"
+                appearance="outline"
+              >
                 <mat-label>Max</mat-label>
                 <input
                   matInput
@@ -163,7 +209,10 @@
           <hr class="drawer-line" />
           <div class="filter-option">
             <h3 class="body-large">Localização no Estoque</h3>
-            <mat-form-field class="text-input" appearance="outline">
+            <mat-form-field
+              class="text-input"
+              appearance="outline"
+            >
               <mat-label>Localização</mat-label>
               <input
                 matInput
@@ -182,7 +231,10 @@
             </mat-form-field>
           </div>
           <div class="filters-button">
-            <app-normal-button [filled]="true" (click)="applyFilters()">
+            <app-normal-button
+              [filled]="true"
+              (click)="applyFilters()"
+            >
               Filtrar
             </app-normal-button>
             <app-normal-button (click)="cleanFilters()">

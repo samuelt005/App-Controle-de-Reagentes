@@ -1,6 +1,6 @@
-import { Component, OnChanges, Input, SimpleChanges } from "@angular/core";
-import { Router } from "@angular/router";
-import { PaginatorData } from "src/app/interfaces";
+import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { PaginatorData } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-paginator',
@@ -13,7 +13,7 @@ export class PaginatorComponent implements OnChanges {
     totalPages: 0,
     totalItems: 0,
   };
-  
+
   minItem = 0;
   maxItem = 0;
 
@@ -38,10 +38,12 @@ export class PaginatorComponent implements OnChanges {
 
   calculateMinMaxItems() {
     const { currentPage, totalItems } = this.data;
-    
+
     if (totalItems < 20) {
       this.maxItem = totalItems;
-      this.minItem = 1;
+      if (this.data.totalItems !== 0) {
+        this.minItem = 1;
+      }
     } else {
       this.minItem = (currentPage - 1) * 20 + 1;
       this.maxItem = currentPage * 20;

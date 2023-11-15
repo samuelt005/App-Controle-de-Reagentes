@@ -77,6 +77,7 @@ export class ListingComponent extends PageComponent implements OnInit {
           totalItems: totalItems,
         };
         this.tableData = responseData.data;
+        this.loading = false;
       });
 
       this.infoCardsService

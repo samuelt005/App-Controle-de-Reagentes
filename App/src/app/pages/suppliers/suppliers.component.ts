@@ -21,7 +21,7 @@ export class SuppliersComponent extends PageComponent implements OnInit {
     adjustButton: false,
   };
 
-  suppliersTableData: SuppliersRow[] = [];
+  tableData: SuppliersRow[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -55,6 +55,7 @@ export class SuppliersComponent extends PageComponent implements OnInit {
   }
 
   private updateTableData(page: number): void {
+    this.loading = true;
     this.suppliersService.listPerPage(page).subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
@@ -62,7 +63,8 @@ export class SuppliersComponent extends PageComponent implements OnInit {
         totalPages: totalPages,
         totalItems: totalItems,
       };
-      this.suppliersTableData = responseData.data;
+      this.tableData = responseData.data;
+      this.loading = false;
     });
   }
 

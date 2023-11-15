@@ -3,7 +3,10 @@
   <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="table-spacer">
-      <div class="table-container">
+      <div
+        *ngIf="tableData.length !== 0"
+        class="table-container"
+      >
         <div class="table-header">
           <p class="data body-medium">Data de Criação</p>
           <p class="cnpj body-medium">CNPJ</p>
@@ -11,7 +14,7 @@
           <p class="nfes body-medium">Notas Fiscais</p>
         </div>
         <div
-          *ngFor="let row of suppliersTableData"
+          *ngFor="let row of tableData"
           class="table-row"
           (click)="openEditItem('100ms', '100ms', row)"
         >
@@ -20,6 +23,19 @@
           <p class="razao body-medium">{{ row.razao_social }}</p>
           <p class="nfes body-medium">{{ row.notas_vinculadas }}</p>
         </div>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">web_asset_off</mat-icon>
+        <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
+      </div>
+      <div
+        *ngIf="loading"
+        class="loading-container"
+      >
+        <mat-spinner [diameter]="40"></mat-spinner>
       </div>
     </div>
     <app-paginator [data]="paginatorData" />

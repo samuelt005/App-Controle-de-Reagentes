@@ -3,7 +3,10 @@
   <div class="main-content">
     <app-header [pageTitle]="pageTitle" />
     <div class="table-spacer">
-      <div class="table-container">
+      <div
+        *ngIf="tableData.length !== 0"
+        class="table-container"
+      >
         <div class="table-header">
           <p class="cod body-medium">Código</p>
           <p class="desc body-medium">Descrição</p>
@@ -28,9 +31,23 @@
             .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
             }}</p>
           <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
-          <p class="valor-estoque body-medium">R$ {{ (+row.vlr_estoque).toLocaleString('pt-BR', { minimumFractionDigits: 2,
+          <p class="valor-estoque body-medium">R$ {{ (+row.vlr_estoque).toLocaleString('pt-BR', { minimumFractionDigits:
+            2,
             maximumFractionDigits: 2 }) }}</p>
         </div>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">web_asset_off</mat-icon>
+        <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
+      </div>
+      <div
+        *ngIf="loading"
+        class="loading-container"
+      >
+        <mat-spinner [diameter]="40"></mat-spinner>
       </div>
     </div>
     <app-paginator [data]="paginatorData" />

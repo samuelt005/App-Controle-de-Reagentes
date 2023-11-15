@@ -18,6 +18,10 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+      img {
+        cursor: pointer;
+      }
     }
 
     .bottom-content {

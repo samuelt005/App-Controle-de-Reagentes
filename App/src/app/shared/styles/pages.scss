@@ -89,6 +89,33 @@
           }
         }
       }
+
+      .empty-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        .empty-icon {
+          color: var(--cinza-3);
+          font-size: 40px;
+          height: 40px;
+          width: auto;
+        }
+
+        h2 {
+          color: var(--cinza-3);
+        }
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
     }
 
     .button-container {

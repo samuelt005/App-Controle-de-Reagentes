@@ -55,6 +55,7 @@ export class NfesComponent extends PageComponent implements OnInit {
   }
 
   private updateTableData(page: number): void {
+    this.loading = true;
     this.nfesService.listPerPage(page).subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
@@ -63,6 +64,7 @@ export class NfesComponent extends PageComponent implements OnInit {
         totalItems: totalItems,
       };
       this.tableData = responseData.data;
+      this.loading = false;
     });
   }
 

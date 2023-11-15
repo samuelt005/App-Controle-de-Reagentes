@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -147,6 +148,7 @@ export const CUSTOM_FORMAT: MatDateFormats = {
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule,
     NgxMaskDirective,
     NgxMaskPipe,
   ],
