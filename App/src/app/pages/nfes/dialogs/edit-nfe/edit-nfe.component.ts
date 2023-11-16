@@ -2,11 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SuppliersRow, EditNfe } from 'src/app/interfaces';
+import { FornecedoresData, NfesData } from 'src/app/interfaces';
 import {
   NfesService,
   NfesUpdaterService,
-  SuppliersService,
+  FornecedoresService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
@@ -17,20 +17,10 @@ import { dateValidator } from 'src/app/utils';
   styleUrls: ['./edit-nfe.component.scss'],
 })
 export class EditNfeComponent extends DialogComponent implements OnInit {
-  form = new FormGroup({
-    numero: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
-    id_fornecedor: new FormControl('', [Validators.required]),
-  });
-
-  selectData: SuppliersRow[] = [];
-
+  // Construtor
   constructor(
-    @Inject(MAT_DIALOG_DATA) public injectedData: EditNfe,
-    private fornecedoresService: SuppliersService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: NfesData,
+    private fornecedoresService: FornecedoresService,
     private nfesService: NfesService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar,
@@ -39,13 +29,26 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
     super(snackBar);
 
     this.form.setValue({
-      numero: injectedData.rowData.numero.toString(),
-      data_emissao: injectedData.rowData.data_emissao,
-      id_fornecedor: injectedData.rowData.emitente.id.toString(),
+      numero: dialogData.numero.toString(),
+      data_emissao: dialogData.data_emissao,
+      id_fornecedor: dialogData.emitente.id.toString(),
     });
   }
 
-  saveData(
+  // Atributos
+  public form = new FormGroup({
+    numero: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
+    id_fornecedor: new FormControl('', [Validators.required]),
+  });
+
+  public selectData: FornecedoresData[] = [];
+
+  // Métodos
+  public saveData(
     enterAnimationDuration = '100ms',
     exitAnimationDuration = '100ms',
     message = ''
@@ -53,7 +56,7 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
-      data: { message },
+      data: message,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -63,29 +66,27 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
           id_fornecedor: number;
         };
 
-        this.nfesService
-          .edit(formData, this.injectedData.rowData.id)
-          .subscribe({
-            complete: () => {
-              this.openSnackBar(false);
-              this.tableUpdaterService.updateTable();
-            },
-            error: (e) => {
-              if (e.status === 409) {
-                this.openSnackBar(true, 'Esta nota fiscal já existe.');
-              } else {
-                this.openSnackBar(true);
-              }
-              console.error('Ocorreu um erro:', e);
-            },
-          });
+        this.nfesService.edit(formData, this.dialogData.id).subscribe({
+          complete: () => {
+            this.openSnackBar(false);
+            this.tableUpdaterService.updateTable();
+          },
+          error: (e) => {
+            if (e.status === 409) {
+              this.openSnackBar(true, 'Esta nota fiscal já existe.');
+            } else {
+              this.openSnackBar(true);
+            }
+            console.error('Ocorreu um erro:', e);
+          },
+        });
       } else {
         this.dialog.closeAll();
       }
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.fornecedoresService.listAll().subscribe((responseData) => {
       this.selectData = responseData.data;
     });

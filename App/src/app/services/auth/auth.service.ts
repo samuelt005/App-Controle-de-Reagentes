@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { AuthData, AuthResponse } from 'src/app/interfaces';
+import { AuthRequest, AuthResponse } from 'src/app/interfaces';
 import { UserService } from '../user/user.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment.development';
 export class AuthService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
-  auth(body: AuthData): Observable<HttpResponse<AuthResponse>> {
+  public auth(body: AuthRequest): Observable<HttpResponse<AuthResponse>> {
     return this.http
       .post<AuthResponse>(`${environment.apiUrl}/auth/login`, body, {
         observe: 'response',

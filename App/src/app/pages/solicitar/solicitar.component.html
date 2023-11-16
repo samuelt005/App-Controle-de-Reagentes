@@ -1,0 +1,24 @@
+<div class="page-container">
+  <app-sidebar [filtersHidden]="true" />
+  <div class="main-content">
+    <app-page-title [pageTitle]="pageTitle" />
+    <div class="content-spacer">
+      <div class="content-container">
+        <app-data-inputs [noDeleteButton]="true"></app-data-inputs>
+        <div *ngFor="let dataInput of dataInputs; let i = index">
+          <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
+        </div>
+        <div class="button-container">
+          <button class="add-button body-medium" (click)="addNewSection()">
+            <mat-icon class="material-icons-outlined"> add </mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <app-normal-button (click)="saveRequest()" [filled]="true">
+        Salvar
+      </app-normal-button>
+    </div>
+  </div>
+</div>

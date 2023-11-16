@@ -1,0 +1,16 @@
+<div class="confirm-save-container">
+  <h2 class="title-large">
+    {{ active ? "Deseja realmente inativar?" : "Deseja realmente ativar?" }}
+  </h2>
+  <div class="buttons">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="confirm(true)"
+      >{{ active ? "Inativar" : "Ativar" }}</app-normal-button
+    >
+    <app-normal-button mat-dialog-close (click)="confirm(false)">
+      Cancelar
+    </app-normal-button>
+  </div>
+</div>

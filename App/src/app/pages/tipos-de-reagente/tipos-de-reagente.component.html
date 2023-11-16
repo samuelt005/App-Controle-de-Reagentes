@@ -1,0 +1,71 @@
+<div class="page-container">
+  <app-sidebar [filtersHidden]="true" />
+  <div class="main-content">
+    <header class="header">
+      <app-page-title [pageTitle]="pageTitle" />
+      <mat-form-field class="search-input" appearance="outline">
+        <mat-label>Pesquisar por Código ou Descrição</mat-label>
+        <input matInput type="text" class="number-input" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </header>
+    <div class="table-spacer">
+      <div *ngIf="tableData.length !== 0" class="table-container">
+        <div class="table-header">
+          <p class="cod body-medium">Código</p>
+          <p class="desc body-medium">Descrição</p>
+          <p class="tags body-medium">Tags</p>
+          <p class="localizacao body-medium">Loc. no Estoque</p>
+          <p class="estoque body-medium">Estoque Atual</p>
+          <p class="un body-medium">Un</p>
+          <p class="valor-estoque body-medium">Valor em Estoque</p>
+        </div>
+        <div
+          *ngFor="let row of tableData"
+          class="table-row"
+          [ngClass]="{ inactive: !row.ativo }"
+          (click)="openEditItem(row)"
+        >
+          <p class="cod body-medium">{{ row.cod }}</p>
+          <p class="desc body-medium">{{ row.descricao }}</p>
+          <app-tags [tags]="row.tags"></app-tags>
+          <p class="localizacao body-medium">
+            {{ row.loc_estoque ? row.loc_estoque : "-" }}
+          </p>
+          <p class="estoque body-medium">
+            {{
+              (+row.estoque_atual / +row.un_de_medida.peso).toLocaleString(
+                "pt-BR",
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+              )
+            }}
+          </p>
+          <p class="un body-medium">{{ row.un_de_medida.sigla | uppercase }}</p>
+          <p class="valor-estoque body-medium">
+            R$
+            {{
+              (+row.vlr_estoque).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })
+            }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="tableData.length === 0 && !loading" class="empty-container">
+        <mat-icon class="empty-icon">web_asset_off</mat-icon>
+        <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
+      </div>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </div>
+    <app-paginator [data]="paginatorData" />
+
+    <div class="button-container">
+      <app-normal-button (click)="openNewItem()" [filled]="true">
+        Incluir Novo
+      </app-normal-button>
+    </div>
+  </div>
+</div>

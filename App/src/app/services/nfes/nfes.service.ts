@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Nfe, NfesData } from 'src/app/interfaces';
+import { NfesRequest, NfesResponse } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -20,26 +20,26 @@ export class NfesService {
     return headers;
   }
 
-  listPerPage(page: number): Observable<NfesData> {
+  public listPerPage(page: number): Observable<NfesResponse> {
     const headers = this.getHeaders();
-    return this.http.get<NfesData>(`${environment.apiUrl}/nfes/page/${page}`, {
+    return this.http.get<NfesResponse>(`${environment.apiUrl}/nfes/page/${page}`, {
       headers,
     });
   }
 
-  listAll(): Observable<NfesData> {
+  public listAll(): Observable<NfesResponse> {
     const headers = this.getHeaders();
-    return this.http.get<NfesData>(`${environment.apiUrl}/nfes`, { headers });
+    return this.http.get<NfesResponse>(`${environment.apiUrl}/nfes`, { headers });
   }
 
-  addNew(body: Nfe): Observable<Nfe> {
+  public addNew(body: NfesRequest): Observable<NfesRequest> {
     const headers = this.getHeaders();
-    return this.http.post<Nfe>(`${environment.apiUrl}/nfes`, body, { headers });
+    return this.http.post<NfesRequest>(`${environment.apiUrl}/nfes`, body, { headers });
   }
 
-  edit(body: Nfe, id: number): Observable<Nfe> {
+  public edit(body: NfesRequest, id: number): Observable<NfesRequest> {
     const headers = this.getHeaders();
-    return this.http.put<Nfe>(`${environment.apiUrl}/nfes/${id}`, body, {
+    return this.http.put<NfesRequest>(`${environment.apiUrl}/nfes/${id}`, body, {
       headers,
     });
   }

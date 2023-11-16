@@ -1,0 +1,81 @@
+<div class="page-container">
+  <app-sidebar [filtersHidden]="true" />
+  <div class="main-content">
+    <header class="header">
+      <app-page-title [pageTitle]="pageTitle" />
+      <app-normal-button (click)="openAdjustment()" [filled]="true">
+        Incluir Ajuste
+      </app-normal-button>
+    </header>
+    <div class="cards-container">
+      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+    </div>
+    <div class="table-spacer">
+      <div *ngIf="tableData.length !== 0" class="table-container">
+        <div class="table-header">
+          <mat-icon class="table-icon-header material-icons-outlined">
+            info
+          </mat-icon>
+          <p class="data body-medium">Data</p>
+          <p class="forn-resp body-medium">Fornecedor/Responsável</p>
+          <p class="nfe body-medium">Nº NF-e</p>
+          <p class="valor-tot body-medium">Valor Total</p>
+          <p class="quant body-medium">Quantidade</p>
+          <p class="un body-medium">Un</p>
+        </div>
+        <div
+          *ngFor="let row of tableData; let i = index"
+          class="table-row"
+          (click)="openCommentary(row.comentario)"
+          matRipple
+        >
+          <mat-icon
+            class="table-icon-type material-icons-outlined"
+            [style.color]="getIconColor(i)"
+          >
+            {{ getIconType(i) }}
+          </mat-icon>
+          <p class="data body-medium">{{ getFormattedDate(row.data) }}</p>
+          <p class="forn-resp body-medium">
+            {{
+              row.operacao === 3
+                ? row.resp_ajuste
+                : row.solicitacao.responsavel.nome
+            }}
+          </p>
+          <p class="nfe body-medium">
+            {{ row.operacao === 1 ? row.nfe.numero : "-" }}
+          </p>
+          <p class="valor-tot body-medium">
+            R$
+            {{
+              (+row.valor_unit * row.qtd_mov).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })
+            }}
+          </p>
+          <p class="quant body-medium">
+            {{
+              row.qtd_mov.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })
+            }}
+          </p>
+          <p class="un body-medium">
+            {{ row.tipo.un_de_medida.sigla | uppercase }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="tableData.length === 0 && !loading" class="empty-container">
+        <mat-icon class="empty-icon">history</mat-icon>
+        <h2 class="title-large">Este item ainda não possui histórico!</h2>
+      </div>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </div>
+    <app-paginator [data]="paginatorData" />
+  </div>
+</div>

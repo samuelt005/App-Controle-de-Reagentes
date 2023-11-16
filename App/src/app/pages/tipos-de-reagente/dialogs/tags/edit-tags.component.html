@@ -1,0 +1,30 @@
+<div class="edit-tags-container">
+  <s class="checkboxes" [formGroup]="form">
+    <p class="body-large">
+      <mat-checkbox formControlName="em"
+        >Material com Estoque Mínimo</mat-checkbox
+      >
+    </p>
+    <p class="body-large">
+      <mat-checkbox formControlName="pf"
+        >Controlado por Polícia Federal</mat-checkbox
+      >
+    </p>
+    <p class="body-large">
+      <mat-checkbox formControlName="pc"
+        >Controlado por Polícia Civil</mat-checkbox
+      >
+    </p>
+    <p class="body-large">
+      <mat-checkbox formControlName="eb"
+        >Controlado por Exército Brasileiro</mat-checkbox
+      >
+    </p>
+  </s>
+  <div class="buttons">
+    <app-normal-button mat-dialog-close [filled]="true" (click)="saveData()">
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

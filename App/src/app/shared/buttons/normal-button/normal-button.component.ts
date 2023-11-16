@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-normal-button',
   templateUrl: './normal-button.component.html',
-  styleUrls: ['./normal-button.component.scss']
+  styleUrls: ['./normal-button.component.scss'],
 })
 export class NormalButtonComponent {
-    @Input() filled = false;
-    @Input() inactive = false;
-    @Input() matRippleDisabled = false;
-    @Input() customWidth = '150px';
-    @Input() disabled = false;
-    @Input() redColor = false;
+  // Atributos
+  @Input() public filled = false;
+  @Input() public inactive = false;
+  @Input() public matRippleDisabled = false;
+  @Input() public customWidth = '150px';
+  @Input() public disabled = false;
+  @Input() public redColor = false;
 }

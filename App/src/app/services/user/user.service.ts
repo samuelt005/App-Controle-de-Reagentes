@@ -16,27 +16,27 @@ export class UserService {
     }
   }
 
-  decodeJWT() {
+  public decodeJWT() {
     const token = this.tokenService.returnToken();
     const user = jwtDecode(token) as UserData;
     this.userSubject.next(user);
   }
 
-  returnUser() {
+  public returnUser() {
     return this.userSubject.asObservable();
   }
 
-  saveToken(token: string) {
+  public saveToken(token: string) {
     this.tokenService.saveToken(token);
     this.decodeJWT();
   }
 
-  logout() {
+  public logout() {
     this.tokenService.deleteToken();
     this.userSubject.next(null);
   }
 
-  isLogged() {
+  public isLogged() {
     return this.tokenService.haveToken();
   }
 }

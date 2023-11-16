@@ -8,18 +8,21 @@ import { PaginatorData } from 'src/app/interfaces';
   styleUrls: ['./paginator.component.scss'],
 })
 export class PaginatorComponent implements OnChanges {
-  @Input() data: PaginatorData = {
+  // Construtor
+  constructor(private router: Router) {}
+
+  // Atributos
+  @Input() public data: PaginatorData = {
     currentPage: 0,
     totalPages: 0,
     totalItems: 0,
   };
 
-  minItem = 0;
-  maxItem = 0;
+  public minItem = 0;
+  public maxItem = 0;
 
-  constructor(private router: Router) {}
-
-  goToPage(button: string) {
+  // Métodos
+  public goToPage(button: string) {
     const { currentPage, totalItems } = this.data;
 
     if (button === 'back' && currentPage > 1) {
@@ -36,7 +39,7 @@ export class PaginatorComponent implements OnChanges {
     this.data.currentPage = newPage;
   }
 
-  calculateMinMaxItems() {
+  private calculateMinMaxItems() {
     const { currentPage, totalItems } = this.data;
 
     if (totalItems < 20) {
@@ -53,7 +56,7 @@ export class PaginatorComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       this.calculateMinMaxItems();
     }

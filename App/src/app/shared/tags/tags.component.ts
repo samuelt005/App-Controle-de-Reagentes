@@ -1,15 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { Tags } from 'src/app/interfaces';
+import { Tag } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+  styleUrls: ['./tags.component.scss'],
 })
 export class TagsComponent {
-  @Input() tags: Tags[] = [];
+  // Atributos
+  @Input() public tags: Tag[] = [];
 
-  getObjectKeys(obj: object): string[] {
+  // Métodos
+  public getObjectKeys(obj: object): string[] {
     return Object.keys(obj);
   }
 }

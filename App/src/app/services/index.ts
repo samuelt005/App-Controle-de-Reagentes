@@ -1,21 +1,17 @@
 export * from './auth/auth.service';
 export * from './token/token.service';
 export * from './user/user.service';
-
-export * from './history/history.service';
-export * from './info-cards/info-cards.service';
-export * from './listing/listing.service';
-export * from './requestlisting/request-listing.service';
+export * from './cards/cards.service';
+export * from './listagem/listagem.service';
+export * from './solicitacoes/solicitacoes.service';
 export * from './uns-de-medida/uns-de-medida.service';
-
-export * from './material-types/material-types.service';
-export * from './material-types/material-types-updater.service';
-
+export * from './historico/historico.service';
+export * from './historico/historico-updater.service';
+export * from './tipos-de-reagente/tipos-de-reagente.service';
+export * from './tipos-de-reagente/tipos-de-reagente-updater.service';
 export * from './nfes/nfes.service';
 export * from './nfes/nfes-updater.service';
-
-export * from './suppliers/suppliers.service';
-export * from './suppliers/suppliers-updater.service';
-
-export * from './purchase-lots/purchase-lots.service';
-export * from './purchase-lots/purchase-lots-updater.service';
+export * from './fornecedores/fornecedores.service';
+export * from './fornecedores/fornecedores-updater.service';
+export * from './lotes-de-compra/lotes-de-compra.service';
+export * from './lotes-de-compra/lotes-de-compra-updater.service';

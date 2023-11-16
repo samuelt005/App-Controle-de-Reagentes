@@ -6,9 +6,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   template: '',
 })
 export abstract class DialogComponent {
+  // Construtor
   constructor(public snackBar: MatSnackBar) {}
 
-  getFormattedCnpj(cnpj: string): string {
+  // Métodos
+  protected getFormattedCnpj(cnpj: string): string {
     if (cnpj.length == 14) {
       const formattedCnpj = cnpj.replace(
         /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
@@ -20,10 +22,10 @@ export abstract class DialogComponent {
     }
   }
 
-  openSnackBar(error: boolean, message?: string) {
+  protected openSnackBar(error: boolean, message?: string) {
     this.snackBar.openFromComponent(SnackbarComponent, {
       duration: 2000,
-      data: {error, message },
+      data: { error, message },
     });
   }
 }

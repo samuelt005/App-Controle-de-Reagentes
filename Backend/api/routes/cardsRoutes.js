@@ -5,25 +5,18 @@ const CardsController = require('../controllers/CardsController');
 const router = Router();
 
 router
-	// Rota para somar valores de uma tabela e coluna específica
+	// Rota para pegar os dados da página de listagem
 	.get(
-		'/items/sum/:table/:column',
+		'/cards/listing',
 		autorizacao(['Administrador']),
-		CardsController.getItemsSum
+		CardsController.getListingData
 	)
 
-	// Rota para contar itens ativos da tabela tiposdereagente
+	// Rota para pegar os dados da página de histórico
 	.get(
-		'/tiposdereagente/count/actives',
+		'/cards/historico/:id',
 		autorizacao(['Administrador']),
-		CardsController.getActiveTypesCount
-	)
-
-	// Rota para encontrar o item com mais usos
-	.get(
-		'/tiposdereagente/find/mostused',
-		autorizacao(['Administrador']),
-		CardsController.getMostUsedCount
+		CardsController.getHistoryData
 	);
 
 module.exports = router;

@@ -1,15 +1,7 @@
 <div class="item-container">
-  <h3 class="title-large">
-    Nova Nota Fiscal
-  </h3>
-  <div
-    class="inputs"
-    [formGroup]="form"
-  >
-    <mat-form-field
-      class="input"
-      appearance="outline"
-    >
+  <h3 class="title-large">Nova Nota Fiscal</h3>
+  <div class="inputs" [formGroup]="form">
+    <mat-form-field class="input" appearance="outline">
       <input
         matInput
         type="text"
@@ -23,10 +15,7 @@
         Insira o número da nota fiscal.
       </mat-error>
     </mat-form-field>
-    <mat-form-field
-      class="input"
-      appearance="outline"
-    >
+    <mat-form-field class="input" appearance="outline">
       <input
         matInput
         minlength="10"
@@ -34,32 +23,29 @@
         placeholder="Data de Emissão"
         [matDatepicker]="picker"
         formControlName="data_emissao"
-      >
+      />
       <mat-error
-        *ngIf="form.get('data_emissao')?.hasError('required') || form.get('data_emissao')?.hasError('invalidDate')"
+        *ngIf="
+          form.get('data_emissao')?.hasError('required') ||
+          form.get('data_emissao')?.hasError('invalidDate')
+        "
       >
         Insira uma data válida.
       </mat-error>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      >
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
       </mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field
-      class="input"
-      appearance="outline"
-    >
-      <mat-select
-        placeholder="Fornecedor"
-        formControlName="id_fornecedor"
-      >
+    <mat-form-field class="input" appearance="outline">
+      <mat-select placeholder="Fornecedor" formControlName="id_fornecedor">
         <!-- TODO Incluir pesquisa neste select -->
         <mat-option
           *ngFor="let item of selectData"
           [value]="item.id.toString()"
-        >{{ getFormattedCnpj(item.cnpj) + " - " + item.razao_social }}</mat-option>
+          >{{
+            getFormattedCnpj(item.cnpj) + " - " + item.razao_social
+          }}</mat-option
+        >
       </mat-select>
       <mat-error *ngIf="form.get('id_fornecedor')?.hasError('required')">
         Escolhar o emitente.

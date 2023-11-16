@@ -6,7 +6,7 @@ const router = Router();
 
 // Rota para listar 20 históricos de movimentação
 router.get(
-	'/history/item/:id/page/:page',
+	'/historico/item/:id/page/:page',
 	autorizacao(['Administrador']),
 	ItensMovimentacaoController.getHistory
 );

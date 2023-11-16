@@ -1,0 +1,69 @@
+<div class="adjustment-container">
+  <h3 class="title-large">Novo Ajuste</h3>
+  <div class="inputs" [formGroup]="form">
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        minlength="10"
+        maxlength="10"
+        placeholder="Data do Ajuste"
+        [matDatepicker]="picker"
+        formControlName="data"
+      />
+      <mat-error
+        *ngIf="
+          form.get('data')?.hasError('required') ||
+          form.get('data')?.hasError('invalidDate')
+        "
+      >
+        Insira uma data válida.
+      </mat-error>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="text"
+        class="number-input body-large"
+        placeholder="Valor Total"
+        formControlName="valor_total"
+        mask="999999999"
+        [specialCharacters]="[]"
+      />
+      <mat-error *ngIf="form.get('valor_total')?.hasError('required')">
+        Insira o valor total do ajuste.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="text"
+        class="number-input body-large"
+        [placeholder]="quantidadePlaceholder"
+        formControlName="valor_total"
+        mask="999999999"
+        [specialCharacters]="[]"
+      />
+      <mat-error *ngIf="form.get('valor_total')?.hasError('required')">
+        Insira a quantidade do ajuste.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field class="textarea" appearance="outline">
+    <textarea
+      matInput
+      placeholder="Insira um comentário..."
+      cdkAutosizeMinRows="4"
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+    ></textarea>
+  </mat-form-field>
+  <div class="buttons">
+    <app-normal-button mat-dialog-close [filled]="true">
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

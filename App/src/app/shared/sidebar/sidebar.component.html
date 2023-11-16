@@ -1,0 +1,202 @@
+<div class="side-bar-container">
+  <mat-toolbar class="mat-toolbar-column">
+    <div class="top-content">
+      <div>
+        <img
+          src="assets/logos/no-text-white.svg"
+          alt=""
+          (click)="returnPage()"
+        />
+      </div>
+      <app-icon-button (click)="toggleMenusDrawer()" [activated]="menusDrawer">
+        menu
+      </app-icon-button>
+      <app-icon-button
+        (click)="toggleFiltersDrawer()"
+        [activated]="filtersDrawer"
+        *ngIf="!filtersHidden"
+      >
+        filter_alt
+      </app-icon-button>
+      <app-icon-button (click)="returnPage()" *ngIf="filtersHidden">
+        arrow_back
+      </app-icon-button>
+    </div>
+    <span class="spacer"></span>
+    <div class="bottom-content">
+      <app-icon-button> person </app-icon-button>
+      <app-icon-button (click)="logOut()"> logout </app-icon-button>
+    </div>
+  </mat-toolbar>
+
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer1 class="drawer" mode="over" [opened]="menusDrawer">
+      <div class="menus-drawer">
+        <h2 class="drawer-title title-large">{{ getRoleName(this.role) }}</h2>
+        <hr class="drawer-line" />
+        <ng-container *ngFor="let option of menuOptions">
+          <ng-container *ngIf="option.authorized.includes(role)">
+            <app-menu-option (click)="goToPage(option.page)">{{
+              option.title
+            }}</app-menu-option>
+          </ng-container>
+        </ng-container>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer2 class="drawer" mode="over" [opened]="filtersDrawer">
+      <div class="filters-drawer">
+        <h2 class="drawer-title title-large">Filtros</h2>
+        <hr class="drawer-line" />
+        <div class="menu-option">
+          <div class="filter-option">
+            <h3 class="body-large">Unidade de Medida</h3>
+            <mat-form-field class="select-input" appearance="outline">
+              <mat-label>Selecione</mat-label>
+              <mat-select [(ngModel)]="filtersValue.un">
+                <mat-option selected></mat-option>
+                <mat-option value="kg">Kilogramas</mat-option>
+                <mat-option value="l">Litros</mat-option>
+                <mat-option value="gr">Gramas</mat-option>
+                <mat-option value="ml">Mililitros</mat-option>
+              </mat-select>
+              <button
+                *ngIf="filtersValue.un"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.un = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Tag</h3>
+            <mat-form-field class="select-input" appearance="outline">
+              <mat-label>Selecione</mat-label>
+              <mat-select [(ngModel)]="filtersValue.tag">
+                <mat-option selected></mat-option>
+                <mat-option value="em">Estoque Mínimo</mat-option>
+                <mat-option value="pf">Polícia Federal</mat-option>
+                <mat-option value="pc">Polícia Civil</mat-option>
+                <mat-option value="eb">Exército Brasileiro</mat-option>
+              </mat-select>
+              <button
+                *ngIf="filtersValue.tag"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.tag = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Quantidade</h3>
+            <div class="min-max">
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.qtdMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.qtdMax"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Valor Unitário</h3>
+            <div class="min-max">
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrUnitMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrUnitMax"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Valor Total</h3>
+            <div class="min-max">
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Min</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrTotMin"
+                />
+              </mat-form-field>
+              <mat-form-field class="min-max-input" appearance="outline">
+                <mat-label>Max</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  class="number-input"
+                  [(ngModel)]="filtersValue.vlrTotMax"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <hr class="drawer-line" />
+          <div class="filter-option">
+            <h3 class="body-large">Localização no Estoque</h3>
+            <mat-form-field class="text-input" appearance="outline">
+              <mat-label>Localização</mat-label>
+              <input
+                matInput
+                type="text"
+                class="number-input"
+                [(ngModel)]="filtersValue.loc"
+              />
+              <button
+                *ngIf="filtersValue.loc"
+                matSuffix
+                mat-icon-button
+                (click)="filtersValue.loc = ''"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="filters-button">
+            <app-normal-button [filled]="true" (click)="applyFilters()">
+              Filtrar
+            </app-normal-button>
+            <app-normal-button (click)="cleanFilters()">
+              Limpar Filtros
+            </app-normal-button>
+          </div>
+        </div>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

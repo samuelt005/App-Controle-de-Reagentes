@@ -9,18 +9,21 @@ import { AuthService } from 'src/app/services';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    senha: new FormControl('', [Validators.required]),
-  });
-
+  // Construtor
   constructor(
     private AuthService: AuthService,
     private router: Router,
     private userService: UserService
   ) {}
 
-  login() {
+  // Atributos
+  public form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    senha: new FormControl('', [Validators.required]),
+  });
+
+  // Métodos
+  public login() {
     const formData = this.form.value as unknown as {
       email: string;
       senha: string;
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.AuthService.auth(formData).subscribe({
       next: () => {
         setTimeout(() => {
-          this.router.navigate(['/listing/page/1']);
+          this.router.navigate(['/listagem/page/1']);
         }, 500);
       },
       error: (e) => {
@@ -38,9 +41,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (this.userService.isLogged()) {
-        this.router.navigate(['/listing/page/1']);
+        this.router.navigate(['/listagem/page/1']);
     }
   }
 }

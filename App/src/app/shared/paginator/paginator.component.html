@@ -9,13 +9,21 @@
     <mat-icon class="material-icons-outlined"> arrow_back </mat-icon>
     <p>Anterior</p>
   </div>
-  <p class="pages body-small">{{minItem}} - {{maxItem}} de {{this.data.totalItems}}</p>
+  <p class="pages body-small">
+    {{ minItem }} - {{ maxItem }} de {{ this.data.totalItems }}
+  </p>
   <div
     class="forward-button body-small"
-    [ngClass]="this.data.totalItems/this.data.currentPage <= 20 ? '' : 'active'"
-    (click)="this.data.totalItems/this.data.currentPage <= 20 ? null : goToPage('forward')"
+    [ngClass]="
+      this.data.totalItems / this.data.currentPage <= 20 ? '' : 'active'
+    "
+    (click)="
+      this.data.totalItems / this.data.currentPage <= 20
+        ? null
+        : goToPage('forward')
+    "
     matRipple
-    [matRippleDisabled]="this.data.totalItems/this.data.currentPage <= 20"
+    [matRippleDisabled]="this.data.totalItems / this.data.currentPage <= 20"
   >
     <p>Próximo</p>
     <mat-icon class="material-icons-outlined"> arrow_forward </mat-icon>

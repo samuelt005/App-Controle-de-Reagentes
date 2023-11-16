@@ -5,18 +5,20 @@ import { PaginatorData } from 'src/app/interfaces';
   template: '',
 })
 export abstract class PageComponent {
-  paginatorData: PaginatorData = {
+  // Atributos
+  protected paginatorData: PaginatorData = {
     currentPage: 0,
     totalPages: 0,
     totalItems: 0,
   };
 
-  page = 1;
-  loading = true;
+  protected page = 1;
+  protected loading = true;
 
-  dataInputs: object[] = [];
+  protected dataInputs: object[] = [];
 
-  getFormattedDate(dateTimeStr: string): string {
+  // Métodos
+  protected getFormattedDate(dateTimeStr: string): string {
     const parts = dateTimeStr.split('T')[0].split('-');
     const day = parts[2];
     const month = parts[1];
@@ -24,7 +26,7 @@ export abstract class PageComponent {
     return `${day}/${month}/${year}`;
   }
 
-  getFormattedCnpj(cnpj: string): string {
+  protected getFormattedCnpj(cnpj: string): string {
     if (cnpj.length == 14) {
       const formattedCnpj = cnpj.replace(
         /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
@@ -35,12 +37,12 @@ export abstract class PageComponent {
       return 'CNPJ inválido';
     }
   }
-  
-  addNewSection() {
+
+  protected addNewSection() {
     this.dataInputs.push({});
   }
 
-  deleteSection(index: number) {
+  protected deleteSection(index: number) {
     this.dataInputs.splice(index, 1);
   }
 }

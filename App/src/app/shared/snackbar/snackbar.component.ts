@@ -8,9 +8,7 @@ import { SnackbarData } from 'src/app/interfaces';
   styleUrls: ['./snackbar.component.scss'],
 })
 export class SnackbarComponent {
-  error = false;
-  message = '';
-
+  // Construtor
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData) {
     if (!data.error) {
       this.message = 'Salvo com sucesso.';
@@ -22,4 +20,8 @@ export class SnackbarComponent {
       this.message = data.message;
     }
   }
+
+  // Atributos
+  public error = false;
+  public message = '';
 }

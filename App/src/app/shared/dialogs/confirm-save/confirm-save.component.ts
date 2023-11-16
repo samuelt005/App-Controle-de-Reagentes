@@ -4,7 +4,6 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { ConfirmSave } from 'src/app/interfaces';
 
 @Component({
   selector: 'app-confirm-save',
@@ -12,13 +11,15 @@ import { ConfirmSave } from 'src/app/interfaces';
   styleUrls: ['./confirm-save.component.scss'],
 })
 export class ConfirmSaveComponent {
+  // Construtor
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmSave,
+    @Inject(MAT_DIALOG_DATA) public message: string,
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<ConfirmSaveComponent>
   ) {}
 
-  confirm(result: boolean): void {
+  // Métodos
+  public confirm(result: boolean): void {
     this.dialogRef.close(result);
   }
 }

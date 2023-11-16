@@ -1,0 +1,31 @@
+<div class="item-container">
+  <h3 class="title-large">Novo Lote de Compra</h3>
+  <div class="inputs" [formGroup]="form">
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="text"
+        class="number-input body-large"
+        placeholder="Número do Lote"
+        formControlName="numero"
+        mask="999999999"
+        [specialCharacters]="[]"
+      />
+      <mat-error *ngIf="form.get('numero')?.hasError('required')">
+        Insira o número do lote.
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="saveData()"
+      [inactive]="!form.valid ? true : false"
+      [disabled]="!form.valid ? true : false"
+    >
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

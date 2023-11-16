@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SuppliersRow } from 'src/app/interfaces';
+import { FornecedoresData } from 'src/app/interfaces';
 import {
   NfesService,
   NfesUpdaterService,
-  SuppliersService,
+  FornecedoresService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
@@ -17,19 +17,9 @@ import { dateValidator } from 'src/app/utils';
   styleUrls: ['./new-nfe.component.scss'],
 })
 export class NewNfeComponent extends DialogComponent implements OnInit {
-  form = new FormGroup({
-    numero: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
-    id_fornecedor: new FormControl('', [Validators.required]),
-  });
-
-  selectData: SuppliersRow[] = [];
-
+  // Construtor
   constructor(
-    private fornecedoresService: SuppliersService,
+    private fornecedoresService: FornecedoresService,
     private nfesService: NfesService,
     public dialog: MatDialog,
     public override snackBar: MatSnackBar,
@@ -38,7 +28,20 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
     super(snackBar);
   }
 
-  saveData(
+  // Atributos
+  public form = new FormGroup({
+    numero: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
+    id_fornecedor: new FormControl('', [Validators.required]),
+  });
+
+  public selectData: FornecedoresData[] = [];
+
+  // Métodos
+  public saveData(
     enterAnimationDuration = '100ms',
     exitAnimationDuration = '100ms',
     message = 'O item não poderá ser excluído!'
@@ -46,7 +49,7 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
-      data: { message },
+      data: message,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -76,7 +79,7 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.fornecedoresService.listAll().subscribe((responseData) => {
       this.selectData = responseData.data;
     });

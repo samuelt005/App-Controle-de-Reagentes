@@ -1,12 +1,9 @@
 <div class="snackbar-content">
-  <span
-    class="test"
-    [ngClass]="[ error ? 'error' : 'success' ]"
-  >
+  <span class="test" [ngClass]="[error ? 'error' : 'success']">
     {{ this.message }}
   </span>
 
-  <mat-icon
-    [ngClass]="[ error ? 'error' : 'success' ]"
-  >{{ error ? 'close' : 'check'}}</mat-icon>
+  <mat-icon [ngClass]="[error ? 'error' : 'success']">{{
+    error ? "close" : "check"
+  }}</mat-icon>
 </div>

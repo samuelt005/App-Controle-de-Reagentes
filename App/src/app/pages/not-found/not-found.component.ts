@@ -7,13 +7,15 @@ import { PageComponent } from 'src/app/shared';
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent extends PageComponent {
+  // Construtor
   constructor(private router: Router) {
     super();
   }
 
-  returnPage() {
+  // Métodos
+  public returnPage() {
     setTimeout(() => {
-      this.router.navigate(['/listing/page/1']);
+      this.router.navigate(['/listagem/page/1']);
     }, 500);
   }
 }

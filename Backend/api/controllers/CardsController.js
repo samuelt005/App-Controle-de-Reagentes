@@ -1,50 +1,72 @@
 const database = require('../models');
 
 class CardsController {
-	static async getItemsSum(req, res) {
-		const { table, column } = req.params;
-
+	// Método para pegar os dados dos cards da página de listagem
+	static async getListingData(req, res) {
 		try {
-			const model = database[table];
-
-			if (
-				table == 'Usuarios' ||
-				table == 'Perfis' ||
-				table == 'Tags' ||
-				table == 'UnsDeMedida'
-			) {
-				return res.status(403).json();
-			} else {
-				const sum = await model.sum(column);
-				return res.status(200).json(sum);
-			}
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para pegar a quantidade de de tipos ativos
-	static async getActiveTypesCount(req, res) {
-		try {
-			const count = await database.TiposDeReagente.count({
+			const total_items = await database.TiposDeReagente.count({
 				where: { ativo: true },
 			});
-			return res.status(200).json(count);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
 
-	// Método para pegar o item com mais utilizações(saídas)
-	static async getMostUsedCount(req, res) {
-		try {
-			const maxItem = await database.TiposDeReagente.findOne({
+			const total_value = await database.TiposDeReagente.sum('vlr_estoque', {
+				where: { ativo: true },
+			});
+
+			const most_used = await database.TiposDeReagente.findOne({
 				attributes: ['descricao'],
-				order: [['saidas', 'DESC']],
 				where: { ativo: true },
 			});
 
-			return res.status(200).json(maxItem.descricao);
+			const resData = {
+				total_items,
+				total_value,
+				most_used: most_used.descricao,
+			};
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Método para pegar os dados dos cards da página de histórico
+	static async getHistoryData(req, res) {
+		const { id } = req.params;
+
+		try {
+			const total_value = await database.ItensMovimentacao.sum('valor_unit', {
+				where: { id_tipo_de_reagente_fk: id },
+			});
+
+			const type = await database.TiposDeReagente.findOne({
+				attributes: ['descricao'],
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+				],
+				where: { id },
+			});
+
+			const total_entries = await database.ItensMovimentacao.count({
+				where: { id_tipo_de_reagente_fk: id, operacao: 1 },
+			});
+
+			const total_outputs = await database.ItensMovimentacao.count({
+				where: { id_tipo_de_reagente_fk: id, operacao: 2 },
+			});
+
+			const resData = {
+				desc: type.descricao,
+				total_value,
+				total_entries,
+				total_outputs,
+				un_de_medida: type.un_de_medida,
+			};
+
+			return res.status(200).json(resData);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

@@ -1,12 +1,16 @@
 <div class="page-container">
-  <app-side-bar [filtersHidden]="true" />
+  <app-sidebar [filtersHidden]="true" />
   <div class="main-content">
-    <app-header [pageTitle]="pageTitle" />
+    <header class="header">
+      <app-page-title [pageTitle]="pageTitle" />
+      <mat-form-field class="search-input" appearance="outline">
+        <mat-label>Pesquisar por Fornecedor ou Número</mat-label>
+        <input matInput type="text" class="number-input" />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </header>
     <div class="table-spacer">
-      <div
-        *ngIf="tableData.length !== 0"
-        class="table-container"
-      >
+      <div *ngIf="tableData.length !== 0" class="table-container">
         <div class="table-header">
           <p class="numero body-medium">Nº NF-e</p>
           <p class="razao body-medium">Fornecedor</p>
@@ -17,36 +21,31 @@
         <div
           *ngFor="let row of tableData"
           class="table-row"
-          (click)="openEditItem('100ms', '100ms', row)"
+          (click)="openEditItem(row)"
         >
           <p class="numero body-medium">{{ row.numero }}</p>
           <p class="razao body-medium">{{ row.emitente.razao_social }}</p>
-          <p class="cnpj body-medium">{{ getFormattedCnpj(row.emitente.cnpj) }}</p>
-          <p class="data body-medium">{{ getFormattedDate(row.data_emissao) }}</p>
+          <p class="cnpj body-medium">
+            {{ getFormattedCnpj(row.emitente.cnpj) }}
+          </p>
+          <p class="data body-medium">
+            {{ getFormattedDate(row.data_emissao) }}
+          </p>
           <p class="vinculados body-medium">{{ row.itens_vinculados }}</p>
         </div>
       </div>
-      <div
-        *ngIf="tableData.length === 0 && !loading"
-        class="empty-container"
-      >
+      <div *ngIf="tableData.length === 0 && !loading" class="empty-container">
         <mat-icon class="empty-icon">web_asset_off</mat-icon>
         <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
       </div>
-      <div
-        *ngIf="loading"
-        class="loading-container"
-      >
+      <div *ngIf="loading" class="loading-container">
         <mat-spinner [diameter]="40"></mat-spinner>
       </div>
     </div>
     <app-paginator [data]="paginatorData" />
 
     <div class="button-container">
-      <app-normal-button
-        (click)="openNewItem('100ms', '100ms')"
-        [filled]="true"
-      >
+      <app-normal-button (click)="openNewItem()" [filled]="true">
         Incluir Novo
       </app-normal-button>
     </div>

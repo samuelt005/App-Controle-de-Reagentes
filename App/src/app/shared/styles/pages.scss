@@ -17,6 +17,36 @@
     margin: 0 auto;
     padding: 22px 80px;
 
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .search-input {
+        width: 450px;
+        height: 56px;
+
+        input {
+          height: 24px;
+        }
+
+        mat-icon {
+          cursor: pointer;
+          color: var(--cinza-3);
+        }
+      }
+
+      ::ng-deep .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
+        border-top-left-radius: var(--mdc-shape-small, 10px) !important;
+        border-bottom-left-radius: var(--mdc-shape-small, 10px) !important;
+      }
+
+      ::ng-deep .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
+        border-top-right-radius: var(--mdc-shape-small, 10px) !important;
+        border-bottom-right-radius: var(--mdc-shape-small, 10px) !important;
+      }
+    }
+
     .content-spacer {
       height: 100%;
       min-height: 200px;

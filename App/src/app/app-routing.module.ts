@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {
   LoginComponent,
-  ListingComponent,
-  HistoryComponent,
-  WriteOffComponent,
-  RequestComponent,
-  RequestListingComponent,
-  ReportsComponent,
-  MaterialTypesComponent,
+  ListagemComponent,
+  HistoricoComponent,
+  DarBaixaComponent,
+  SolicitarComponent,
+  SolicitacoesComponent,
+  RelatoriosComponent,
+  TiposDeReagenteComponent,
   NfesComponent,
-  SuppliersComponent,
-  PurchaseLotsComponent,
+  FornecedoresComponent,
+  LotesDeCompraComponent,
   NotFoundComponent,
 } from './pages';
 
@@ -26,44 +26,44 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'listing/page/:page',
-    component: ListingComponent,
+    path: 'listagem/page/:page',
+    component: ListagemComponent,
   },
   {
-    path: 'history/item/:id/page/:page',
-    component: HistoryComponent,
+    path: 'historico/item/:id/page/:page',
+    component: HistoricoComponent,
   },
   {
-    path: 'writeoff',
-    component: WriteOffComponent,
+    path: 'cadastrarbaixa',
+    component: DarBaixaComponent,
   },
   {
-    path: 'request',
-    component: RequestComponent,
+    path: 'solicitarcompra',
+    component: SolicitarComponent,
   },
   {
-    path: 'requestlisting/page/:page',
-    component: RequestListingComponent,
+    path: 'solicitacoes/page/:page',
+    component: SolicitacoesComponent,
   },
   {
-    path: 'reports',
-    component: ReportsComponent,
+    path: 'relatorios',
+    component: RelatoriosComponent,
   },
   {
-    path: 'materialtypes/page/:page',
-    component: MaterialTypesComponent,
+    path: 'tiposdereagentes/page/:page',
+    component: TiposDeReagenteComponent,
   },
   {
     path: 'nfes/page/:page',
     component: NfesComponent,
   },
   {
-    path: 'suppliers/page/:page',
-    component: SuppliersComponent,
+    path: 'fornecedores/page/:page',
+    component: FornecedoresComponent,
   },
   {
-    path: 'purchaselots/page/:page',
-    component: PurchaseLotsComponent,
+    path: 'lotesdecompra/page/:page',
+    component: LotesDeCompraComponent,
   },
   {
     path: '**',

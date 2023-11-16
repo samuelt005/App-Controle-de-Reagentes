@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UnsDeMedida } from 'src/app/interfaces';
+import { UnDeMedida } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -20,9 +20,9 @@ export class UnsDeMedidaService {
     return headers;
   }
 
-  listAll(): Observable<UnsDeMedida[]> {
+  public listAll(): Observable<UnDeMedida[]> {
     const headers = this.getHeaders();
-    return this.http.get<UnsDeMedida[]>(`${environment.apiUrl}/unsdemedida`, {
+    return this.http.get<UnDeMedida[]>(`${environment.apiUrl}/unsdemedida`, {
       headers,
     });
   }

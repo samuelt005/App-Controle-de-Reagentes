@@ -7,11 +7,11 @@ import { Subject } from 'rxjs';
 export class NfesUpdaterService {
   private updateSubject = new Subject<void>();
 
-  updateTable() {
+  public updateTable() {
     this.updateSubject.next();
   }
 
-  getUpdateObservable() {
+  public getUpdateObservable() {
     return this.updateSubject.asObservable();
   }
 }
