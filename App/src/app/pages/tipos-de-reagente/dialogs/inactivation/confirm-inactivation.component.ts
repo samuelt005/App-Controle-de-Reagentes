@@ -7,7 +7,6 @@ import {
 import { ConfirmSaveComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-confirm-inactivation',
   templateUrl: './confirm-inactivation.component.html',
   styleUrls: ['./confirm-inactivation.component.scss'],
 })

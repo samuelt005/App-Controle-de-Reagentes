@@ -11,6 +11,8 @@ export * from './page-title/page-title.component';
 export * from './card/card.component';
 export * from './paginator/paginator.component';
 export * from './sidebar/sidebar.component';
+export * from './sidebar/dialogs/profile/profile.component';
+export * from './sidebar/dialogs/change-password/change-password.component';
 export * from './sidebar/menu-option/menu-option.component';
 export * from './tags/tags.component';
 export * from './snackbar/snackbar.component';

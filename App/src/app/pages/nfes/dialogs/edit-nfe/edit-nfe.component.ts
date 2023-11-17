@@ -12,7 +12,6 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
 
 @Component({
-  selector: 'app-edit-nfe',
   templateUrl: './edit-nfe.component.html',
   styleUrls: ['./edit-nfe.component.scss'],
 })

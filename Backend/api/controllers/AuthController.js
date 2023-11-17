@@ -12,7 +12,14 @@ class AuthController {
 				where: {
 					email,
 				},
-				attributes: ['id', 'email', 'senha'],
+				attributes: ['id', 'nome', 'ra', 'cpf', 'email', 'senha'],
+				include: [
+					{
+						model: database.Perfis,
+						as: 'perfil',
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+				],
 			});
 
 			if (!usuario) {
@@ -30,7 +37,11 @@ class AuthController {
 			const accessToken = sign(
 				{
 					id: usuario.id,
+					nome: usuario.nome,
+					ra: usuario.ra,
+					cpf: usuario.cpf,
 					email: usuario.email,
+					perfil: usuario.perfil.nome,
 				},
 				jsonSecret.secret,
 				{ expiresIn: 86400 }

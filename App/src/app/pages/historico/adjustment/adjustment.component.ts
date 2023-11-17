@@ -3,12 +3,15 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdjustmentsDialog } from 'src/app/interfaces';
-import { HistoricoService, HistoricoUpdaterService } from 'src/app/services';
+import {
+  HistoricoService,
+  HistoricoUpdaterService,
+  UserService,
+} from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
 
 @Component({
-  selector: 'app-adjustment',
   templateUrl: './adjustment.component.html',
   styleUrls: ['./adjustment.component.scss'],
 })
@@ -19,7 +22,8 @@ export class AdjustmentComponent extends DialogComponent {
     public override snackBar: MatSnackBar,
     public dialog: MatDialog,
     public historicoService: HistoricoService,
-    private tableUpdaterService: HistoricoUpdaterService
+    private tableUpdaterService: HistoricoUpdaterService,
+    private userService: UserService
   ) {
     super(snackBar);
     this.id = dialogData.id;
@@ -50,12 +54,22 @@ export class AdjustmentComponent extends DialogComponent {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        const id_usuario = this.userService.getUserId();
+
         const formData = this.form.value as unknown as {
           data: Date;
           valor_total: number;
           quantidade: number;
           comentario: string;
+          id_usuario: string;
         };
+
+        if (id_usuario !== null) {
+          formData.id_usuario = id_usuario;
+        } else {
+          console.error('ID do usuário é nulo.');
+          return;
+        }
 
         if (this.id !== null) {
           this.historicoService.addNew(this.id, formData).subscribe({
@@ -69,8 +83,8 @@ export class AdjustmentComponent extends DialogComponent {
             },
           });
         } else {
-          // Handle the case where this.id is null
-          console.error('ID is null. Cannot save data.');
+          console.error('ID é nulo. Não foi possível salvar.');
+          return;
         }
       } else {
         this.dialog.closeAll();

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MenuOption } from 'src/app/interfaces';
+import { MenuOption, UserData } from 'src/app/interfaces';
 import { UserService } from 'src/app/services';
+import { ProfileComponent } from './dialogs/profile/profile.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,14 +12,24 @@ import { UserService } from 'src/app/services';
 })
 export class SidebarComponent implements OnInit {
   // Construtor
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private dialog: MatDialog
+  ) {
+    const userData = this.userService.getUserData();
+    if (userData !== null) {
+      this.roleName = userData.perfil;
+      this.userData = userData;
+    }
+  }
 
   // Atributos
-  public role = 1; //TODO remover depois
-  //TODO arrumar responsívidade
+  public roleName = '';
   public menusDrawer = false;
   public filtersDrawer = false;
   public isChecked = false;
+  private userData: UserData | null = null;
   @Input() public filtersHidden = false;
 
   public filtersValue = {
@@ -36,42 +48,42 @@ export class SidebarComponent implements OnInit {
     {
       title: 'Cadastrar Baixa',
       page: '/cadastrarbaixa',
-      authorized: [1, 2, 3],
+      authorized: ['Administrador', 'Professor', 'Aluno'],
     },
     {
       title: 'Solicitar Compra',
       page: '/solicitarcompra',
-      authorized: [1, 2],
+      authorized: ['Administrador', 'Professor'],
     },
     {
       title: 'Solicitações de Compra',
       page: '/solicitacoes/page/1',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
     {
       title: 'Gerar Relatórios',
       page: '/relatorios',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
     {
       title: 'Registro de Materiais',
       page: '/tiposdereagentes/page/1',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
     {
       title: 'Notas Fiscais',
       page: 'nfes/page/1',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
     {
       title: 'Fornecedores',
       page: 'fornecedores/page/1',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
     {
       title: 'Lotes de Compra',
       page: 'lotesdecompra/page/1',
-      authorized: [1],
+      authorized: ['Administrador'],
     },
   ];
 
@@ -85,22 +97,6 @@ export class SidebarComponent implements OnInit {
   };
 
   // Métodos
-  public getRoleName(role: number) {
-    switch (role) {
-      case 1:
-        return 'Administrador';
-
-      case 2:
-        return 'Professor';
-
-      case 3:
-        return 'Aluno';
-
-      default:
-        return 'PLACEHOLDER';
-    }
-  }
-
   public toggleMenusDrawer() {
     this.menusDrawer = !this.menusDrawer;
     if (this.filtersDrawer) {
@@ -149,6 +145,18 @@ export class SidebarComponent implements OnInit {
     this.filtersValue.vlrTotMin = null;
     this.filtersValue.vlrTotMax = null;
     this.filtersValue.loc = '';
+  }
+
+  public openProfile(
+    userData = this.userData,
+    enterAnimationDuration = '100ms',
+    exitAnimationDuration = '100ms'
+  ): void {
+    this.dialog.open(ProfileComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: userData,
+    });
   }
 
   public ngOnInit(): void {

@@ -10,7 +10,6 @@ import {
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-edit-tags',
   templateUrl: './edit-tags.component.html',
   styleUrls: ['./edit-tags.component.scss'],
 })

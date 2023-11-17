@@ -54,6 +54,8 @@ import {
 } from './pages';
 import {
   SidebarComponent,
+  ProfileComponent,
+  ChangePasswordComponent,
   HeaderComponent,
   InfoCardComponent,
   PaginatorComponent,
@@ -92,6 +94,8 @@ export const CUSTOM_FORMAT: MatDateFormats = {
     LoginComponent,
     ListagemComponent,
     SidebarComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
     HeaderComponent,
     InfoCardComponent,
     PaginatorComponent,

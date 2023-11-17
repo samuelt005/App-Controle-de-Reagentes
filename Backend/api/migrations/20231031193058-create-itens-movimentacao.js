@@ -26,6 +26,7 @@ module.exports = {
 			novo: {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
+				defaultValue: false,
 			},
 			recusado: {
 				type: Sequelize.BOOLEAN,
@@ -33,12 +34,12 @@ module.exports = {
 			validade: {
 				type: Sequelize.DATEONLY,
 			},
+			data_ajuste: {
+				type: Sequelize.DATEONLY,
+			},
 			comentario: {
 				allowNull: false,
 				type: Sequelize.STRING(200),
-			},
-      resp_ajuste: {
-				type: Sequelize.STRING(50),
 			},
 			id_solicitacao_fk: {
 				allowNull: true,
@@ -54,6 +55,11 @@ module.exports = {
 				allowNull: true,
 				type: Sequelize.INTEGER,
 				references: { model: 'Nfes', key: 'id' },
+			},
+			id_usuario_fk: {
+				allowNull: true,
+				type: Sequelize.UUID,
+				references: { model: 'Usuarios', key: 'id' },
 			},
 			id_tipo_de_reagente_fk: {
 				allowNull: false,

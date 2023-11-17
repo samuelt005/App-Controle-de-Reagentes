@@ -10,7 +10,6 @@ import {
 import { DialogComponent, ConfirmSaveComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-edit-purchase-lot',
   templateUrl: './edit-lotes-de-compra.component.html',
   styleUrls: ['./edit-lotes-de-compra.component.scss'],
 })

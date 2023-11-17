@@ -13,7 +13,6 @@ import {
 } from 'src/app/services';
 
 @Component({
-  selector: 'app-edit-type',
   templateUrl: './edit-tipos-de-reagente.component.html',
   styleUrls: ['./edit-tipos-de-reagente.component.scss'],
 })

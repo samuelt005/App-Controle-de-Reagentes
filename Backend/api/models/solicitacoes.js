@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'id_solicitacao_fk',
 			});
       Solicitacoes.belongsTo(models.Usuarios, {
-        as: 'responsavel',
+        as: 'responsavel_solicitacao',
 				foreignKey: 'id_usuario_fk',
 			});
 		}

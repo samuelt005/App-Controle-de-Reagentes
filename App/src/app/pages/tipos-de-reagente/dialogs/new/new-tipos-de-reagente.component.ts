@@ -11,7 +11,6 @@ import {
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-new-type',
   templateUrl: './new-tipos-de-reagente.component.html',
   styleUrls: ['./new-tipos-de-reagente.component.scss'],
 })

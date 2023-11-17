@@ -35,12 +35,18 @@
           >
             {{ getIconType(i) }}
           </mat-icon>
-          <p class="data body-medium">{{ getFormattedDate(row.data) }}</p>
-          <p class="forn-resp body-medium">
+          <p class="data body-medium">
             {{
               row.operacao === 3
-                ? row.resp_ajuste
-                : row.solicitacao.responsavel.nome
+                ? getFormattedDate(row.data_ajuste)
+                : getFormattedDate(row.data)
+            }}
+          </p>
+          <p class="forn-resp body-medium">
+            {{
+              row.operacao === 1
+                ? row.solicitacao.responsavel_solicitacao.nome
+                : row.responsavel_movimentacao.nome
             }}
           </p>
           <p class="nfe body-medium">

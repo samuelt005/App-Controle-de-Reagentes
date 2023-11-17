@@ -8,34 +8,47 @@
           (click)="returnPage()"
         />
       </div>
-      <app-icon-button (click)="toggleMenusDrawer()" [activated]="menusDrawer">
+      <app-icon-button
+        class="icon-button"
+        [activated]="menusDrawer"
+        (click)="toggleMenusDrawer()"
+      >
         menu
       </app-icon-button>
       <app-icon-button
-        (click)="toggleFiltersDrawer()"
+        class="icon-button"
         [activated]="filtersDrawer"
         *ngIf="!filtersHidden"
+        (click)="toggleFiltersDrawer()"
       >
         filter_alt
       </app-icon-button>
-      <app-icon-button (click)="returnPage()" *ngIf="filtersHidden">
+      <app-icon-button
+        class="icon-button"
+        *ngIf="filtersHidden"
+        (click)="returnPage()"
+      >
         arrow_back
       </app-icon-button>
     </div>
     <span class="spacer"></span>
     <div class="bottom-content">
-      <app-icon-button> person </app-icon-button>
-      <app-icon-button (click)="logOut()"> logout </app-icon-button>
+      <app-icon-button class="icon-button" (click)="openProfile()">
+        person
+      </app-icon-button>
+      <app-icon-button class="icon-button" (click)="logOut()">
+        logout
+      </app-icon-button>
     </div>
   </mat-toolbar>
 
   <mat-drawer-container class="drawer-container">
     <mat-drawer #drawer1 class="drawer" mode="over" [opened]="menusDrawer">
       <div class="menus-drawer">
-        <h2 class="drawer-title title-large">{{ getRoleName(this.role) }}</h2>
+        <h2 class="drawer-title title-large">{{ this.roleName }}</h2>
         <hr class="drawer-line" />
         <ng-container *ngFor="let option of menuOptions">
-          <ng-container *ngIf="option.authorized.includes(role)">
+          <ng-container *ngIf="option.authorized.includes(roleName)">
             <app-menu-option (click)="goToPage(option.page)">{{
               option.title
             }}</app-menu-option>

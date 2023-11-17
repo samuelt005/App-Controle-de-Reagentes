@@ -29,6 +29,7 @@ class TiposDeReagenteController {
 							'id_nfe_fk',
 							'validade',
 							'updatedAt',
+							'id_usuario_fk',
 						],
 						include: [
 							[
@@ -60,7 +61,7 @@ class TiposDeReagenteController {
 							include: [
 								{
 									model: database.Usuarios,
-									as: 'responsavel',
+									as: 'responsavel_solicitacao',
 									attributes: ['nome'],
 								},
 							],
@@ -76,6 +77,11 @@ class TiposDeReagenteController {
 									attributes: ['sigla'],
 								},
 							],
+						},
+						{
+							model: database.Usuarios,
+							as: 'responsavel_movimentacao',
+							attributes: ['nome'],
 						},
 					],
 					order: [['updatedAt', 'ASC']],
@@ -98,7 +104,7 @@ class TiposDeReagenteController {
 	}
 
 	static async newAdjustment(req, res) {
-		const { data, valor_total, quantidade, comentario } = req.body;
+		const { data, valor_total, quantidade, comentario, id_usuario } = req.body;
 		const { id } = req.params;
 
 		const valor_unit = parseFloat(valor_total / quantidade);
@@ -108,9 +114,9 @@ class TiposDeReagenteController {
 				operacao: 3,
 				qtd_mov: quantidade,
 				valor_unit,
-				novo: false,
+				data_ajuste: data,
 				comentario,
-				resp_ajuste: 'Teste123', // TODO adicionar o usuário que fez o cadastro do ajuste
+				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: id,
 			});
 
@@ -122,7 +128,7 @@ class TiposDeReagenteController {
 
 				const newValue =
 					parseFloat(tipoDeReagente.vlr_estoque) + parseFloat(valor_total);
-          
+
 				await database.TiposDeReagente.update(
 					{ vlr_estoque: newValue },
 					{

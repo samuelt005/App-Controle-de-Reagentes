@@ -1,0 +1,32 @@
+<div class="item-container">
+  <h3 class="title-large">Dados do Usuário</h3>
+  <div class="user-data">
+    <div class="data-titles">
+      <p class="body-large">Nome:</p>
+      <p class="body-large">RA:</p>
+      <p class="body-large">CPF:</p>
+      <p class="body-large">E-mail:</p>
+      <p class="body-large">Perfil:</p>
+    </div>
+    <div class="datas">
+      <p class="body-large">{{ userData.nome }}</p>
+      <p class="body-large">{{ userData.ra }}</p>
+      <p class="body-large">{{ userData.cpf }}</p>
+      <p class="body-large">{{ userData.email }}</p>
+      <p class="body-large">{{ userData.perfil }}</p>
+    </div>
+  </div>
+  <div class="buttons">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="openPasswordChanging()"
+    >
+      Alterar Senha
+    </app-normal-button>
+    <app-normal-button mat-dialog-close [filled]="true">
+      Alterar E-mail
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Fechar </app-normal-button>
+  </div>
+</div>

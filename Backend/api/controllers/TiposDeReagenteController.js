@@ -284,8 +284,6 @@ class TiposDeReagenteController {
 				},
 			});
 
-			// TODO converter o estoque atual quando a un de medida é alterada
-
 			if (
 				existingTipoDeReagente &&
 				existingTipoDeReagente.id !== parseInt(id)
@@ -344,7 +342,5 @@ class TiposDeReagenteController {
 		}
 	}
 }
-
-// TODO Método para atualizar as tags de um tipo de reagente
 
 module.exports = TiposDeReagenteController;

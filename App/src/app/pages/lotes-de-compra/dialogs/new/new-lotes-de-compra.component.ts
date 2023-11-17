@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 
 @Component({
-  selector: 'app-new-purchase-lots',
+  selector: 'app-new-lotes-de-compra',
   templateUrl: './new-lotes-de-compra.component.html',
   styleUrls: ['./new-lotes-de-compra.component.scss'],
 })

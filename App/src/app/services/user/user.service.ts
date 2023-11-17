@@ -39,4 +39,14 @@ export class UserService {
   public isLogged() {
     return this.tokenService.haveToken();
   }
+
+  public getUserId(): string | null {
+    const user = this.userSubject.value;
+    return user ? user.id : null;
+  }
+
+  public getUserData() {
+    const user = this.userSubject.value;
+    return user ? user : null;
+  }
 }

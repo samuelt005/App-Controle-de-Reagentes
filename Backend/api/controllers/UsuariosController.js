@@ -3,8 +3,6 @@ const { Usuarios } = require('../models');
 const { hash } = require('bcryptjs');
 const uuid = require('uuid');
 
-// TODO melhorar a segurança
-
 class UsuariosController {
 	// Método para pegar um usuario específico
 	static async getUsuario(req, res) {
@@ -34,7 +32,6 @@ class UsuariosController {
 		const { nome, email, nova_senha, ra, cpf } = req.body;
 
 		try {
-			// TODO validar CPF também?
 			const existingRa = await Usuarios.findOne({
 				where: {
 					ra,

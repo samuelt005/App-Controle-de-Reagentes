@@ -15,9 +15,9 @@ export interface HistoricosData {
   valor_unit: string;
   novo: boolean;
   recusado: boolean;
-  resp_ajuste: string;
   comentario: string;
   data: string;
+  data_ajuste: string;
   nfe: {
     numero: number;
     id_emitente: number;
@@ -28,7 +28,7 @@ export interface HistoricosData {
   };
   solicitacao: {
     id_responsavel: number;
-    responsavel: {
+    responsavel_solicitacao: {
       nome: string;
     };
   };
@@ -37,6 +37,9 @@ export interface HistoricosData {
     un_de_medida: {
       sigla: string;
     };
+  };
+  responsavel_movimentacao: {
+    nome: string;
   };
 }
 

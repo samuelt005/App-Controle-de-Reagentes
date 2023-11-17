@@ -8,7 +8,6 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { cnpjValidator } from 'src/app/utils';
 
 @Component({
-  selector: 'app-edit-supplier',
   templateUrl: './edit-fornecedores.component.html',
   styleUrls: ['./edit-fornecedores.component.scss'],
 })

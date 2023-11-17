@@ -7,7 +7,7 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { cnpjValidator } from 'src/app/utils';
 
 @Component({
-  selector: 'app-new-supplier',
+  selector: 'app-new-fornecedores',
   templateUrl: './new-fornecedores.component.html',
   styleUrls: ['./new-fornecedores.component.scss'],
 })
