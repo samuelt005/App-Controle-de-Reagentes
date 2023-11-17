@@ -73,12 +73,14 @@ export class ListagemComponent extends PageComponent implements OnInit {
 
       this.infoCardsService.getListingData().subscribe((responseData) => {
         this.infoCards[0].data = responseData.total_items.toString();
-        this.infoCards[1].data =
-          'R$ ' +
-          responseData.total_value.toLocaleString('pt-BR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          });
+        if (responseData.total_value !== null) {
+          this.infoCards[1].data =
+            'R$ ' +
+            responseData.total_value.toLocaleString('pt-BR', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }); // TODO verificar pq o valor não é convertido
+        }
         this.infoCards[2].data = responseData.most_used;
       });
     });

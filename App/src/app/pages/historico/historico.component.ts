@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { PageTitle, Card, HistoricosData } from 'src/app/interfaces';
 import {
-  PageTitle,
-  Card,
-  HistoricosData,
-} from 'src/app/interfaces';
-import { HistoricoService, CardsService } from 'src/app/services';
+  HistoricoService,
+  CardsService,
+  HistoricoUpdaterService,
+} from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 import { CommentaryComponent } from 'src/app/shared';
 import { AdjustmentComponent } from './adjustment/adjustment.component';
@@ -21,7 +21,8 @@ export class HistoricoComponent extends PageComponent implements OnInit {
     private dialog: MatDialog,
     private historyService: HistoricoService,
     private infoCardsService: CardsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tableUpdaterService: HistoricoUpdaterService
   ) {
     super();
   }
@@ -119,39 +120,50 @@ export class HistoricoComponent extends PageComponent implements OnInit {
     });
   }
 
+  private updateTableData(page: number, id: number): void {
+    this.tableData = [];
+    this.loading = true;
+
+    this.historyService.listPerPage(page, id).subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.tableData = responseData.data;
+      this.loading = false;
+    });
+
+    this.infoCardsService.getHistoryData(id).subscribe((responseData) => {
+      this.infoCards[0].data = responseData.desc;
+      if (responseData.total_value !== null) {
+        this.infoCards[1].data =
+          'R$ ' +
+          responseData.total_value.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+      }
+      this.infoCards[2].data = responseData.total_entries.toString();
+      this.infoCards[3].data = responseData.total_outputs.toString();
+      this.unDeMedida = responseData.un_de_medida.nome;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page, this.id);
+  }
+
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
       this.id = Number(params.get('id'));
+      this.updateTableData(this.page, this.id);
+    });
 
-      this.historyService
-        .listPerPage(this.page, this.id)
-        .subscribe((responseData) => {
-          const { currentPage, totalPages, totalItems } = responseData;
-          this.paginatorData = {
-            currentPage: currentPage,
-            totalPages: totalPages,
-            totalItems: totalItems,
-          };
-          this.tableData = responseData.data;
-        });
-
-      this.infoCardsService
-        .getHistoryData(this.id)
-        .subscribe((responseData) => {
-          this.infoCards[0].data = responseData.desc;
-          this.infoCards[1].data =
-            'R$ ' +
-            responseData.total_value.toLocaleString('pt-BR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
-          this.infoCards[2].data = responseData.total_entries.toString();
-          this.infoCards[3].data = responseData.total_outputs.toString();
-          this.unDeMedida = responseData.un_de_medida.nome;
-        });
-
-      this.loading = false;
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

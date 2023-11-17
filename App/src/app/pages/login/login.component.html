@@ -34,6 +34,7 @@
             </mat-error>
           </mat-form-field>
           <hr />
+          <p class="login-error">{{ loginError }}</p>
           <app-normal-button
             (click)="login()"
             [filled]="true"

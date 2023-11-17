@@ -52,6 +52,18 @@
             height: 1px;
             background-color: var(--cinza-2);
             border: none;
+            margin: 0;
+          }
+
+          .login-error {
+            height: 24px;
+            color: var(--erro-2);
+            margin: 0;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0.5px;
           }
 
           p {

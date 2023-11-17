@@ -101,14 +101,37 @@ class TiposDeReagenteController {
 		const { data, valor_total, quantidade, comentario } = req.body;
 		const { id } = req.params;
 
+		const valor_unit = parseFloat(valor_total / quantidade);
+
 		try {
-			const createdTipoDeReagente = await database.TiposDeReagente.create({
-				cod,
-				descricao,
-				loc_estoque,
-				id_un_de_medida_fk: id_un_de_medida,
+			const createdItemMovimentacao = await database.ItensMovimentacao.create({
+				operacao: 3,
+				qtd_mov: quantidade,
+				valor_unit,
+				novo: false,
+				comentario,
+				resp_ajuste: 'Teste123', // TODO adicionar o usuário que fez o cadastro do ajuste
+				id_tipo_de_reagente_fk: id,
 			});
-			return res.status(200).json(createdTipoDeReagente);
+
+			if (createdItemMovimentacao !== null) {
+				const tipoDeReagente = await database.TiposDeReagente.findOne({
+					where: { id: Number(id) },
+					attributes: ['vlr_estoque'],
+				});
+
+				const newValue =
+					parseFloat(tipoDeReagente.vlr_estoque) + parseFloat(valor_total);
+          
+				await database.TiposDeReagente.update(
+					{ vlr_estoque: newValue },
+					{
+						where: { id: Number(id) },
+					}
+				);
+			}
+
+			return res.status(200).json(createdItemMovimentacao);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

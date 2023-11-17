@@ -24,6 +24,6 @@ export interface ListagemData {
 
 export interface ListagemPageData {
   total_items: number;
-  total_value: number;
+  total_value: number | null;
   most_used: string;
 }

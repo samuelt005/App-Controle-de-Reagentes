@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
     senha: new FormControl('', [Validators.required]),
   });
 
+  public loginError = '';
+
   // Métodos
   public login() {
     const formData = this.form.value as unknown as {
@@ -36,14 +38,16 @@ export class LoginComponent implements OnInit {
         }, 500);
       },
       error: (e) => {
-        console.error('Ocorreu um erro:', e);
+        if (e.status === 404 || e.status === 401) {
+          this.loginError = 'Usuário ou senha incorreto!';
+        }
       },
     });
   }
 
   public ngOnInit(): void {
     if (this.userService.isLogged()) {
-        this.router.navigate(['/listagem/page/1']);
+      this.router.navigate(['/listagem/page/1']);
     }
   }
 }

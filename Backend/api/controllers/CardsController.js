@@ -34,8 +34,9 @@ class CardsController {
 		const { id } = req.params;
 
 		try {
-			const total_value = await database.ItensMovimentacao.sum('valor_unit', {
-				where: { id_tipo_de_reagente_fk: id },
+			const tipoDeReagente = await database.TiposDeReagente.findOne({
+				where: { id: Number(id) },
+				attributes: ['vlr_estoque'],
 			});
 
 			const type = await database.TiposDeReagente.findOne({
@@ -60,7 +61,7 @@ class CardsController {
 
 			const resData = {
 				desc: type.descricao,
-				total_value,
+				total_value: tipoDeReagente.vlr_estoque,
 				total_entries,
 				total_outputs,
 				un_de_medida: type.un_de_medida,

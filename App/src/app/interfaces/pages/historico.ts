@@ -1,4 +1,4 @@
-import { UnDeMedida } from "../shared/un-de-medida";
+import { UnDeMedida } from '../shared/un-de-medida';
 
 export interface HistoricosResponse {
   currentPage: number;
@@ -40,9 +40,16 @@ export interface HistoricosData {
   };
 }
 
+export interface HistoricosRequest {
+  data: Date;
+  valor_total: number;
+  quantidade: number;
+  comentario: string;
+}
+
 export interface HistoricosPageData {
   desc: string;
-  total_value: number;
+  total_value: number | null;
   total_entries: number;
   total_outputs: number;
   un_de_medida: UnDeMedida;
