@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogComponent } from 'src/app/shared/dialogs/dialog/dialog.component';
 import { passwordValidator } from 'src/app/utils';
+import { updatePassword } from 'src/app/interfaces';
 
 @Component({
   templateUrl: './change-password.component.html',
@@ -11,14 +13,22 @@ import { passwordValidator } from 'src/app/utils';
 })
 export class ChangePasswordComponent extends DialogComponent implements OnInit {
   // Construtor
-  constructor(public dialog: MatDialog, public override snackBar: MatSnackBar) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: string,
+    public dialog: MatDialog,
+    public override snackBar: MatSnackBar,
+    public userService: UserService
+  ) {
     super(snackBar);
   }
 
   // Atributos
   public form = new FormGroup({
     old_password: new FormControl('', [Validators.required]),
-    new_password: new FormControl('', [Validators.required, passwordValidator()]),
+    new_password: new FormControl('', [
+      Validators.required,
+      passwordValidator(),
+    ]),
     confirm_password: new FormControl('', [Validators.required]),
   });
 
@@ -49,7 +59,7 @@ export class ChangePasswordComponent extends DialogComponent implements OnInit {
   }
 
   public saveData() {
-    const formData = this.form.value as unknown as {
+    const formData = this.form.value as updatePassword as {
       old_password: string;
       new_password: string;
       confirm_password: string;
@@ -60,9 +70,21 @@ export class ChangePasswordComponent extends DialogComponent implements OnInit {
       return;
     }
 
-    this.changePasswordError = 'Senha atual incorreta!';
-
-    console.log(formData);
+    this.userService.updatePassword(formData, this.dialogData).subscribe({
+      complete: () => {
+        this.dialog.closeAll();
+        this.openSnackBar(false);
+      },
+      error: (e) => {
+        if (e.status === 401) {
+          this.changePasswordError = 'Senha atual incorreta!';
+        } else if (e.status === 400) {
+          this.changePasswordError = 'Nova senha igual a senha atual!';
+        } else {
+          console.error('Ocorreu um erro:', e);
+        }
+      },
+    });
   }
 
   ngOnInit() {

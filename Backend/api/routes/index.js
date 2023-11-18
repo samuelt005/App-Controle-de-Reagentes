@@ -16,8 +16,8 @@ module.exports = (app) => {
 	app.use(bodyParser.json()); // Converte os dados de body recebidos por métodos em JSON
 	app.use(
 		auth,
-		usuarios,
 		fornecedores,
+		usuarios,
 		lotesdecompra,
 		nfes,
 		solicitacoes,

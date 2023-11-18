@@ -79,7 +79,7 @@ export class ListagemComponent extends PageComponent implements OnInit {
             responseData.total_value.toLocaleString('pt-BR', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
-            }); // TODO verificar pq o valor não é convertido
+            });
         }
         this.infoCards[2].data = responseData.most_used;
       });

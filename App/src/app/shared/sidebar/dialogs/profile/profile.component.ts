@@ -49,6 +49,8 @@ export class ProfileComponent extends DialogComponent implements OnInit {
     });
   }
 
+  // TODO adicionar alteração de email
+
   ngOnInit(): void {
     console.log('');
   }

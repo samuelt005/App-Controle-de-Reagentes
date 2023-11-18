@@ -61,7 +61,7 @@ class CardsController {
 
 			const resData = {
 				desc: type.descricao,
-				total_value: tipoDeReagente.vlr_estoque,
+				total_value: parseFloat(tipoDeReagente.vlr_estoque),
 				total_entries,
 				total_outputs,
 				un_de_medida: type.un_de_medida,

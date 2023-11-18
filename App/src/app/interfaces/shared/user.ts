@@ -4,5 +4,11 @@ export interface UserData {
   ra: string;
   cpf: string;
   email: string;
-  perfil:  string;
+  perfil: string;
+}
+
+export interface updatePassword {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
 }

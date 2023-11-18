@@ -1,6 +1,6 @@
 const database = require('../models');
 const { Usuarios } = require('../models');
-const { hash } = require('bcryptjs');
+const { hash, compare } = require('bcryptjs');
 const uuid = require('uuid');
 
 class UsuariosController {
@@ -122,6 +122,45 @@ class UsuariosController {
 				},
 			});
 			return res.status(200).json(updatedUsuario);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	static async updateSenha(req, res) {
+		const { id } = req.params;
+		const { old_password, new_password } = req.body;
+
+		try {
+			const usuario = await database.Usuarios.findOne({
+				where: { id: id },
+				attributes: ['senha'],
+			});
+
+			const comparedPassword = await compare(old_password, usuario.senha);
+
+			if (!comparedPassword) {
+				return res.status(401).json({ message: 'Senha invalida' });
+			}
+
+			if (old_password === new_password) {
+				return res
+					.status(400)
+					.json({ message: 'Senha nova igual a senha antiga' });
+			}
+
+			const hashedPassword = await hash(new_password, 8);
+
+			await database.Usuarios.update(
+				{
+					senha: hashedPassword,
+				},
+				{
+					where: { id: id },
+				}
+			);
+
+			return res.status(200).json({ message: 'Senha atualizada com sucesso' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

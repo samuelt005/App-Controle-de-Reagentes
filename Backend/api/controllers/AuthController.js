@@ -28,9 +28,9 @@ class AuthController {
 				});
 			}
 
-			const samePassword = await compare(senha, usuario.senha);
+			const comparedPassword = await compare(senha, usuario.senha);
 
-			if (!samePassword) {
+			if (!comparedPassword) {
 				return res.status(401).json({ message: 'Usuário ou senha invalido' });
 			}
 
