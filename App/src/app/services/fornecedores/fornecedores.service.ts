@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FornecedoresRequest, FornecedoresResponse } from 'src/app/interfaces';
@@ -20,19 +20,29 @@ export class FornecedoresService {
     return headers;
   }
 
-  public listPerPage(page: number): Observable<FornecedoresResponse> {
+  public listPerPage(
+    page: number,
+    search?: string
+  ): Observable<FornecedoresResponse> {
     const headers = this.getHeaders();
-    return this.http.get<FornecedoresResponse>(
-      `${environment.apiUrl}/fornecedores/page/${page}`,
-      { headers }
-    );
+    let url = `${environment.apiUrl}/fornecedores/page/${page}`;
+
+    if (search) {
+      const params = new HttpParams().set('search', search);
+      url += `?${params.toString()}`;
+    }
+
+    return this.http.get<FornecedoresResponse>(url, { headers });
   }
 
   public listAll(): Observable<FornecedoresResponse> {
     const headers = this.getHeaders();
-    return this.http.get<FornecedoresResponse>(`${environment.apiUrl}/fornecedores`, {
-      headers,
-    });
+    return this.http.get<FornecedoresResponse>(
+      `${environment.apiUrl}/fornecedores`,
+      {
+        headers,
+      }
+    );
   }
 
   public addNew(body: FornecedoresRequest): Observable<FornecedoresRequest> {
@@ -44,7 +54,10 @@ export class FornecedoresService {
     );
   }
 
-  public edit(body: FornecedoresRequest, id: number): Observable<FornecedoresRequest> {
+  public edit(
+    body: FornecedoresRequest,
+    id: number
+  ): Observable<FornecedoresRequest> {
     const headers = this.getHeaders();
     return this.http.put<FornecedoresRequest>(
       `${environment.apiUrl}/fornecedores/${id}`,

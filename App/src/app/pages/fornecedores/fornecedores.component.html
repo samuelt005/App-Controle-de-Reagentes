@@ -5,8 +5,15 @@
       <app-page-title [pageTitle]="pageTitle" />
       <mat-form-field class="search-input" appearance="outline">
         <mat-label>Pesquisar por Razão Social ou CNPJ</mat-label>
-        <input matInput type="text" class="number-input" />
-        <mat-icon matSuffix>search</mat-icon>
+        <input
+          matInput
+          type="text"
+          class="number-input"
+          [(ngModel)]="search"
+          (keyup.enter)="doSearch()"
+        />
+        <!-- TODO adicionar botão de limpeza -->
+        <mat-icon matSuffix (click)="doSearch()">search</mat-icon>
       </mat-form-field>
     </header>
     <div class="table-spacer">
@@ -28,7 +35,11 @@
           <p class="nfes body-medium">{{ row.notas_vinculadas }}</p>
         </div>
       </div>
-      <div *ngIf="tableData.length === 0 && !loading" class="empty-container">
+      <div *ngIf="tableData.length === 0 && !loading && showSearchError" class="empty-container">
+        <mat-icon class="empty-icon">search</mat-icon>
+        <h2 class="title-large">Nenhum item encontrado!</h2>
+      </div>
+      <div *ngIf="tableData.length === 0 && !loading && !showSearchError" class="empty-container">
         <mat-icon class="empty-icon">web_asset_off</mat-icon>
         <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
       </div>

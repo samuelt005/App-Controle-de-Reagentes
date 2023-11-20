@@ -54,6 +54,10 @@ export class PaginatorComponent implements OnChanges {
         this.maxItem = totalItems;
       }
     }
+    if (totalItems === 0) {
+      this.minItem = 0;
+      this.maxItem = 0;
+    }
   }
 
   public ngOnChanges(changes: SimpleChanges) {

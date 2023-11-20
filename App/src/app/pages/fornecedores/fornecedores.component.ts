@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, FornecedoresData } from 'src/app/interfaces';
-import { FornecedoresService, FornecedoresUpdaterService } from 'src/app/services';
+import {
+  FornecedoresService,
+  FornecedoresUpdaterService,
+} from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 import { NewFornecedoresComponent } from './dialogs/new/new-fornecedores.component';
 import { EditFornecedoresComponent } from './dialogs/edit/edit-fornecedores.component';
@@ -17,7 +20,8 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
     private dialog: MatDialog,
     private suppliersService: FornecedoresService,
     private route: ActivatedRoute,
-    private tableUpdaterService: FornecedoresUpdaterService
+    private tableUpdaterService: FornecedoresUpdaterService,
+    private router: Router
   ) {
     super();
   }
@@ -30,6 +34,8 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
   };
 
   public tableData: FornecedoresData[] = [];
+  public search: string | null = null;
+  public showSearchError = false;
 
   // Métodos
   public openEditItem(
@@ -54,10 +60,26 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
     });
   }
 
-  private updateTableData(page: number): void {
+  public doSearch(): void {
+    if (this.search) {
+      this.router.navigate(['fornecedores/page/1']);
+      this.updateTableData(this.page, this.search);
+      this.showSearchError = true;
+    } else {
+      this.updateTableData(this.page);
+      this.showSearchError = false;
+    }
+  }
+
+  private updateTableData(page: number, search: string | null = null): void {
     this.tableData = [];
     this.loading = true;
-    this.suppliersService.listPerPage(page).subscribe((responseData) => {
+
+    const observable = search
+      ? this.suppliersService.listPerPage(page, search)
+      : this.suppliersService.listPerPage(page);
+
+    observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
         currentPage: currentPage,
@@ -70,13 +92,13 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
   }
 
   private refreshTable(): void {
-    this.updateTableData(this.page);
+    this.updateTableData(this.page, this.search);
   }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
-      this.updateTableData(this.page);
+      this.updateTableData(this.page, this.search);
     });
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {

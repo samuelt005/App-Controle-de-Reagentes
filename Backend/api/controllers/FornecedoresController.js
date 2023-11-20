@@ -1,4 +1,5 @@
 const database = require('../models');
+const { Op } = require('sequelize');
 const { Fornecedores } = require('../models');
 
 class FornecedoresController {
@@ -18,6 +19,7 @@ class FornecedoresController {
 
 	// Método para pegar 20 fornecedores (paginação)
 	static async getFornecedores(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
 
 		const pageNumber = parseInt(page) || 1;
@@ -26,8 +28,24 @@ class FornecedoresController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
+			const where = {};
+
+			if (search) {
+				const cleanedSearch = search.replace(/[\/\.-]/g, '');
+
+				if (!isNaN(cleanedSearch)) {
+					where.cnpj = {
+						[Op.like]: `%${cleanedSearch}%`,
+					};
+				} else {
+					where.razao_social = {
+						[Op.like]: `%${cleanedSearch}%`,
+					};
+				}
+			}
+
 			const result = await database.Fornecedores.findAndCountAll({
-				where: {},
+				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
@@ -36,13 +54,19 @@ class FornecedoresController {
 			const fornecedores = result.rows;
 
 			for (const fornecedor of fornecedores) {
-				fornecedor.dataValues.notas_vinculadas =
-					await database.Nfes.count({
-						where: { id_fornecedor_fk: fornecedor.id },
-					});
+				fornecedor.dataValues.notas_vinculadas = await database.Nfes.count({
+					where: { id_fornecedor_fk: fornecedor.id },
+				});
 			}
 
-			const totalItems = await database.Fornecedores.count();
+			let totalItems;
+			if (search) {
+				totalItems = await database.Fornecedores.count({
+					where: where,
+				});
+			} else {
+				totalItems = await database.Fornecedores.count();
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -59,7 +83,7 @@ class FornecedoresController {
 		}
 	}
 
-	// Método para pegar 20 fornecedores (paginação)
+	// Método para pegar todos os fornecedores
 	static async getAllFornecedores(req, res) {
 		try {
 			const fornecedores = await database.Fornecedores.findAll({
