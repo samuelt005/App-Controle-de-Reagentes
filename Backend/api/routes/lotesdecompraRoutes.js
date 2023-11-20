@@ -19,6 +19,13 @@ router
 		LotesDeCompraController.getLotesDeCompra
 	)
 
+	// Rota para listar todos os lotes de compra
+	.get(
+		'/lotesdecompra',
+		autorizacao(['Administrador']),
+		LotesDeCompraController.getAllLotesDeCompra
+	)
+
 	// Rota para criar um lote de compra
 	.post(
 		'/lotesdecompra',

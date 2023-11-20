@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  PageTitle,
-  SolicitacoesData,
-} from 'src/app/interfaces';
+import { PageTitle, SolicitacoesData } from 'src/app/interfaces';
 import { SolicitacoesService } from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 
@@ -33,8 +30,14 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
   public tableData: SolicitacoesData[] = [];
 
   // Métodos
-  public getStatus(i: number): string {
-    switch (this.tableData[i].status) {
+  public openDetails(id: number): void {
+    setTimeout(() => {
+      this.router.navigate([`solicitacao/${id}`]);
+    }, 500);
+  }
+
+  public getStatus(status: number): string {
+    switch (status) {
       case 1:
         return 'Aguardando Liberação';
       case 2:
@@ -46,8 +49,8 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
     }
   }
 
-  public getStatusColor(i: number): string {
-    switch (this.tableData[i].status) {
+  public getStatusColor(status: number): string {
+    switch (status) {
       case 1:
         return 'var(--aviso-2)';
       case 2:
@@ -57,12 +60,6 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
       default:
         return 'black';
     }
-  }
-
-  public openDetails() {
-    setTimeout(() => {
-      this.router.navigate(['/solicitacoes/page/1']);
-    }, 500);
   }
 
   public ngOnInit(): void {

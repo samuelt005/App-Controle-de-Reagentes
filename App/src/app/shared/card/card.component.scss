@@ -46,6 +46,7 @@
       overflow: hidden;
       color: var(--base-preto);
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

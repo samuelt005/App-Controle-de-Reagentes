@@ -27,4 +27,19 @@ export class SolicitacoesService {
       { headers }
     );
   }
+
+  public updateStatus(
+    id: number,
+    status: number
+  ): Observable<unknown> {
+    const headers = this.getHeaders();
+    const body = {
+      status,
+    };
+    return this.http.put<unknown>(
+      `${environment.apiUrl}/Solicitacoes/${id}`,
+      body,
+      { headers }
+    );
+  }
 }

@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'id_solicitacao_fk',
 			});
 			ItensMovimentacao.belongsTo(models.LotesDeCompra, {
+        as: 'lote',
 				foreignKey: 'id_lote_fk',
 			});
 			ItensMovimentacao.belongsTo(models.Nfes, {

@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	class LotesDeCompra extends Model {
 		static associate(models) {
 			LotesDeCompra.hasMany(models.ItensMovimentacao, {
+        as: 'lote',
 				foreignKey: 'id_lote_fk',
 			});
 		}

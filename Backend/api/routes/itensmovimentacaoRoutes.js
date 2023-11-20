@@ -12,7 +12,7 @@ router
 		ItensMovimentacaoController.getHistory
 	)
 
-	// Rota para criar um fornecedor
+	// Rota para criar um ajuste de movimentação
 	.post(
 		'/historico/item/:id',
 		autorizacao(['Administrador']),

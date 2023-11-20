@@ -1,0 +1,74 @@
+<div class="page-container">
+  <app-sidebar [filtersHidden]="true" />
+  <div class="main-content">
+    <header class="header">
+      <app-page-title [pageTitle]="pageTitle" />
+    </header>
+    <div class="cards-container">
+      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+    </div>
+    <div class="table-spacer">
+      <div *ngIf="tableData.length !== 0" class="table-container">
+        <div class="table-header body-medium">
+          <p class="cod body-medium">Código</p>
+          <p class="desc body-medium">Descrição</p>
+          <p class="qtd body-medium">Quantidade</p>
+          <p class="un body-medium">Un</p>
+          <p class="lote body-medium">Lote</p>
+          <p class="nfe body-medium">Nº NF-e</p>
+          <p class="status body-medium">Status</p>
+        </div>
+        <div
+          *ngFor="let row of tableData"
+          class="solicitacao-row"
+          [ngClass]="{effects : !row.recusado}"
+          matRipple
+          [matRippleDisabled]="row.recusado"
+          (click)="openItemDialog(row)"
+        >
+          <div [ngClass]="{ recusado: row.recusado }" class="first-line">
+            <p class="cod body-medium">{{ row.tipo.cod }}</p>
+            <p class="desc body-medium">{{ row.tipo.descricao }}</p>
+            <p class="qtd body-medium">
+              {{
+                row.qtd_mov.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              }}
+            </p>
+            <p class="un body-medium">{{ row.tipo.un_de_medida.sigla }}</p>
+            <p class="lote body-medium">
+              {{ row.lote?.numero !== null ? row.lote?.numero : "-" }}
+            </p>
+            <p class="nfe body-medium">
+              {{ row.nfe?.numero !== null ? row.nfe?.numero : "-" }}
+            </p>
+            <p
+              class="status body-medium"
+              [style.color]="getStatusColor(row.status || 6)"
+            >
+              {{ getStatus(row.status || 6) }}
+            </p>
+          </div>
+          <div [ngClass]="{ recusado: row.recusado }" class="second-line">
+            <p [ngClass]="{ justificativa: !row.recusado }" class="body-medium">
+              Justificativa:
+            </p>
+            <p class="justificativa-text body-medium">
+              {{ row.comentario }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </div>
+    <div class="button-container">
+      <app-normal-button (click)="openCommentary()">
+        Ver Comentário
+      </app-normal-button>
+    </div>
+  </div>
+</div>

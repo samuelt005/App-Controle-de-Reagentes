@@ -4,9 +4,17 @@
     <app-page-title [pageTitle]="pageTitle" />
     <div class="content-spacer">
       <div class="content-container">
-        <app-data-inputs [noDeleteButton]="true"></app-data-inputs>
+        <app-data-inputs
+          [unsSelectData]="unsSelectData"
+          [tiposSelectData]="tiposSelectData"
+          [noDeleteButton]="true"
+        ></app-data-inputs>
         <div *ngFor="let dataInput of dataInputs; let i = index">
-          <app-data-inputs (delete)="deleteSection(i)"></app-data-inputs>
+          <app-data-inputs
+            [unsSelectData]="unsSelectData"
+            [tiposSelectData]="tiposSelectData"
+            (delete)="deleteSection(i)"
+          ></app-data-inputs>
         </div>
         <div class="button-container">
           <button class="add-button body-medium" (click)="addNewSection()">

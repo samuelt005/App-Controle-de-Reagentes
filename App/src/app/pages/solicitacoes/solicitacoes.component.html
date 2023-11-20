@@ -18,17 +18,22 @@
           <p class="solicitante body-medium">Solicitante</p>
         </div>
         <div
-          *ngFor="let row of tableData; let i = index"
+          *ngFor="let row of tableData"
           class="table-row"
-          (click)="openDetails()"
+          (click)="openDetails(row.id)"
           matRipple
         >
           <p class="numero body-medium">{{ row.id }}</p>
           <p class="data body-medium">{{ getFormattedDate(row.createdAt) }}</p>
-          <p class="status body-medium" [style.color]="getStatusColor(i)">
-            {{ getStatus(i) }}
+          <p
+            class="status body-medium"
+            [style.color]="getStatusColor(row.status)"
+          >
+            {{ getStatus(row.status) }}
           </p>
-          <p class="solicitante body-medium">{{ row.responsavel.nome }}</p>
+          <p class="solicitante body-medium">
+            {{ row.responsavel_solicitacao.nome }}
+          </p>
         </div>
       </div>
       <div *ngIf="tableData.length === 0 && !loading" class="empty-container">

@@ -10,7 +10,7 @@ export interface SolicitacoesData {
   status: number;
   comentario: string;
   createdAt: string;
-  responsavel: {
+  responsavel_solicitacao: {
     nome: string;
   };
 }

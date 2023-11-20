@@ -1,13 +1,37 @@
 const database = require('../models');
 
 class SolicitacoesController {
-	// Método para pegar um solicitação específico
-	static async getSolicitacao(req, res) {
+	// Método para pegar os itens de uma solicitação
+	static async getSolicitacaoItems(req, res) {
 		const { id } = req.params;
 		try {
-			const solicitacao = await database.Solicitacoes.findOne({
-				where: { id: Number(id) },
-				attributes: { exclude: ['updatedAt'] },
+			const solicitacao = await database.ItensMovimentacao.findAll({
+				where: { id_solicitacao_fk: Number(id) },
+				attributes: ['id', 'novo', 'recusado', 'comentario', 'qtd_mov'],
+				include: [
+					{
+						model: database.LotesDeCompra,
+						as: 'lote',
+						attributes: ['id', 'numero'],
+					},
+					{
+						model: database.Nfes,
+						as: 'nfe',
+						attributes: ['id', 'numero'],
+					},
+					{
+						model: database.TiposDeReagente,
+						as: 'tipo',
+						attributes: ['cod', 'descricao'],
+						include: [
+							{
+								model: database.UnsDeMedida,
+								as: 'un_de_medida',
+								attributes: ['sigla'],
+							},
+						],
+					},
+				],
 			});
 			return res.status(200).json(solicitacao);
 		} catch (error) {
@@ -33,7 +57,7 @@ class SolicitacoesController {
 				include: [
 					{
 						model: database.Usuarios,
-						as: 'responsavel',
+						as: 'responsavel_solicitacao',
 						attributes: ['nome'],
 					},
 				],
@@ -88,6 +112,25 @@ class SolicitacoesController {
 				where: { id: Number(id) },
 			});
 			return res.status(200).json(updatedSolicitacao);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+  // Método para atualizar um item de uma solicitação
+	static async updateItem(req, res) {
+		const { lote, nfe, recusado } = req.body;
+		const { id } = req.params;
+
+		try {
+			await database.ItensMovimentacao.update(
+				{ id_lote_fk: lote, id_nfe_fk: nfe, recusado },
+				{
+					where: { id: Number(id) },
+				}
+			);
+
+			return res.status(200).json({ message: 'Item atualizado com sucesso!' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

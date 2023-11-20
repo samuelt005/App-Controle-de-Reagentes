@@ -74,6 +74,28 @@ class NfesController {
 		}
 	}
 
+	// Método para pegar todas as nfes
+	static async getAllNfes(req, res) {
+		try {
+			const resData = await database.Nfes.findAll({
+				where: {},
+				attributes: ['id', 'numero'],
+				include: [
+					{
+						model: database.Fornecedores,
+						as: 'emitente',
+						attributes: ['razao_social'],
+					},
+				],
+				order: [['data_emissao', 'DESC']],
+			});
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
 	// Método para criar um nfe
 	static async createNfe(req, res) {
 		const { numero, data_emissao, id_fornecedor } = req.body;

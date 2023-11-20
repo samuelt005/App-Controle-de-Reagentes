@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NfesRequest, NfesResponse } from 'src/app/interfaces';
+import { NfesData, NfesRequest, NfesResponse } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -27,9 +27,9 @@ export class NfesService {
     });
   }
 
-  public listAll(): Observable<NfesResponse> {
+  public listAll(): Observable<NfesData[]> {
     const headers = this.getHeaders();
-    return this.http.get<NfesResponse>(`${environment.apiUrl}/nfes`, { headers });
+    return this.http.get<NfesData[]>(`${environment.apiUrl}/nfes`, { headers });
   }
 
   public addNew(body: NfesRequest): Observable<NfesRequest> {

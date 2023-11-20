@@ -13,6 +13,7 @@ import {
   FornecedoresComponent,
   LotesDeCompraComponent,
   NotFoundComponent,
+  DetalhesSolicitacaoComponent,
 } from './pages';
 
 const routes: Routes = [
@@ -44,6 +45,10 @@ const routes: Routes = [
   {
     path: 'solicitacoes/page/:page',
     component: SolicitacoesComponent,
+  },
+  {
+    path: 'solicitacao/:id',
+    component: DetalhesSolicitacaoComponent,
   },
   {
     path: 'relatorios',

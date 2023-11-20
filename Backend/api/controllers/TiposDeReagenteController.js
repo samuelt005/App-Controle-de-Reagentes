@@ -126,6 +126,22 @@ class TiposDeReagenteController {
 		}
 	}
 
+	// Método para pegar todos os tipos de reagente ativos
+	static async getAllTiposDeReagenteActive(req, res) {
+		try {
+			const tiposDeReagente = await database.TiposDeReagente.findAll({
+				where: { ativo: true },
+				attributes: ['id', 'cod', 'descricao'],
+			});
+
+			const resData = tiposDeReagente;
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
 	// Método para pegar 20 tipos de reagente, ativos e filtrado
 	// TODO criar outro método de filtragem
 	/*static async getTiposDeReagenteFiltered(req, res) {

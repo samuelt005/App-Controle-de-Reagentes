@@ -1,3 +1,4 @@
+export * from './pages/detalhes-solicitacao';
 export * from './pages/historico';
 export * from './pages/login';
 export * from './pages/listagem';
@@ -7,6 +8,7 @@ export * from './pages/solicitacoes';
 export * from './pages/fornecedores';
 export * from './pages/tipos-de-reagente';
 export * from './shared/un-de-medida';
+export * from './shared/tipo-de-reagente';
 export * from './shared/tag';
 export * from './shared/card';
 export * from './shared/sidebar';

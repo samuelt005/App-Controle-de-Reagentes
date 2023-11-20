@@ -4,6 +4,8 @@ export * from './user/user.service';
 export * from './cards/cards.service';
 export * from './listagem/listagem.service';
 export * from './solicitacoes/solicitacoes.service';
+export * from './detalhes-solicitacao/detalhes-solicitacao.service';
+export * from './detalhes-solicitacao/detalhes-solicitacao-updater.service';
 export * from './uns-de-medida/uns-de-medida.service';
 export * from './historico/historico.service';
 export * from './historico/historico-updater.service';

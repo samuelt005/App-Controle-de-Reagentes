@@ -16,7 +16,14 @@ router
 	.get(
 		'/cards/historico/:id',
 		autorizacao(['Administrador']),
-		CardsController.getHistoryData
+		CardsController.getHistoricoData
+	)
+
+	// Rota para pegar os dados da página de solicitação
+	.get(
+		'/cards/solicitacao/:id',
+		autorizacao(['Administrador']),
+		CardsController.getSolicitacaoData
 	);
 
 module.exports = router;

@@ -15,6 +15,9 @@ router
 		NfesController.getNfes
 	)
 
+	// Rota para listar todas as nfes
+	.get('/nfes', autorizacao(['Administrador']), NfesController.getAllNfes)
+
 	// Rota para criar um nfe
 	.post('/nfes', autorizacao(['Administrador']), NfesController.createNfe)
 

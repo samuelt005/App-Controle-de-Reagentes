@@ -1,0 +1,21 @@
+<div class="item-container">
+  <h3 class="title-large">Aprovar ou Recusar Item</h3>
+  <div class="buttons">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="saveData('O item será aprovado!', false)"
+    >
+      Aprovar
+    </app-normal-button>
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      [redColor]="true"
+      (click)="saveData('O item será recusado!', true)"
+    >
+      Recusar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

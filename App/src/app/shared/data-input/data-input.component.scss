@@ -1,46 +1,47 @@
 .data-inputs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  align-self: stretch;
   margin-bottom: 10px;
+  gap: 20px;
 
-  .first-line {
+  .inputs {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     gap: 20px;
-    align-self: stretch;
-    height: 40px;
 
-    .input {
-      .number-input {
+    .first-line {
+      display: flex;
+      gap: 20px;
+      width: 100%;
 
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-
-        &[type=number] {
-          appearance: textfield;
-          -moz-appearance: textfield;
-        }
+      .qtd {
+        min-width: 120px;
+        max-width: 120px;
       }
 
-      :first-child {
-        width: 86px;
+      .un {
+        min-width: 80px;
+        max-width: 80px;
       }
 
-      &:nth-child(2) {
+      .select {
         width: 100%;
       }
+    }
 
-      :nth-child(n + 3) {
-        width: 100px;
+    .second-line {
+      width: 100%;
+
+      .just {
+        width: 100%;
       }
     }
+  }
+
+  .buttons {
+    width: 40px;
 
     .delete-button {
       display: flex;
@@ -56,36 +57,28 @@
       border-radius: 5px;
       color: var(--base-branco);
     }
-
-    .no-delete-button {
-      width: 70px;
-    }
-  }
-
-  .second-line {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    align-self: stretch;
-    height: 40px;
-    margin-right: 60px;
-
-    :first-child {
-      width: 100%;
-    }
   }
 
   ::ng-deep .mat-mdc-text-field-wrapper {
     height: 40px !important;
   }
-  
+
   ::ng-deep .mat-mdc-input-element {
     position: relative !important;
     top: -5px !important;
   }
-  
+
   ::ng-deep .mat-mdc-form-field {
     height: 40px;
+  }
+
+  ::ng-deep .mat-mdc-select-trigger {
+    position: relative !important;
+    top: -8px !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-error-wrapper {
+    padding: 0;
+    padding-top: 2px;
   }
 }

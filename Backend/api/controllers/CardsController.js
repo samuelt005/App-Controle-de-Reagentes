@@ -30,7 +30,7 @@ class CardsController {
 	}
 
 	// Método para pegar os dados dos cards da página de histórico
-	static async getHistoryData(req, res) {
+	static async getHistoricoData(req, res) {
 		const { id } = req.params;
 
 		try {
@@ -65,6 +65,37 @@ class CardsController {
 				total_entries,
 				total_outputs,
 				un_de_medida: type.un_de_medida,
+			};
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Método para pegar os dados dos cards da página de histórico
+	static async getSolicitacaoData(req, res) {
+		const { id } = req.params;
+
+		try {
+			const solicitacao = await database.Solicitacoes.findOne({
+				where: { id: Number(id) },
+				attributes: ['id', 'status', 'createdAt', 'comentario'],
+				include: [
+					{
+						model: database.Usuarios,
+						as: 'responsavel_solicitacao',
+						attributes: ['nome'],
+					},
+				],
+			});
+
+			const resData = {
+				id: solicitacao.id,
+				data: solicitacao.createdAt,
+				status: solicitacao.status,
+				responsavel: solicitacao.responsavel_solicitacao.nome,
+				comentario: solicitacao.comentario,
 			};
 
 			return res.status(200).json(resData);

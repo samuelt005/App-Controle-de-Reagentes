@@ -135,7 +135,7 @@ export class HistoricoComponent extends PageComponent implements OnInit {
       this.loading = false;
     });
 
-    this.infoCardsService.getHistoryData(id).subscribe((responseData) => {
+    this.infoCardsService.getHistoricoData(id).subscribe((responseData) => {
       this.infoCards[0].data = responseData.desc;
       if (responseData.total_value !== null) {
         this.infoCards[1].data =

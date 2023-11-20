@@ -7,9 +7,9 @@ const router = Router();
 router
 	// Rota para listar um solicitação
 	.get(
-		'/solicitacoes/:id',
+		'/solicitacao/:id',
 		autorizacao(['Administrador']),
-		SolicitacoesController.getSolicitacao
+		SolicitacoesController.getSolicitacaoItems
 	)
 
 	// Rota para listar solicitações com paginação
@@ -31,6 +31,13 @@ router
 		'/solicitacoes/:id',
 		autorizacao(['Administrador']),
 		SolicitacoesController.updateStatus
+	)
+
+	// Rota para atualizar um item de uma solicitação
+	.put(
+		'/solicitacao/item/:id',
+		autorizacao(['Administrador']),
+		SolicitacoesController.updateItem
 	);
 
 module.exports = router;

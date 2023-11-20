@@ -19,11 +19,18 @@ router
 		TiposDeReagenteController.getTiposDeReagente
 	)
 
-	// Rota para listar tipos de reagente com paginação
+	// Rota para listar tipos de reagente ativos com paginação
 	.get(
 		'/tiposdereagente/page/:page/active',
 		autorizacao(['Administrador']),
 		TiposDeReagenteController.getTiposDeReagenteActive
+	)
+  
+  	// Rota para listar tipos de reagente ativos
+	.get(
+		'/tiposdereagente',
+		autorizacao(['Administrador']),
+		TiposDeReagenteController.getAllTiposDeReagenteActive
 	)
 
 	// Rota para listar tipos de reagente com paginação, ativos e filtrados

@@ -1,0 +1,49 @@
+<div class="item-container">
+  <h3 class="title-large">Vincular Lote e NF-e</h3>
+  <div class="inputs" [formGroup]="form">
+    <mat-form-field class="input" appearance="outline">
+      <mat-select
+        placeholder="Lote de Compra"
+        formControlName="lote"
+        (selectionChange)="onLoteSelectionChange()"
+      >
+        <mat-option
+          *ngFor="let item of lotesSelectData"
+          [value]="item.id.toString()"
+          >{{ item.numero }}</mat-option
+        >
+      </mat-select>
+      <button
+        *ngIf="this.form.get('lote')?.value"
+        matSuffix
+        mat-icon-button
+        (click)="clearLoteValue()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <mat-select placeholder="Nota Fiscal" formControlName="nfe">
+        <mat-option
+          *ngFor="let item of nfesSelectData"
+          [value]="item.id.toString()"
+          >{{ item.numero + " - " + item.emitente.razao_social }}</mat-option
+        >
+      </mat-select>
+      <button
+        *ngIf="this.form.get('nfe')?.value"
+        matSuffix
+        mat-icon-button
+        (click)="clearNfeValue()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <app-normal-button mat-dialog-close [filled]="true" (click)="saveData()">
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

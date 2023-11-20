@@ -1,0 +1,91 @@
+@import "../../shared/styles/pages";
+
+.cod {
+  width: 60px;
+}
+
+.desc {
+  width: 440px;
+}
+
+.qtd {
+  width: 100px;
+}
+
+.un {
+  width: 50px;
+}
+
+.status {
+  width: 100px;
+}
+
+.lote,
+.nfe {
+  width: 70px;
+}
+
+.qtd,
+.un,
+.nfe,
+.lote,
+.status {
+  text-align: center;
+}
+
+.solicitacao-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  height: 70px;
+  transition: background-color 0.2s;
+
+  p {
+    margin: 0;
+  }
+
+  .recusado {
+    color: var(--cinza-2);
+  }
+
+  .first-line,
+  .second-line {
+    display: flex;
+    width: 100%;
+
+    p {
+      line-height: 30px;
+    }
+  }
+
+  .first-line {
+    justify-content: space-between;
+  }
+
+  .second-line {
+    gap: 10px;
+
+    .justificativa {
+      color: var(--cinza-3);
+    }
+  }
+
+  &:hover {
+    background-color: #efefef;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 0.5px solid var(--cinza-2);
+  }
+}
+
+.effects {
+  cursor: pointer;
+}

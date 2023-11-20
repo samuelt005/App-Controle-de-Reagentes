@@ -2,7 +2,7 @@ import { TokenService } from 'src/app/services';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListagemResponse, TiposDeReagenteRequest } from 'src/app/interfaces';
+import { ListagemResponse, TipoDeReagente, TiposDeReagenteRequest } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -28,10 +28,10 @@ export class TiposDeReagenteService {
     );
   }
 
-  public listAll(): Observable<ListagemResponse> {
+  public listAll(): Observable<TipoDeReagente[]> {
     const headers = this.getHeaders();
-    return this.http.get<ListagemResponse>(
-      `${environment.apiUrl}/tiposdereagente/active`,
+    return this.http.get<TipoDeReagente[]>(
+      `${environment.apiUrl}/tiposdereagente`,
       { headers }
     );
   }

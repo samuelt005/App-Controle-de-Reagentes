@@ -9,6 +9,8 @@
   </div>
   <div class="data-container">
     <p class="card-title body-medium">{{ card.title }}</p>
-    <p class="card-data body-medium">{{ card.data }}</p>
+    <p class="card-data body-medium" [style.color]="getStatusColor((card.data))">
+      {{ getStatus(card.data) }}
+    </p>
   </div>
 </div>

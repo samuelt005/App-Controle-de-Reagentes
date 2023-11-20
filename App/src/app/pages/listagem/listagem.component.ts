@@ -71,7 +71,7 @@ export class ListagemComponent extends PageComponent implements OnInit {
         this.loading = false;
       });
 
-      this.infoCardsService.getListingData().subscribe((responseData) => {
+      this.infoCardsService.getListagemData().subscribe((responseData) => {
         this.infoCards[0].data = responseData.total_items.toString();
         if (responseData.total_value !== null) {
           this.infoCards[1].data =

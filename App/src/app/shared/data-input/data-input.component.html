@@ -1,27 +1,49 @@
 <div class="data-inputs">
-  <div class="first-line">
-    <mat-form-field class="input" appearance="outline">
-      <input
-        matInput
-        type="number"
-        class="number-input body-large"
-        placeholder="Código"
-      />
-    </mat-form-field>
-    <mat-form-field class="input" appearance="outline">
-      <input matInput type="text" class="body-large" placeholder="Item" />
-    </mat-form-field>
-    <mat-form-field class="input" appearance="outline">
-      <input
-        matInput
-        type="number"
-        class="number-input body-large"
-        placeholder="Qtd."
-      />
-    </mat-form-field>
-    <mat-form-field class="input" appearance="outline">
-      <input matInput type="text" class="body-large" placeholder="Un." />
-    </mat-form-field>
+  <div class="inputs" >
+    <div class="first-line" [formGroup]="form">
+      <mat-form-field class="select" appearance="outline">
+        <!-- TODO Incluir pesquisa neste select -->
+        <mat-select placeholder="Item" formControlName="tipo">
+          <mat-option
+            *ngFor="let item of tiposSelectData"
+            [value]="item.id.toString()"
+            >{{ item.cod + " - " + item.descricao }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="qtd" appearance="outline">
+        <input
+          matInput
+          type="text"
+          class="number-input body-large"
+          placeholder="Qtd."
+          formControlName="qtd"
+        />
+      </mat-form-field>
+      <mat-form-field class="un" appearance="outline">
+        <mat-select placeholder="Item" formControlName="peso_un">
+          <mat-option
+            *ngFor="let item of unsSelectData"
+            [value]="item.peso"
+            >{{ item.sigla }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="second-line">
+      <mat-form-field class="just" appearance="outline">
+        <input
+          matInput
+          type="text"
+          class="body-large"
+          placeholder="Justificativa"
+          formControlName="desc"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="buttons">
     <button
       class="delete-button body-medium"
       (click)="deleteThisSection()"
@@ -29,16 +51,6 @@
     >
       <mat-icon class="material-icons-outlined"> remove </mat-icon>
     </button>
-    <div *ngIf="noDeleteButton" class="no-delete-button"></div>
-  </div>
-  <div class="second-line">
-    <mat-form-field class="input" appearance="outline">
-      <input
-        matInput
-        type="text"
-        class="body-large"
-        placeholder="Justificativa"
-      />
-    </mat-form-field>
+    <div *ngIf="noDeleteButton" class="spacer"></div>
   </div>
 </div>

@@ -31,7 +31,7 @@ class LotesDeCompraController {
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
-        order: [['numero', 'DESC']],
+				order: [['numero', 'DESC']],
 			});
 
 			const lotesdecompra = result.rows;
@@ -53,6 +53,21 @@ class LotesDeCompraController {
 				totalItems: totalItems,
 				data: lotesdecompra,
 			};
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Método para pegar todos os lotes de compra
+	static async getAllLotesDeCompra(req, res) {
+		try {
+			const resData = await database.LotesDeCompra.findAll({
+				where: {},
+				attributes: ['id', 'numero'],
+				order: [['numero', 'DESC']],
+			});
 
 			return res.status(200).json(resData);
 		} catch (error) {

@@ -16,7 +16,19 @@ class TiposDeReagenteController {
 				await database.ItensMovimentacao.findAndCountAll({
 					where: {
 						id_tipo_de_reagente_fk: Number(id),
-						operacao: { [Op.not]: null },
+						[Op.and]: [
+							{ operacao: { [Op.not]: null } },
+							{
+								[Op.or]: [
+									{
+										operacao: 1,
+										id_lote_fk: { [Op.not]: null },
+										id_nfe_fk: { [Op.not]: null },
+									},
+									{ operacao: { [Op.notIn]: [1] } },
+								],
+							},
+						],
 					},
 					limit: itemsPerPage,
 					offset: offset,

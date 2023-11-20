@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LotesDeCompraRequest, LotesDeCompraResponse } from 'src/app/interfaces';
+import { LotesDeCompraData, LotesDeCompraRequest, LotesDeCompraResponse } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -28,9 +28,9 @@ export class LotesDeCompraService {
     );
   }
 
-  public listAll(): Observable<LotesDeCompraResponse> {
+  public listAll(): Observable<LotesDeCompraData[]> {
     const headers = this.getHeaders();
-    return this.http.get<LotesDeCompraResponse>(
+    return this.http.get<LotesDeCompraData[]>(
       `${environment.apiUrl}/lotesdecompra`,
       { headers }
     );
