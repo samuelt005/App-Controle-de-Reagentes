@@ -12,8 +12,17 @@
           [(ngModel)]="search"
           (keyup.enter)="doSearch()"
         />
-        <!-- TODO adicionar botão de limpeza -->
-        <mat-icon matSuffix (click)="doSearch()">search</mat-icon>
+        <button
+          *ngIf="this.search"
+          matSuffix
+          mat-icon-button
+          (click)="clearSearchValue()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button (click)="doSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
     </header>
     <div class="table-spacer">
@@ -35,11 +44,17 @@
           <p class="nfes body-medium">{{ row.notas_vinculadas }}</p>
         </div>
       </div>
-      <div *ngIf="tableData.length === 0 && !loading && showSearchError" class="empty-container">
+      <div
+        *ngIf="tableData.length === 0 && !loading && showSearchError"
+        class="empty-container"
+      >
         <mat-icon class="empty-icon">search</mat-icon>
         <h2 class="title-large">Nenhum item encontrado!</h2>
       </div>
-      <div *ngIf="tableData.length === 0 && !loading && !showSearchError" class="empty-container">
+      <div
+        *ngIf="tableData.length === 0 && !loading && !showSearchError"
+        class="empty-container"
+      >
         <mat-icon class="empty-icon">web_asset_off</mat-icon>
         <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
       </div>

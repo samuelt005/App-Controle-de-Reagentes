@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, SolicitacoesData } from 'src/app/interfaces';
-import { SolicitacoesService } from 'src/app/services';
+import {
+  SolicitacoesService,
+  SolicitacoesUpdaterService,
+} from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 
 @Component({
@@ -15,6 +18,7 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
     private requestListingService: SolicitacoesService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private tableUpdaterService: SolicitacoesUpdaterService,
     private router: Router
   ) {
     super();
@@ -62,22 +66,54 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
     }
   }
 
+  public doSearch(): void {
+    if (this.search) {
+      this.router.navigate(['solicitacoes/page/1']);
+      this.updateTableData(this.page, this.search);
+      this.showSearchError = true;
+    } else {
+      this.updateTableData(this.page);
+      this.showSearchError = false;
+    }
+  }
+
+  public clearSearchValue() {
+    this.search = null;
+    this.refreshTable();
+  }
+
+  private updateTableData(page: number, search: string | null = null): void {
+    this.tableData = [];
+    this.loading = true;
+
+    const observable = search
+      ? this.requestListingService.listPerPage(page, search)
+      : this.requestListingService.listPerPage(page);
+
+    observable.subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.tableData = responseData.data;
+      this.loading = false;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page, this.search);
+  }
+
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
+      this.updateTableData(this.page, this.search);
+    });
 
-      this.requestListingService
-        .listPerPage(this.page)
-        .subscribe((responseData) => {
-          const { currentPage, totalPages, totalItems } = responseData;
-          this.paginatorData = {
-            currentPage: currentPage,
-            totalPages: totalPages,
-            totalItems: totalItems,
-          };
-          this.tableData = responseData.data;
-          this.loading = false;
-        });
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

@@ -1,5 +1,6 @@
 const database = require('../models');
 const { LotesDeCompra } = require('../models');
+const { Op } = require('sequelize');
 
 class LotesDeCompraController {
 	// Método para pegar um lote de compra específico
@@ -18,6 +19,7 @@ class LotesDeCompraController {
 
 	// Método para pegar 20 lotes de compra (paginação)
 	static async getLotesDeCompra(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
 
 		const pageNumber = parseInt(page) || 1;
@@ -26,15 +28,21 @@ class LotesDeCompraController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const result = await database.LotesDeCompra.findAndCountAll({
-				where: {},
+			const where = {};
+
+			if (search) {
+				where.numero = {
+					[Op.like]: `%${search}%`,
+				};
+			}
+
+			const lotesdecompra = await database.LotesDeCompra.findAll({
+				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
 				order: [['numero', 'DESC']],
 			});
-
-			const lotesdecompra = result.rows;
 
 			for (const lotedecompra of lotesdecompra) {
 				lotedecompra.dataValues.itens_vinculados =
@@ -43,7 +51,14 @@ class LotesDeCompraController {
 					});
 			}
 
-			const totalItems = await database.LotesDeCompra.count();
+			let totalItems;
+			if (search) {
+				totalItems = await database.LotesDeCompra.count({
+					where: where,
+				});
+			} else {
+				totalItems = await database.LotesDeCompra.count();
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 

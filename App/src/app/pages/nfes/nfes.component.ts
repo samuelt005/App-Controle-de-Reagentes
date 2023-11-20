@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, NfesData } from 'src/app/interfaces';
 import { NfesService, NfesUpdaterService } from 'src/app/services';
 import { EditNfeComponent } from './dialogs/edit-nfe/edit-nfe.component';
@@ -17,7 +17,8 @@ export class NfesComponent extends PageComponent implements OnInit {
     private dialog: MatDialog,
     private nfesService: NfesService,
     private route: ActivatedRoute,
-    private tableUpdaterService: NfesUpdaterService
+    private tableUpdaterService: NfesUpdaterService,
+    private router: Router
   ) {
     super();
   }
@@ -55,10 +56,31 @@ export class NfesComponent extends PageComponent implements OnInit {
     });
   }
 
-  private updateTableData(page: number): void {
+  public doSearch(): void {
+    if (this.search) {
+      this.router.navigate(['nfes/page/1']);
+      this.updateTableData(this.page, this.search);
+      this.showSearchError = true;
+    } else {
+      this.updateTableData(this.page);
+      this.showSearchError = false;
+    }
+  }
+
+  public clearSearchValue() {
+    this.search = null;
+    this.refreshTable();
+  }
+
+  private updateTableData(page: number, search: string | null = null): void {
     this.tableData = [];
     this.loading = true;
-    this.nfesService.listPerPage(page).subscribe((responseData) => {
+
+    const observable = search
+      ? this.nfesService.listPerPage(page, search)
+      : this.nfesService.listPerPage(page);
+
+    observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
         currentPage: currentPage,
@@ -71,13 +93,13 @@ export class NfesComponent extends PageComponent implements OnInit {
   }
 
   private refreshTable(): void {
-    this.updateTableData(this.page);
+    this.updateTableData(this.page, this.search);
   }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
-      this.updateTableData(this.page);
+      this.updateTableData(this.page, this.search);
     });
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {

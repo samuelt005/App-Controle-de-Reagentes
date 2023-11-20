@@ -1,5 +1,5 @@
 import { TokenService } from 'src/app/services';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ListagemResponse, TipoDeReagente, TiposDeReagenteRequest } from 'src/app/interfaces';
@@ -20,12 +20,19 @@ export class TiposDeReagenteService {
     return headers;
   }
 
-  public listPerPage(page: number): Observable<ListagemResponse> {
+  public listPerPage(
+    page: number,
+    search?: string
+  ): Observable<ListagemResponse> {
     const headers = this.getHeaders();
-    return this.http.get<ListagemResponse>(
-      `${environment.apiUrl}/tiposdereagente/page/${page}`,
-      { headers }
-    );
+    let url = `${environment.apiUrl}/tiposdereagente/page/${page}`;
+
+    if (search) {
+      const params = new HttpParams().set('search', search);
+      url += `?${params.toString()}`;
+    }
+
+    return this.http.get<ListagemResponse>(url, { headers });
   }
 
   public listAll(): Observable<TipoDeReagente[]> {

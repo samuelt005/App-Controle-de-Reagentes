@@ -33,14 +33,31 @@ class TiposDeReagenteController {
 
 	// Método para pegar 20 tipos de reagente
 	static async getTiposDeReagente(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
+
 		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
+
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
+			const where = {};
+
+			if (search) {
+				if (!isNaN(search)) {
+					where.cod = {
+						[Op.like]: `%${search}%`,
+					};
+				} else {
+					where.descricao = {
+						[Op.like]: `%${search}%`,
+					};
+				}
+			}
+
 			const tiposDeReagente = await database.TiposDeReagente.findAll({
-				where: {},
+				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: {
@@ -60,7 +77,15 @@ class TiposDeReagenteController {
 					attributes: ['sigla'],
 				});
 			}
-			const totalItems = await database.TiposDeReagente.count();
+
+			let totalItems;
+			if (search) {
+				totalItems = await database.TiposDeReagente.count({
+					where: where,
+				});
+			} else {
+				totalItems = await database.TiposDeReagente.count();
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -79,14 +104,31 @@ class TiposDeReagenteController {
 
 	// Método para pegar 20 tipos de reagente ativos
 	static async getTiposDeReagenteActive(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
+
 		const pageNumber = parseInt(page) || 1;
 		const itemsPerPage = 20;
+
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
+			const where = { ativo: true };
+
+			if (search) {
+				if (!isNaN(search)) {
+					where.cod = {
+						[Op.like]: `%${search}%`,
+					};
+				} else {
+					where.descricao = {
+						[Op.like]: `%${search}%`,
+					};
+				}
+			}
+
 			const tiposDeReagente = await database.TiposDeReagente.findAll({
-				where: { ativo: true },
+				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: {
@@ -107,9 +149,16 @@ class TiposDeReagenteController {
 				});
 			}
 
-			const totalItems = await database.TiposDeReagente.count({
-				where: { ativo: true },
-			});
+			let totalItems;
+			if (search) {
+				totalItems = await database.TiposDeReagente.count({
+					where: where,
+				});
+			} else {
+				totalItems = await database.TiposDeReagente.count({
+					where: { ativo: true },
+				});
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -220,7 +269,7 @@ class TiposDeReagenteController {
 				};
 			}
 
-			const tiposdereagente = await database.TiposDeReagente.findAndCountAll({
+			const tiposdereagente = await database.TiposDeReagente.findAll({
 				where: where,
 				limit: itemsPerPage,
 				offset: offset,
@@ -250,7 +299,7 @@ class TiposDeReagenteController {
 				currentPage: pageNumber,
 				totalPages: totalPages,
 				totalItems: totalItems,
-				data: tiposdereagente.rows,
+				data: tiposdereagente,
 			};
 
 			return res.status(200).json(resData);

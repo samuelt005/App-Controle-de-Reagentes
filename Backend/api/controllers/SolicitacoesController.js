@@ -1,4 +1,5 @@
 const database = require('../models');
+const { Op } = require('sequelize');
 
 class SolicitacoesController {
 	// Método para pegar os itens de uma solicitação
@@ -41,6 +42,7 @@ class SolicitacoesController {
 
 	// Método para pegar 20 solicitações (paginação)
 	static async getSolicitacoes(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
 
 		const pageNumber = parseInt(page) || 1;
@@ -49,7 +51,15 @@ class SolicitacoesController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const solicitacoes = await database.Solicitacoes.findAndCountAll({
+			const whereResponsavel = {};
+
+			if (search) {
+				whereResponsavel.nome = {
+					[Op.like]: `%${search}%`,
+				};
+			}
+
+			const solicitacoes = await database.Solicitacoes.findAll({
 				where: {},
 				limit: itemsPerPage,
 				offset: offset,
@@ -59,11 +69,27 @@ class SolicitacoesController {
 						model: database.Usuarios,
 						as: 'responsavel_solicitacao',
 						attributes: ['nome'],
+						where: whereResponsavel,
 					},
 				],
+				order: [['id', 'DESC']],
 			});
 
-			const totalItems = await database.Solicitacoes.count();
+			let totalItems;
+			if (search) {
+				totalItems = await database.Solicitacoes.count({
+					include: [
+						{
+							model: database.Usuarios,
+							as: 'responsavel_solicitacao',
+							attributes: ['nome'],
+							where: whereResponsavel,
+						},
+					],
+				});
+			} else {
+				totalItems = await database.Solicitacoes.count();
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -71,7 +97,7 @@ class SolicitacoesController {
 				currentPage: pageNumber,
 				totalPages: totalPages,
 				totalItems: totalItems,
-				data: solicitacoes.rows,
+				data: solicitacoes,
 			};
 
 			return res.status(200).json(resData);
@@ -117,7 +143,7 @@ class SolicitacoesController {
 		}
 	}
 
-  // Método para atualizar um item de uma solicitação
+	// Método para atualizar um item de uma solicitação
 	static async updateItem(req, res) {
 		const { lote, nfe, recusado } = req.body;
 		const { id } = req.params;

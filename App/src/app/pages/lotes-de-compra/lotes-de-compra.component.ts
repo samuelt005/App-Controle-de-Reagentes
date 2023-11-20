@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, LotesDeCompraData } from 'src/app/interfaces';
 import {
   LotesDeCompraService,
@@ -20,7 +20,8 @@ export class LotesDeCompraComponent extends PageComponent implements OnInit {
     public dialog: MatDialog,
     private lotsService: LotesDeCompraService,
     private route: ActivatedRoute,
-    private tableUpdaterService: LotesDeCompraUpdaterService
+    private tableUpdaterService: LotesDeCompraUpdaterService,
+    private router: Router
   ) {
     super();
   }
@@ -56,10 +57,31 @@ export class LotesDeCompraComponent extends PageComponent implements OnInit {
     });
   }
 
-  private updateTableData(page: number): void {
+  public doSearch(): void {
+    if (this.search) {
+      this.router.navigate(['lotesdecompra/page/1']);
+      this.updateTableData(this.page, this.search);
+      this.showSearchError = true;
+    } else {
+      this.updateTableData(this.page);
+      this.showSearchError = false;
+    }
+  }
+
+  public clearSearchValue() {
+    this.search = null;
+    this.refreshTable();
+  }
+
+  private updateTableData(page: number, search: string | null = null): void {
     this.tableData = [];
     this.loading = true;
-    this.lotsService.listPerPage(page).subscribe((responseData) => {
+
+    const observable = search
+      ? this.lotsService.listPerPage(page, search)
+      : this.lotsService.listPerPage(page);
+
+      observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
         currentPage: currentPage,
@@ -72,13 +94,13 @@ export class LotesDeCompraComponent extends PageComponent implements OnInit {
   }
 
   private refreshTable(): void {
-    this.updateTableData(this.page);
+    this.updateTableData(this.page, this.search);
   }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
-      this.updateTableData(this.page);
+      this.updateTableData(this.page, this.search);
     });
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {

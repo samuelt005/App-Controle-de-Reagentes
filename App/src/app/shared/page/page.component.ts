@@ -14,6 +14,8 @@ export abstract class PageComponent {
 
   protected page = 1;
   protected loading = true;
+  protected search: string | null = null;
+  protected showSearchError = false;
 
   protected dataInputs: object[] = [];
 

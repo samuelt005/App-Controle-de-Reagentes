@@ -1,7 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LotesDeCompraData, LotesDeCompraRequest, LotesDeCompraResponse } from 'src/app/interfaces';
+import {
+  LotesDeCompraData,
+  LotesDeCompraRequest,
+  LotesDeCompraResponse,
+} from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -20,12 +24,19 @@ export class LotesDeCompraService {
     return headers;
   }
 
-  public listPerPage(page: number): Observable<LotesDeCompraResponse> {
+  public listPerPage(
+    page: number,
+    search?: string
+  ): Observable<LotesDeCompraResponse> {
     const headers = this.getHeaders();
-    return this.http.get<LotesDeCompraResponse>(
-      `${environment.apiUrl}/lotesdecompra/page/${page}`,
-      { headers }
-    );
+    let url = `${environment.apiUrl}/lotesdecompra/page/${page}`;
+
+    if (search) {
+      const params = new HttpParams().set('search', search);
+      url += `?${params.toString()}`;
+    }
+
+    return this.http.get<LotesDeCompraResponse>(url, { headers });
   }
 
   public listAll(): Observable<LotesDeCompraData[]> {
@@ -45,7 +56,10 @@ export class LotesDeCompraService {
     );
   }
 
-  public edit(body: LotesDeCompraRequest, id: number): Observable<LotesDeCompraRequest> {
+  public edit(
+    body: LotesDeCompraRequest,
+    id: number
+  ): Observable<LotesDeCompraRequest> {
     const headers = this.getHeaders();
     return this.http.put<LotesDeCompraRequest>(
       `${environment.apiUrl}/lotesdecompra/${id}`,

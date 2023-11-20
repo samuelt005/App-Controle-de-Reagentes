@@ -1,5 +1,6 @@
 const database = require('../models');
 const { Nfes } = require('../models');
+const { Op } = require('sequelize');
 
 class NfesController {
 	// Método para pegar um nfe específico
@@ -25,6 +26,7 @@ class NfesController {
 
 	// Método para pegar 20 nfes (paginação)
 	static async getNfes(req, res) {
+		const { search } = req.query;
 		const { page } = req.params;
 
 		const pageNumber = parseInt(page) || 1;
@@ -33,8 +35,23 @@ class NfesController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const result = await database.Nfes.findAndCountAll({
-				where: {},
+			const where = {};
+			const whereEmitente = {};
+
+			if (search) {
+				if (!isNaN(search)) {
+					where.numero = {
+						[Op.like]: `%${search}%`,
+					};
+				} else {
+					whereEmitente.razao_social = {
+						[Op.like]: `%${search}%`,
+					};
+				}
+			}
+
+			const nfes = await database.Nfes.findAll({
+				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				include: [
@@ -42,13 +59,12 @@ class NfesController {
 						model: database.Fornecedores,
 						as: 'emitente',
 						attributes: { exclude: ['createdAt', 'updatedAt'] },
+						where: whereEmitente,
 					},
 				],
 				attributes: { exclude: ['createdAt', 'updatedAt', 'id_fornecedor_fk'] },
 				order: [['data_emissao', 'DESC']],
 			});
-
-			const nfes = result.rows;
 
 			for (const nfe of nfes) {
 				nfe.dataValues.itens_vinculados =
@@ -57,7 +73,27 @@ class NfesController {
 					});
 			}
 
-			const totalItems = await database.Nfes.count();
+			let totalItems;
+			if (search) {
+				if (!isNaN(search)) {
+					totalItems = await database.Nfes.count({
+						where: where,
+					});
+				} else {
+					totalItems = await database.Nfes.count({
+						include: [
+							{
+								model: database.Fornecedores,
+								as: 'emitente',
+								attributes: [],
+								where: whereEmitente,
+							},
+						],
+					});
+				}
+			} else {
+				totalItems = await database.Nfes.count();
+			}
 
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 

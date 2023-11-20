@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PageTitle, Card, ListagemData } from 'src/app/interfaces';
-import { ListagemService, CardsService } from 'src/app/services';
+import {
+  ListagemService,
+  CardsService,
+  ListagemUpdaterService,
+} from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 
 @Component({
@@ -14,6 +18,7 @@ export class ListagemComponent extends PageComponent implements OnInit {
     private listingService: ListagemService,
     private infoCardsService: CardsService,
     private router: Router,
+    private tableUpdaterService: ListagemUpdaterService,
     private route: ActivatedRoute
   ) {
     super();
@@ -56,33 +61,67 @@ export class ListagemComponent extends PageComponent implements OnInit {
     }, 500);
   }
 
+  public doSearch(): void {
+    if (this.search) {
+      this.router.navigate(['listagem/page/1']);
+      this.updateTableData(this.page, this.search);
+      this.showSearchError = true;
+    } else {
+      this.updateTableData(this.page);
+      this.showSearchError = false;
+    }
+  }
+
+  public clearSearchValue() {
+    this.search = null;
+    this.refreshTable();
+  }
+
+  private updateTableData(page: number, search: string | null = null): void {
+    this.tableData = [];
+    this.loading = true;
+
+    const observable = search
+      ? this.listingService.listPerPage(page, search)
+      : this.listingService.listPerPage(page);
+
+    observable.subscribe((responseData) => {
+      const { currentPage, totalPages, totalItems } = responseData;
+      this.paginatorData = {
+        currentPage: currentPage,
+        totalPages: totalPages,
+        totalItems: totalItems,
+      };
+      this.tableData = responseData.data;
+      this.loading = false;
+    });
+
+    this.infoCardsService.getListagemData().subscribe((responseData) => {
+      this.infoCards[0].data = responseData.total_items.toString();
+      if (responseData.total_value !== null) {
+        this.infoCards[1].data =
+          'R$ ' +
+          responseData.total_value.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+      }
+      this.infoCards[2].data = responseData.most_used;
+    });
+  }
+
+  private refreshTable(): void {
+    this.updateTableData(this.page, this.search);
+  }
+
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
+      this.updateTableData(this.page, this.search);
+    });
 
-      this.listingService.listPerPage(this.page).subscribe((responseData) => {
-        const { currentPage, totalPages, totalItems } = responseData;
-        this.paginatorData = {
-          currentPage: currentPage,
-          totalPages: totalPages,
-          totalItems: totalItems,
-        };
-        this.tableData = responseData.data;
-        this.loading = false;
-      });
-
-      this.infoCardsService.getListagemData().subscribe((responseData) => {
-        this.infoCards[0].data = responseData.total_items.toString();
-        if (responseData.total_value !== null) {
-          this.infoCards[1].data =
-            'R$ ' +
-            responseData.total_value.toLocaleString('pt-BR', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
-        }
-        this.infoCards[2].data = responseData.most_used;
-      });
+    this.tableUpdaterService.getUpdateObservable().subscribe(() => {
+      this.refreshTable();
     });
   }
 }

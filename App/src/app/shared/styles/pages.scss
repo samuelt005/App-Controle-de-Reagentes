@@ -31,7 +31,6 @@
         }
 
         mat-icon {
-          cursor: pointer;
           color: var(--cinza-3);
         }
       }
@@ -44,6 +43,10 @@
       ::ng-deep .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
         border-top-right-radius: var(--mdc-shape-small, 10px) !important;
         border-bottom-right-radius: var(--mdc-shape-small, 10px) !important;
+      }
+
+      ::ng-deep .mat-mdc-text-field-wrapper {
+        padding-right: 4px;
       }
     }
 

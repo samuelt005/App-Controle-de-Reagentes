@@ -34,8 +34,6 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
   };
 
   public tableData: FornecedoresData[] = [];
-  public search: string | null = null;
-  public showSearchError = false;
 
   // Métodos
   public openEditItem(
@@ -69,6 +67,11 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
       this.updateTableData(this.page);
       this.showSearchError = false;
     }
+  }
+
+  public clearSearchValue() {
+    this.search = null;
+    this.refreshTable();
   }
 
   private updateTableData(page: number, search: string | null = null): void {

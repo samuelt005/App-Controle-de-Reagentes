@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SolicitacoesResponse } from 'src/app/interfaces';
@@ -20,12 +20,19 @@ export class SolicitacoesService {
     return headers;
   }
 
-  public listPerPage(page: number): Observable<SolicitacoesResponse> {
+  public listPerPage(
+    page: number,
+    search?: string
+  ): Observable<SolicitacoesResponse> {
     const headers = this.getHeaders();
-    return this.http.get<SolicitacoesResponse>(
-      `${environment.apiUrl}/solicitacoes/page/${page}`,
-      { headers }
-    );
+    let url = `${environment.apiUrl}/solicitacoes/page/${page}`;
+
+    if (search) {
+      const params = new HttpParams().set('search', search);
+      url += `?${params.toString()}`;
+    }
+
+    return this.http.get<SolicitacoesResponse>(url, { headers });
   }
 
   public updateStatus(

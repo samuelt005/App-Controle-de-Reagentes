@@ -49,11 +49,11 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   public lotesSelectData: LotesDeCompraData[] = [];
 
   // Métodos
-  onLoteSelectionChange() {
+  public onLoteSelectionChange() {
     this.form.get('nfe')?.enable();
   }
 
-  clearLoteValue() {
+  public clearLoteValue() {
     const loteControl = this.form.get('lote');
     const nfeControl = this.form.get('nfe');
     if (loteControl) {
@@ -63,7 +63,7 @@ export class EditItemComponent extends DialogComponent implements OnInit {
     }
   }
 
-  clearNfeValue() {
+  public clearNfeValue() {
     const nfeControl = this.form.get('nfe');
     if (nfeControl) {
       nfeControl?.setValue('');
@@ -117,7 +117,7 @@ export class EditItemComponent extends DialogComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.nfesService.listAll().subscribe((responseData) => {
       this.nfesSelectData = responseData;
     });

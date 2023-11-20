@@ -1,6 +1,6 @@
 const database = require('../models');
-const { Op } = require('sequelize');
 const { Fornecedores } = require('../models');
+const { Op } = require('sequelize');
 
 class FornecedoresController {
 	// Método para pegar um fornecedor específico
@@ -44,14 +44,12 @@ class FornecedoresController {
 				}
 			}
 
-			const result = await database.Fornecedores.findAndCountAll({
+			const fornecedores = await database.Fornecedores.findAll({
 				where: where,
 				limit: itemsPerPage,
 				offset: offset,
 				attributes: { exclude: ['updatedAt'] },
 			});
-
-			const fornecedores = result.rows;
 
 			for (const fornecedor of fornecedores) {
 				fornecedor.dataValues.notas_vinculadas = await database.Nfes.count({

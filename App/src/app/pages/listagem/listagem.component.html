@@ -5,8 +5,24 @@
       <app-page-title [pageTitle]="pageTitle" />
       <mat-form-field class="search-input" appearance="outline">
         <mat-label>Pesquisar por Código ou Descrição</mat-label>
-        <input matInput type="text" class="number-input" />
-        <mat-icon matSuffix>search</mat-icon>
+        <input
+          matInput
+          type="text"
+          class="number-input"
+          [(ngModel)]="search"
+          (keyup.enter)="doSearch()"
+        />
+        <button
+          *ngIf="this.search"
+          matSuffix
+          mat-icon-button
+          (click)="clearSearchValue()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button (click)="doSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
     </header>
     <div class="cards-container">
@@ -68,7 +84,17 @@
           </p>
         </div>
       </div>
-      <div *ngIf="tableData.length === 0 && !loading" class="empty-container">
+      <div
+        *ngIf="tableData.length === 0 && !loading && showSearchError"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">search</mat-icon>
+        <h2 class="title-large">Nenhum item encontrado!</h2>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading && !showSearchError"
+        class="empty-container"
+      >
         <mat-icon class="empty-icon">web_asset_off</mat-icon>
         <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
       </div>
