@@ -1,8 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { PageTitle, TipoDeReagente, UnDeMedida } from 'src/app/interfaces';
-import { TiposDeReagenteService, UnsDeMedidaService } from 'src/app/services';
-import { NewCommentaryComponent, PageComponent } from 'src/app/shared';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import {
+  PageTitle,
+  TipoDeReagente,
+  UnDeMedida,
+  darBaixaRequest,
+} from 'src/app/interfaces';
+import {
+  DarBaixaService,
+  TiposDeReagenteService,
+  UnsDeMedidaService,
+  UserService,
+} from 'src/app/services';
+import {
+  ConfirmSaveComponent,
+  PageComponent,
+  SnackbarComponent,
+} from 'src/app/shared';
 
 @Component({
   templateUrl: './dar-baixa.component.html',
@@ -13,7 +30,12 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private unsDeMedidaService: UnsDeMedidaService,
-    private materialTypesService: TiposDeReagenteService
+    private materialTypesService: TiposDeReagenteService,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    public snackBar: MatSnackBar,
+    private darBaixaService: DarBaixaService,
+    private router: Router
   ) {
     super();
   }
@@ -28,16 +50,89 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
   public unsSelectData: UnDeMedida[] = [];
   public tiposSelectData: TipoDeReagente[] = [];
 
+  protected formsArray: FormGroup[] = [];
+
   // Métodos
-  public saveWriteOff(
+  public isFormsArrayValid(): boolean {
+    return this.formsArray.every((dataInputForm) => dataInputForm.valid);
+  }
+
+  public addNewSection() {
+    const newSection = this.formBuilder.group({
+      id: ['', Validators.required],
+      qtd_mov: ['', Validators.required],
+      peso_un: ['', Validators.required],
+      comentario: ['', Validators.required],
+    });
+
+    this.formsArray.push(newSection);
+  }
+
+  public deleteSection(index: number) {
+    this.formsArray.splice(index, 1);
+  }
+
+  private openSnackBar(error: boolean, message?: string) {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      duration: 2000,
+      data: { error, message },
+    });
+  }
+
+  public saveData(
     enterAnimationDuration = '100ms',
-    exitAnimationDuration = '100ms'
+    exitAnimationDuration = '100ms',
+    message = 'Os itens serão baixados do estoque!'
   ): void {
-    console.log(this.unsSelectData)
-    console.log(this.tiposSelectData)
-    this.dialog.open(NewCommentaryComponent, {
+    const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
+      data: message,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const id_usuario = this.userService.getUserId();
+
+        const requestArray: darBaixaRequest[] = [];
+
+        this.formsArray.forEach((data) => {
+          requestArray.push(data.value as darBaixaRequest);
+        });
+
+        if (id_usuario !== null) {
+          requestArray.forEach((request) => {
+            request.id_usuario = id_usuario;
+          });
+        } else {
+          console.error('ID do usuário é nulo.');
+          return;
+        }
+
+        // TODO validar quantidade em estoque antes de enviar as requests
+
+        let requestsCompleted = 0;
+
+        requestArray.forEach((request) => {
+          console.log(request);
+          this.darBaixaService.addNew(request.id, request).subscribe({
+            complete: () => {
+              requestsCompleted++;
+
+              if (requestsCompleted === requestArray.length) {
+                this.router.navigate(['listagem/page/1']);
+                this.openSnackBar(false);
+              }
+            },
+            error: (e) => {
+              this.openSnackBar(true);
+              console.error('Ocorreu um erro:', e);
+              return;
+            },
+          });
+        });
+      } else {
+        this.dialog.closeAll();
+      }
     });
   }
 
@@ -49,5 +144,7 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
     this.materialTypesService.listAll().subscribe((responseData) => {
       this.tiposSelectData = responseData;
     });
+
+    this.addNewSection();
   }
 }

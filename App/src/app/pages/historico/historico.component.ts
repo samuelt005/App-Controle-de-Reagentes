@@ -93,6 +93,16 @@ export class HistoricoComponent extends PageComponent implements OnInit {
     }
   }
 
+  public getTotalValue(row: HistoricosData) {
+    return ((+row.valor_unit) * Math.abs(row.qtd_mov)).toLocaleString(
+      'pt-BR',
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    );
+  }
+
   public openCommentary(
     commentary: string,
     enterAnimationDuration = '100ms',

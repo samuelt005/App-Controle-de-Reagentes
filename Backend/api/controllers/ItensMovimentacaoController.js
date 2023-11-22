@@ -115,6 +115,7 @@ class TiposDeReagenteController {
 		}
 	}
 
+	// TODO juntar newAdjustment e newWriteOff
 	static async newAdjustment(req, res) {
 		const { data, valor_total, quantidade, comentario, id_usuario } = req.body;
 		const { id } = req.params;
@@ -148,6 +149,71 @@ class TiposDeReagenteController {
 					}
 				);
 			}
+
+			return res.status(200).json(createdItemMovimentacao);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	static async newWriteOff(req, res) {
+		const { qtd_mov, comentario, id_usuario } = req.body;
+		const { id } = req.params;
+
+		const valor_unit = -1; // TODO pegar valor unitário do banco
+		const new_qtd_mov = qtd_mov * -1;
+
+		try {
+			const createdItemMovimentacao = await database.ItensMovimentacao.create({
+				operacao: 2,
+				qtd_mov: new_qtd_mov,
+				valor_unit,
+				comentario,
+				id_usuario_fk: id_usuario,
+				id_tipo_de_reagente_fk: Number(id),
+			});
+
+			if (createdItemMovimentacao !== null) {
+				const tipoDeReagente = await database.TiposDeReagente.findOne({
+					where: { id: Number(id) },
+					attributes: ['vlr_estoque'],
+				});
+
+				const newValue = parseFloat(tipoDeReagente.vlr_estoque) - 1; // TODO passar valor total
+
+				await database.TiposDeReagente.update(
+					{ vlr_estoque: newValue },
+					{
+						where: { id: Number(id) },
+					}
+				);
+			}
+
+			return res.status(200).json(createdItemMovimentacao);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	static async newRequestItem(req, res) {
+		const { qtd_mov, comentario, id_usuario, id_solicitacao } = req.body;
+		const { id } = req.params;
+
+		console.log(req.body);
+		console.log(id);
+
+		const valor_unit = 1; // TODO pegar valor unitário do banco
+
+		try {
+			const createdItemMovimentacao = await database.ItensMovimentacao.create({
+				operacao: 1,
+				qtd_mov,
+				comentario,
+				valor_unit,
+				id_usuario_fk: id_usuario,
+				id_tipo_de_reagente_fk: Number(id),
+				id_solicitacao_fk: id_solicitacao,
+			});
 
 			return res.status(200).json(createdItemMovimentacao);
 		} catch (error) {

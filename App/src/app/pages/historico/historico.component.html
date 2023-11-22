@@ -54,12 +54,7 @@
           </p>
           <p class="valor-tot body-medium">
             R$
-            {{
-              (+row.valor_unit * row.qtd_mov).toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })
-            }}
+            {{ getTotalValue(row) }}
           </p>
           <p class="quant body-medium">
             {{

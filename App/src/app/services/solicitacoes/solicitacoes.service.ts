@@ -35,10 +35,7 @@ export class SolicitacoesService {
     return this.http.get<SolicitacoesResponse>(url, { headers });
   }
 
-  public updateStatus(
-    id: number,
-    status: number
-  ): Observable<unknown> {
+  public updateStatus(id: number, status: number): Observable<unknown> {
     const headers = this.getHeaders();
     const body = {
       status,

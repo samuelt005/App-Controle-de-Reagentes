@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HistoricosRequest, HistoricosResponse } from 'src/app/interfaces';
-import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
+import { TokenService } from '../token/token.service';
+import { solicitacaoRequest } from 'src/app/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HistoricoService {
+export class SolicitarService {
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   private getHeaders(): HttpHeaders {
@@ -20,21 +20,24 @@ export class HistoricoService {
     return headers;
   }
 
-  public listPerPage(page: number, id: number): Observable<HistoricosResponse> {
+  public addNewSolicitacao(
+    comentario: string,
+    id_usuario: string
+  ): Observable<number> {
+    const body = {
+      comentario,
+      id_usuario,
+    };
     const headers = this.getHeaders();
-    return this.http.get<HistoricosResponse>(
-      `${environment.apiUrl}/historico/item/${id}/page/${page}`,
-      { headers }
-    );
+    return this.http.post<number>(`${environment.apiUrl}/solicitacoes`, body, {
+      headers,
+    });
   }
 
-  public addNew(
-    id: number,
-    body: HistoricosRequest
-  ): Observable<HistoricosRequest> {
+  public addNewItem(id: number, body: solicitacaoRequest): Observable<solicitacaoRequest> {
     const headers = this.getHeaders();
-    return this.http.post<HistoricosRequest>(
-      `${environment.apiUrl}/movimentacao/ajuste/${id}`,
+    return this.http.post<solicitacaoRequest>(
+      `${environment.apiUrl}/movimentacao/solicitacao/${id}`,
       body,
       { headers }
     );

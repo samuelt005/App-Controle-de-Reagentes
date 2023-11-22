@@ -9,19 +9,17 @@ import { TipoDeReagente, UnDeMedida } from 'src/app/interfaces';
 })
 export class DataInputsComponent {
   // Atributos
-  @Input() public noDeleteButton = false;
+  @Input() public isFirstItem = false;
   @Input() public unsSelectData: UnDeMedida[] = [];
   @Input() public tiposSelectData: TipoDeReagente[] = [];
-  @Output() public delete = new EventEmitter<void>();
-
-  public form = new FormGroup({
-    tipo: new FormControl('', [Validators.required]),
-    qtd: new FormControl('', [Validators.required]),
+  @Input() public form: FormGroup = new FormGroup({
+    id: new FormControl('', [Validators.required]),
+    qtd_mov: new FormControl('', [Validators.required]),
     peso_un: new FormControl('', [Validators.required]),
-    desc: new FormControl('', [Validators.required]),
+    comentario: new FormControl('', [Validators.required]),
   });
 
-  selected = '';
+  @Output() public delete = new EventEmitter<void>();
 
   // Métodos
   public deleteThisSection() {

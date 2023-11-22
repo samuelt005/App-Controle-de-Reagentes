@@ -101,9 +101,10 @@ module.exports = {
 
 			objects.push({
 				operacao: randomOperation,
-				qtd_mov: randomFloat,
+				qtd_mov: randomOperation == 2 ? randomFloat * -1 : randomFloat,
 				qtd_rec: randomOperation == 1 ? randomFloat : null,
-				valor_unit: getRandomDecimal(),
+				valor_unit:
+					randomOperation == 2 ? getRandomDecimal() * -1 : getRandomDecimal(),
 				novo: 0,
 				recusado: randomOperation == 1 ? 0 : null,
 				validade: randomOperation == 1 ? randomDate : null,

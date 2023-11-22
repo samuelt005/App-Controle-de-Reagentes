@@ -4,15 +4,12 @@
     <app-page-title [pageTitle]="pageTitle" />
     <div class="content-spacer">
       <div class="content-container">
-        <app-data-inputs
-          [unsSelectData]="unsSelectData"
-          [tiposSelectData]="tiposSelectData"
-          [noDeleteButton]="true"
-        ></app-data-inputs>
-        <div *ngFor="let dataInput of dataInputs; let i = index">
+        <div *ngFor="let form of formsArray; let i = index">
           <app-data-inputs
             [unsSelectData]="unsSelectData"
             [tiposSelectData]="tiposSelectData"
+            [isFirstItem]="i === 0"
+            [form]="form"
             (delete)="deleteSection(i)"
           ></app-data-inputs>
         </div>
@@ -24,7 +21,13 @@
       </div>
     </div>
     <div class="button-container">
-      <app-normal-button (click)="saveWriteOff()" [filled]="true">
+      <!-- TODO inserir campo de comentário do pedido -->
+      <app-normal-button
+        (click)="saveData()"
+        [filled]="true"
+        [inactive]="!isFormsArrayValid()"
+        [disabled]="!isFormsArrayValid()"
+      >
         Salvar
       </app-normal-button>
     </div>

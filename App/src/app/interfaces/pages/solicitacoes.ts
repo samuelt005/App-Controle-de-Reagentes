@@ -5,6 +5,11 @@ export interface SolicitacoesResponse {
   data: SolicitacoesData[];
 }
 
+export interface SolicitacoesRequest {
+  comentario: string;
+  id_usuario: string;
+}
+
 export interface SolicitacoesData {
   id: number;
   status: number;

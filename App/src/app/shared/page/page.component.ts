@@ -17,7 +17,6 @@ export abstract class PageComponent {
   protected search: string | null = null;
   protected showSearchError = false;
 
-  protected dataInputs: object[] = [];
 
   // Métodos
   protected getFormattedDate(dateTimeStr: string): string {
@@ -38,13 +37,5 @@ export abstract class PageComponent {
     } else {
       return 'CNPJ inválido';
     }
-  }
-
-  protected addNewSection() {
-    this.dataInputs.push({});
-  }
-
-  protected deleteSection(index: number) {
-    this.dataInputs.splice(index, 1);
   }
 }

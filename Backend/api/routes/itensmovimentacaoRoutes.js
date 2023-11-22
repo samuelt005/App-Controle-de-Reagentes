@@ -14,9 +14,23 @@ router
 
 	// Rota para criar um ajuste de movimentação
 	.post(
-		'/historico/item/:id',
+		'/movimentacao/ajuste/:id',
 		autorizacao(['Administrador']),
 		ItensMovimentacaoController.newAdjustment
+	)
+
+	// Rota para criar uma baixa
+	.post(
+		'/movimentacao/baixa/:id',
+		autorizacao(['Administrador']),
+		ItensMovimentacaoController.newWriteOff
+	)
+
+	// Rota para criar um item de pedido
+	.post(
+		'/movimentacao/solicitacao/:id',
+		autorizacao(['Administrador']),
+		ItensMovimentacaoController.newRequestItem
 	);
 
 module.exports = router;

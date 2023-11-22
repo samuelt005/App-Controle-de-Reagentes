@@ -1,33 +1,44 @@
 <div class="data-inputs">
-  <div class="inputs" >
-    <div class="first-line" [formGroup]="form">
+  <div class="inputs" [formGroup]="form">
+    <div class="first-line">
       <mat-form-field class="select" appearance="outline">
         <!-- TODO Incluir pesquisa neste select -->
-        <mat-select placeholder="Item" formControlName="tipo">
+        <mat-select placeholder="Item" formControlName="id">
           <mat-option
             *ngFor="let item of tiposSelectData"
             [value]="item.id.toString()"
             >{{ item.cod + " - " + item.descricao }}</mat-option
           >
         </mat-select>
+        <mat-error *ngIf="form.get('id')?.hasError('required')">
+          Selecione um item.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="qtd" appearance="outline">
         <input
           matInput
-          type="text"
           class="number-input body-large"
-          placeholder="Qtd."
-          formControlName="qtd"
+          placeholder="Quantidade"
+          formControlName="qtd_mov"
+          mask="separator.2"
+          thousandSeparator="."
+          decimalMarker=","
+          [leadZero]="true"
+          maxlength="16"
         />
+        <mat-error *ngIf="form.get('qtd_mov')?.hasError('required')">
+          Obrigatório.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="un" appearance="outline">
-        <mat-select placeholder="Item" formControlName="peso_un">
-          <mat-option
-            *ngFor="let item of unsSelectData"
-            [value]="item.peso"
-            >{{ item.sigla }}</mat-option
-          >
+        <mat-select placeholder="UN" formControlName="peso_un">
+          <mat-option *ngFor="let item of unsSelectData" [value]="item.peso">{{
+            item.sigla
+          }}</mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('peso_un')?.hasError('required')">
+          Selecione.
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="second-line">
@@ -37,8 +48,11 @@
           type="text"
           class="body-large"
           placeholder="Justificativa"
-          formControlName="desc"
+          formControlName="comentario"
         />
+        <mat-error *ngIf="form.get('comentario')?.hasError('required')">
+          Preencha uma justificativa.
+        </mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -47,10 +61,10 @@
     <button
       class="delete-button body-medium"
       (click)="deleteThisSection()"
-      *ngIf="!noDeleteButton"
+      *ngIf="!isFirstItem"
     >
       <mat-icon class="material-icons-outlined"> remove </mat-icon>
     </button>
-    <div *ngIf="noDeleteButton" class="spacer"></div>
+    <div *ngIf="isFirstItem" class="spacer"></div>
   </div>
 </div>

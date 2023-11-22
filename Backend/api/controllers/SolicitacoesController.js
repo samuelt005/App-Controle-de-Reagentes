@@ -115,7 +115,7 @@ class SolicitacoesController {
 				comentario,
 				id_usuario_fk: id_usuario,
 			});
-			return res.status(200).json(createdSolicitacao);
+			return res.status(200).json(createdSolicitacao.id);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
