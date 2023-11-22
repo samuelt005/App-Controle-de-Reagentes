@@ -22,6 +22,7 @@ import {
 } from 'src/app/shared';
 
 @Component({
+  selector: 'app-dar-baixa',
   templateUrl: './dar-baixa.component.html',
   styleUrls: ['./dar-baixa.component.scss'],
 })

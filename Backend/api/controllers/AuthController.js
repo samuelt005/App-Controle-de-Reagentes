@@ -52,6 +52,18 @@ class AuthController {
 			return res.status(401).json({ message: error.message });
 		}
 	}
+
+	static async logout(req, res) {
+		const token = req.headers.authorization.split(' ')[1];
+
+		try {
+			await await database.InvalidTokens.create({ token });
+
+			res.status(200).json({ message: 'Logout efetuado' });
+		} catch (error) {
+			return res.status(400).json({ message: error.message });
+		}
+	}
 }
 
 module.exports = AuthController;

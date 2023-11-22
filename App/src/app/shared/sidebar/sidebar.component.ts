@@ -126,9 +126,6 @@ export class SidebarComponent implements OnInit {
 
   public logOut() {
     this.userService.logout();
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 500);
   }
 
   public applyFilters() {

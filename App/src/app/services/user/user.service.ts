@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +13,20 @@ import { environment } from 'src/environments/environment.development';
 export class UserService {
   private userSubject = new BehaviorSubject<UserData | null>(null);
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+    private router: Router
+  ) {
     if (this.tokenService.haveToken()) {
       this.decodeJWT();
     }
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && this.tokenService.haveToken()) {
+        this.checkTokenValidity();
+      }
+    });
   }
 
   private getHeaders(): HttpHeaders {
@@ -40,11 +51,27 @@ export class UserService {
   public saveToken(token: string) {
     this.tokenService.saveToken(token);
     this.decodeJWT();
+    this.checkTokenValidity();
   }
 
   public logout() {
-    this.tokenService.deleteToken();
-    this.userSubject.next(null);
+    const headers = this.getHeaders();
+
+    this.http
+      .post<string>(`${environment.apiUrl}/auth/logout`, {}, { headers })
+      .subscribe(
+        () => {
+          this.tokenService.deleteToken();
+          this.userSubject.next(null);
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.error('Logout failed:', error);
+          this.tokenService.deleteToken();
+          this.userSubject.next(null);
+          this.router.navigate(['/login']);
+        }
+      );
   }
 
   public isLogged() {
@@ -59,6 +86,19 @@ export class UserService {
   public getUserData() {
     const user = this.userSubject.value;
     return user ? user : null;
+  }
+
+  private checkTokenValidity() {
+    const token = this.tokenService.returnToken();
+    const decodedToken = jwtDecode(token);
+
+    if (decodedToken && decodedToken.exp) {
+      const expirationTime = decodedToken.exp * 1000;
+      const currentTime = new Date().getTime();
+      if (currentTime > expirationTime) {
+        this.logout();
+      }
+    }
   }
 
   public updatePassword(body: updatePassword, id: string): Observable<unknown> {

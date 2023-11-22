@@ -1,3 +1,4 @@
+const database = require('../models');
 const { verify, decode } = require('jsonwebtoken');
 const jsonSecret = require('../config/jsonSecret');
 
@@ -11,6 +12,13 @@ module.exports = async (req, res, next) => {
 	const [, accessToken] = token.split(' ');
 
 	try {
+		const isTokenInvalid = await database.InvalidTokens.findOne({
+			where: { token: accessToken },
+		});
+		if (isTokenInvalid) {
+			return res.status(401).send('Token inválido');
+		}
+
 		verify(accessToken, jsonSecret.secret);
 
 		const { id, email } = await decode(accessToken);
