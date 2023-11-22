@@ -17,10 +17,10 @@ export class AcceptComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: ItemSolicitacao,
+    private tableUpdaterService: DetalhesSolicitacaoUpdaterService,
     private detalhesSolicitacaoService: DetalhesSolicitacaoService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: DetalhesSolicitacaoUpdaterService
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
   }

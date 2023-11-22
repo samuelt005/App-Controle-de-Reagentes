@@ -14,10 +14,10 @@ import { cnpjValidator } from 'src/app/utils';
 export class NewFornecedoresComponent extends DialogComponent {
   // Construtor
   constructor(
-    private suppliersService: FornecedoresService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: FornecedoresUpdaterService
+    private tableUpdaterService: FornecedoresUpdaterService,
+    private fornecedoresService: FornecedoresService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar,
   ) {
     super(snackBar);
   }
@@ -46,7 +46,7 @@ export class NewFornecedoresComponent extends DialogComponent {
           razao_social: string;
         };
 
-        this.suppliersService.addNew(formData).subscribe({
+        this.fornecedoresService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
             this.tableUpdaterService.updateTable();

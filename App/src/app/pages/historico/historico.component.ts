@@ -18,11 +18,11 @@ import { AdjustmentComponent } from './adjustment/adjustment.component';
 export class HistoricoComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private dialog: MatDialog,
-    private historyService: HistoricoService,
-    private infoCardsService: CardsService,
+    private tableUpdaterService: HistoricoUpdaterService,
+    private historicoService: HistoricoService,
+    private cardsService: CardsService,
     private route: ActivatedRoute,
-    private tableUpdaterService: HistoricoUpdaterService
+    private dialog: MatDialog
   ) {
     super();
   }
@@ -94,13 +94,10 @@ export class HistoricoComponent extends PageComponent implements OnInit {
   }
 
   public getTotalValue(row: HistoricosData) {
-    return ((+row.valor_unit) * Math.abs(row.qtd_mov)).toLocaleString(
-      'pt-BR',
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }
-    );
+    return (+row.valor_unit * Math.abs(row.qtd_mov)).toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 
   public openCommentary(
@@ -134,7 +131,7 @@ export class HistoricoComponent extends PageComponent implements OnInit {
     this.tableData = [];
     this.loading = true;
 
-    this.historyService.listPerPage(page, id).subscribe((responseData) => {
+    this.historicoService.listPerPage(page, id).subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
         currentPage: currentPage,
@@ -145,7 +142,7 @@ export class HistoricoComponent extends PageComponent implements OnInit {
       this.loading = false;
     });
 
-    this.infoCardsService.getHistoricoData(id).subscribe((responseData) => {
+    this.cardsService.getHistoricoData(id).subscribe((responseData) => {
       this.infoCards[0].data = responseData.desc;
       if (responseData.total_value !== null) {
         this.infoCards[1].data =

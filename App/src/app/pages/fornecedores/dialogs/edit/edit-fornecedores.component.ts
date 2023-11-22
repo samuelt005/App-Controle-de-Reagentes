@@ -3,7 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FornecedoresDialog } from 'src/app/interfaces';
-import { FornecedoresService, FornecedoresUpdaterService } from 'src/app/services';
+import {
+  FornecedoresService,
+  FornecedoresUpdaterService,
+} from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { cnpjValidator } from 'src/app/utils';
 
@@ -15,10 +18,10 @@ export class EditFornecedoresComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: FornecedoresDialog,
-    private suppliersService: FornecedoresService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: FornecedoresUpdaterService
+    private tableUpdaterService: FornecedoresUpdaterService,
+    private fornecedoresService: FornecedoresService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
     this.form.setValue({
@@ -51,7 +54,7 @@ export class EditFornecedoresComponent extends DialogComponent {
           razao_social: string;
         };
 
-        this.suppliersService
+        this.fornecedoresService
           .edit(formData, this.dialogData.rowData.id)
           .subscribe({
             complete: () => {

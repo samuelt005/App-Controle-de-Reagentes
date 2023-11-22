@@ -28,13 +28,13 @@ import {
 export class SolicitarComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    public dialog: MatDialog,
+    private tiposDeReagenteService: TiposDeReagenteService,
     private unsDeMedidaService: UnsDeMedidaService,
-    private materialTypesService: TiposDeReagenteService,
     private solicitarService: SolicitarService,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    public snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private router: Router
   ) {
     super();
@@ -150,7 +150,7 @@ export class SolicitarComponent extends PageComponent implements OnInit {
       this.unsSelectData = responseData;
     });
 
-    this.materialTypesService.listAll().subscribe((responseData) => {
+    this.tiposDeReagenteService.listAll().subscribe((responseData) => {
       this.tiposSelectData = responseData;
     });
 

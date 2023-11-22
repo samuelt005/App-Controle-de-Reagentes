@@ -27,12 +27,12 @@ export class DetalhesSolicitacaoComponent
 {
   // Construtor
   constructor(
+    private tableUpdaterService: DetalhesSolicitacaoUpdaterService,
     private detalhesSolicitacaoService: DetalhesSolicitacaoService,
     private solicitacoesService: SolicitacoesService,
-    private tableUpdaterService: DetalhesSolicitacaoUpdaterService,
-    private infoCardsService: CardsService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute
+    private cardsService: CardsService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     super();
   }
@@ -229,7 +229,7 @@ export class DetalhesSolicitacaoComponent
         this.loading = false;
       });
 
-    this.infoCardsService.getSolicitacaoData(id).subscribe((responseData) => {
+    this.cardsService.getSolicitacaoData(id).subscribe((responseData) => {
       this.infoCards[0].data = responseData.id.toString();
       this.infoCards[1].data = this.getFormattedDate(
         responseData.data.toString()

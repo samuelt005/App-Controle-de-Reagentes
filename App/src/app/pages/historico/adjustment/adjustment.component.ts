@@ -19,11 +19,11 @@ export class AdjustmentComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: AdjustmentsDialog,
-    public override snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    public historicoService: HistoricoService,
     private tableUpdaterService: HistoricoUpdaterService,
-    private userService: UserService
+    private historicoService: HistoricoService,
+    private userService: UserService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
     this.id = dialogData.id;

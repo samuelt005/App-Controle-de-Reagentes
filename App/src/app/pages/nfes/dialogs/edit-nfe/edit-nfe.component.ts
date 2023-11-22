@@ -20,10 +20,10 @@ export class EditNfeComponent extends DialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: NfesData,
     private fornecedoresService: FornecedoresService,
+    private tableUpdaterService: NfesUpdaterService,
     private nfesService: NfesService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: NfesUpdaterService
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
 

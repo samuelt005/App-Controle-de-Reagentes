@@ -17,10 +17,10 @@ import { PageComponent } from 'src/app/shared';
 export class TiposDeReagenteComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private dialog: MatDialog,
-    private materialTypesService: TiposDeReagenteService,
-    private route: ActivatedRoute,
     private tableUpdaterService: TiposDeReagenteUpdaterService,
+    private tiposDeReagenteService: TiposDeReagenteService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
     private router: Router
   ) {
     super();
@@ -79,8 +79,8 @@ export class TiposDeReagenteComponent extends PageComponent implements OnInit {
     this.loading = true;
 
     const observable = search
-      ? this.materialTypesService.listPerPage(page, search)
-      : this.materialTypesService.listPerPage(page);
+      ? this.tiposDeReagenteService.listPerPage(page, search)
+      : this.tiposDeReagenteService.listPerPage(page);
 
     observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;

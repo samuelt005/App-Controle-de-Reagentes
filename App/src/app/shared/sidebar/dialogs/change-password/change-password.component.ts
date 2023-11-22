@@ -15,9 +15,9 @@ export class ChangePasswordComponent extends DialogComponent implements OnInit {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: string,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    public userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
   }

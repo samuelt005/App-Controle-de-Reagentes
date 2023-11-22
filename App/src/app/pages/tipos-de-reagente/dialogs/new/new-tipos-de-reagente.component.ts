@@ -14,14 +14,17 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
   templateUrl: './new-tipos-de-reagente.component.html',
   styleUrls: ['./new-tipos-de-reagente.component.scss'],
 })
-export class NewTiposDeReagenteComponent extends DialogComponent implements OnInit {
+export class NewTiposDeReagenteComponent
+  extends DialogComponent
+  implements OnInit
+{
   // Construtor
   constructor(
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private materialTypesService: TiposDeReagenteService,
     private tableUpdaterService: TiposDeReagenteUpdaterService,
-    private unsDeMedidaService: UnsDeMedidaService
+    private tiposDeReagenteService: TiposDeReagenteService,
+    private unsDeMedidaService: UnsDeMedidaService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
   }
@@ -59,7 +62,7 @@ export class NewTiposDeReagenteComponent extends DialogComponent implements OnIn
           id_un_de_medida: number;
         };
 
-        this.materialTypesService.addNew(formData).subscribe({
+        this.tiposDeReagenteService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
             this.tableUpdaterService.updateTable();

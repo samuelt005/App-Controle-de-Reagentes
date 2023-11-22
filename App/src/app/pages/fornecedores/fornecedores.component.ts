@@ -17,10 +17,10 @@ import { EditFornecedoresComponent } from './dialogs/edit/edit-fornecedores.comp
 export class FornecedoresComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private dialog: MatDialog,
-    private suppliersService: FornecedoresService,
-    private route: ActivatedRoute,
     private tableUpdaterService: FornecedoresUpdaterService,
+    private fornecedoresService: FornecedoresService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
     private router: Router
   ) {
     super();
@@ -79,8 +79,8 @@ export class FornecedoresComponent extends PageComponent implements OnInit {
     this.loading = true;
 
     const observable = search
-      ? this.suppliersService.listPerPage(page, search)
-      : this.suppliersService.listPerPage(page);
+      ? this.fornecedoresService.listPerPage(page, search)
+      : this.fornecedoresService.listPerPage(page);
 
     observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;

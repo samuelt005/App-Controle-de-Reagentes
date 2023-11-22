@@ -11,9 +11,9 @@ import { AuthService } from 'src/app/services';
 export class LoginComponent implements OnInit {
   // Construtor
   constructor(
-    private AuthService: AuthService,
-    private router: Router,
-    private userService: UserService
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
   ) {}
 
   // Atributos
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       senha: string;
     };
 
-    this.AuthService.auth(formData).subscribe({
+    this.authService.auth(formData).subscribe({
       next: () => {
         setTimeout(() => {
           this.router.navigate(['/listagem/page/1']);

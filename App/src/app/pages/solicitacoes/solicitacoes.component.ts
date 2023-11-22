@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, SolicitacoesData } from 'src/app/interfaces';
 import {
@@ -15,10 +14,9 @@ import { PageComponent } from 'src/app/shared';
 export class SolicitacoesComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private requestListingService: SolicitacoesService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute,
     private tableUpdaterService: SolicitacoesUpdaterService,
+    private solicitacoesService: SolicitacoesService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     super();
@@ -87,8 +85,8 @@ export class SolicitacoesComponent extends PageComponent implements OnInit {
     this.loading = true;
 
     const observable = search
-      ? this.requestListingService.listPerPage(page, search)
-      : this.requestListingService.listPerPage(page);
+      ? this.solicitacoesService.listPerPage(page, search)
+      : this.solicitacoesService.listPerPage(page);
 
     observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;

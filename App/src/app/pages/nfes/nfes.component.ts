@@ -14,10 +14,10 @@ import { PageComponent } from 'src/app/shared';
 export class NfesComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private dialog: MatDialog,
+    private tableUpdaterService: NfesUpdaterService,
     private nfesService: NfesService,
     private route: ActivatedRoute,
-    private tableUpdaterService: NfesUpdaterService,
+    private dialog: MatDialog,
     private router: Router
   ) {
     super();

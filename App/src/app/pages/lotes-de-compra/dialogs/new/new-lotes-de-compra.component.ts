@@ -16,10 +16,10 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 export class NewLotesDeCompraComponent extends DialogComponent {
   // Construtor
   constructor(
-    private purchaseLotsService: LotesDeCompraService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: LotesDeCompraUpdaterService
+    private tableUpdaterService: LotesDeCompraUpdaterService,
+    private lotesDeCompraService: LotesDeCompraService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
   }
@@ -49,7 +49,7 @@ export class NewLotesDeCompraComponent extends DialogComponent {
           numero: number;
         };
 
-        this.purchaseLotsService.addNew(formData).subscribe({
+        this.lotesDeCompraService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
             this.tableUpdaterService.updateTable();

@@ -15,11 +15,11 @@ import { PageComponent } from 'src/app/shared';
 export class ListagemComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    private listingService: ListagemService,
-    private infoCardsService: CardsService,
-    private router: Router,
     private tableUpdaterService: ListagemUpdaterService,
-    private route: ActivatedRoute
+    private listagemService: ListagemService,
+    private cardsService: CardsService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
   }
@@ -82,8 +82,8 @@ export class ListagemComponent extends PageComponent implements OnInit {
     this.loading = true;
 
     const observable = search
-      ? this.listingService.listPerPage(page, search)
-      : this.listingService.listPerPage(page);
+      ? this.listagemService.listPerPage(page, search)
+      : this.listagemService.listPerPage(page);
 
     observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
@@ -96,7 +96,7 @@ export class ListagemComponent extends PageComponent implements OnInit {
       this.loading = false;
     });
 
-    this.infoCardsService.getListagemData().subscribe((responseData) => {
+    this.cardsService.getListagemData().subscribe((responseData) => {
       this.infoCards[0].data = responseData.total_items.toString();
       if (responseData.total_value !== null) {
         this.infoCards[1].data =

@@ -13,9 +13,9 @@ import { ProfileComponent } from './dialogs/profile/profile.component';
 export class SidebarComponent implements OnInit {
   // Construtor
   constructor(
-    private router: Router,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     const userData = this.userService.getUserData();
     if (userData !== null) {

@@ -17,10 +17,10 @@ export class EditLotesDeCompraComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: LotesDeCompraDialog,
-    private purchaseLotsService: LotesDeCompraService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: LotesDeCompraUpdaterService
+    private tableUpdaterService: LotesDeCompraUpdaterService,
+    private lotesDeCompraService: LotesDeCompraService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
     this.form.setValue({
@@ -53,7 +53,7 @@ export class EditLotesDeCompraComponent extends DialogComponent {
           numero: number;
         };
 
-        this.purchaseLotsService
+        this.lotesDeCompraService
           .edit(formData, this.dialogData.rowData.id)
           .subscribe({
             complete: () => {

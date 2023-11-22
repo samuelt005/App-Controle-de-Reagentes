@@ -20,10 +20,10 @@ export class NewNfeComponent extends DialogComponent implements OnInit {
   // Construtor
   constructor(
     private fornecedoresService: FornecedoresService,
+    private tableUpdaterService: NfesUpdaterService,
     private nfesService: NfesService,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private tableUpdaterService: NfesUpdaterService
+    private dialog: MatDialog,
+    snackBar: MatSnackBar,
   ) {
     super(snackBar);
   }

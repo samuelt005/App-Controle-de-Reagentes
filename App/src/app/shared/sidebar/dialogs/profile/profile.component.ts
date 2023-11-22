@@ -13,8 +13,8 @@ export class ProfileComponent extends DialogComponent implements OnInit {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: UserData,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
 

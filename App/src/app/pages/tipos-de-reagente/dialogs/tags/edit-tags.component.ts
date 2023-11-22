@@ -17,10 +17,10 @@ export class EditTagsComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: TagsDialog,
+    private tableUpdaterService: TiposDeReagenteUpdaterService,
+    private tiposDeReagenteService: TiposDeReagenteService,
     public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private materialTypesService: TiposDeReagenteService,
-    private tableUpdaterService: TiposDeReagenteUpdaterService
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
 
@@ -64,7 +64,7 @@ export class EditTagsComponent extends DialogComponent {
           eb: boolean;
         };
 
-        this.materialTypesService
+        this.tiposDeReagenteService
           .updateTags(formData, this.dialogData.id)
           .subscribe({
             complete: () => {

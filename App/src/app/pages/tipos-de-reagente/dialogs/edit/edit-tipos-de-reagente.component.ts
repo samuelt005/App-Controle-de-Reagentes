@@ -16,15 +16,18 @@ import {
   templateUrl: './edit-tipos-de-reagente.component.html',
   styleUrls: ['./edit-tipos-de-reagente.component.scss'],
 })
-export class EditTiposDeReagenteComponent extends DialogComponent implements OnInit {
+export class EditTiposDeReagenteComponent
+  extends DialogComponent
+  implements OnInit
+{
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: TiposDeReagenteDialog,
-    public dialog: MatDialog,
-    public override snackBar: MatSnackBar,
-    private materialTypesService: TiposDeReagenteService,
     private tableUpdaterService: TiposDeReagenteUpdaterService,
-    private unsDeMedidaService: UnsDeMedidaService
+    private tiposDeReagenteService: TiposDeReagenteService,
+    private unsDeMedidaService: UnsDeMedidaService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
 
@@ -96,7 +99,7 @@ export class EditTiposDeReagenteComponent extends DialogComponent implements OnI
           id_un_de_medida: number;
         };
 
-        this.materialTypesService
+        this.tiposDeReagenteService
           .edit(formData, this.dialogData.rowData.id)
           .subscribe({
             complete: () => {
@@ -130,7 +133,7 @@ export class EditTiposDeReagenteComponent extends DialogComponent implements OnI
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.materialTypesService
+        this.tiposDeReagenteService
           .updateActive(this.dialogData.rowData.id)
           .subscribe({
             complete: () => {

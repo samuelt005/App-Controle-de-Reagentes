@@ -17,10 +17,10 @@ import { EditLotesDeCompraComponent } from './dialogs/edit/edit-lotes-de-compra.
 export class LotesDeCompraComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
-    public dialog: MatDialog,
+    private tableUpdaterService: LotesDeCompraUpdaterService,
     private lotsService: LotesDeCompraService,
     private route: ActivatedRoute,
-    private tableUpdaterService: LotesDeCompraUpdaterService,
+    private dialog: MatDialog,
     private router: Router
   ) {
     super();
@@ -81,7 +81,7 @@ export class LotesDeCompraComponent extends PageComponent implements OnInit {
       ? this.lotsService.listPerPage(page, search)
       : this.lotsService.listPerPage(page);
 
-      observable.subscribe((responseData) => {
+    observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
       this.paginatorData = {
         currentPage: currentPage,

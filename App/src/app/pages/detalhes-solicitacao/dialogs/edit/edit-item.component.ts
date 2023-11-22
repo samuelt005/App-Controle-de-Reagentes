@@ -24,12 +24,12 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: ItemSolicitacao,
-    public override snackBar: MatSnackBar,
-    private nfesService: NfesService,
+    private tableUpdaterService: DetalhesSolicitacaoUpdaterService,
     private detalhesSolicitacaoService: DetalhesSolicitacaoService,
-    public dialog: MatDialog,
     private lotesDeCompraService: LotesDeCompraService,
-    private tableUpdaterService: DetalhesSolicitacaoUpdaterService
+    private nfesService: NfesService,
+    private dialog: MatDialog,
+    snackBar: MatSnackBar
   ) {
     super(snackBar);
 

@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ConfirmSaveComponent } from 'src/app/shared';
@@ -14,7 +13,6 @@ export class ConfirmInactivationComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: boolean,
-    public dialog: MatDialog,
     private dialogRef: MatDialogRef<ConfirmSaveComponent>
   ) {
     if (data) {
