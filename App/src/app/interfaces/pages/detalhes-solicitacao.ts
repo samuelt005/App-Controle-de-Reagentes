@@ -14,6 +14,7 @@ export interface ItemSolicitacao {
     numero: number;
   };
   tipo: {
+    id: number;
     cod: number;
     descricao: string;
     un_de_medida: {
@@ -26,6 +27,9 @@ export interface ItemSolicitacaoRequest {
   recusado?: boolean | null;
   lote?: string | null;
   nfe?: string | null;
+  valor_tot?: string | null;
+  qtd_rec?: string | null;
+  validade?: Date | null;
 }
 
 export interface SolicitacaoPageData {

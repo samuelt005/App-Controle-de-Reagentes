@@ -12,7 +12,7 @@ export interface HistoricosData {
   operacao: number;
   qtd_mov: number;
   qtd_rec: number;
-  valor_unit: string;
+  valor_tot: string;
   novo: boolean;
   recusado: boolean;
   comentario: string;
@@ -36,6 +36,7 @@ export interface HistoricosData {
     id_un_de_medida: number;
     un_de_medida: {
       sigla: string;
+      peso: number;
     };
   };
   responsavel_movimentacao: {
@@ -45,9 +46,11 @@ export interface HistoricosData {
 
 export interface HistoricosRequest {
   data: Date;
-  valor_total: number;
-  quantidade: number;
+  valor_tot: number;
+  qtd_mov: number;
+  is_entry: boolean;
   comentario: string;
+  id_usuario: string;
 }
 
 export interface HistoricosPageData {

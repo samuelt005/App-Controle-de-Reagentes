@@ -25,8 +25,8 @@ router
 		autorizacao(['Administrador']),
 		TiposDeReagenteController.getTiposDeReagenteActive
 	)
-  
-  	// Rota para listar tipos de reagente ativos
+
+	// Rota para listar tipos de reagente ativos
 	.get(
 		'/tiposdereagente',
 		autorizacao(['Administrador']),
@@ -55,6 +55,13 @@ router
 		'/tiposdereagente/:id/ativo',
 		autorizacao(['Administrador']),
 		TiposDeReagenteController.updateAtivo
+	)
+
+	// Rota para atualizar o valor total do produto
+	.put(
+		'/tiposdereagente/:id/totais',
+		autorizacao(['Administrador']),
+		TiposDeReagenteController.updateTotals
 	);
 
 module.exports = router;

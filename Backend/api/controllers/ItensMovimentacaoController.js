@@ -86,7 +86,7 @@ class TiposDeReagenteController {
 								{
 									model: database.UnsDeMedida,
 									as: 'un_de_medida',
-									attributes: ['sigla'],
+									attributes: ['sigla', 'peso'],
 								},
 							],
 						},
@@ -117,38 +117,33 @@ class TiposDeReagenteController {
 
 	// TODO juntar newAdjustment e newWriteOff
 	static async newAdjustment(req, res) {
-		const { data, valor_total, quantidade, comentario, id_usuario } = req.body;
+		const { data, valor_tot, qtd_mov, is_entry, comentario, id_usuario } =
+			req.body;
 		const { id } = req.params;
 
-		const valor_unit = parseFloat(valor_total / quantidade);
-
 		try {
+			const tipoDeReagente = await database.TiposDeReagente.findOne({
+				where: { id },
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						attributes: ['peso'],
+					},
+				],
+			});
+
+			const new_qtd_mov = qtd_mov * tipoDeReagente.un_de_medida.peso;
+
 			const createdItemMovimentacao = await database.ItensMovimentacao.create({
 				operacao: 3,
-				qtd_mov: quantidade,
-				valor_unit,
+				qtd_mov: is_entry ? new_qtd_mov * 1 : new_qtd_mov * -1,
+				valor_tot: is_entry ? valor_tot * 1 : valor_tot * -1,
 				data_ajuste: data,
 				comentario,
 				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: id,
 			});
-
-			if (createdItemMovimentacao !== null) {
-				const tipoDeReagente = await database.TiposDeReagente.findOne({
-					where: { id: Number(id) },
-					attributes: ['vlr_estoque'],
-				});
-
-				const newValue =
-					parseFloat(tipoDeReagente.vlr_estoque) + parseFloat(valor_total);
-
-				await database.TiposDeReagente.update(
-					{ vlr_estoque: newValue },
-					{
-						where: { id: Number(id) },
-					}
-				);
-			}
 
 			return res.status(200).json(createdItemMovimentacao);
 		} catch (error) {
@@ -157,37 +152,30 @@ class TiposDeReagenteController {
 	}
 
 	static async newWriteOff(req, res) {
-		const { qtd_mov, comentario, id_usuario } = req.body;
+		const { qtd_mov, comentario, peso_un, id_usuario } = req.body;
 		const { id } = req.params;
 
-		const valor_unit = -1; // TODO pegar valor unitário do banco
-		const new_qtd_mov = qtd_mov * -1;
-
 		try {
+			const tipoDeReagente = await database.TiposDeReagente.findOne({
+				where: { id },
+			});
+
+			const qtd_converted = qtd_mov * peso_un;
+			const new_qtd_mov = qtd_converted * -1;
+			const valor_tot =
+				(parseFloat(tipoDeReagente.vlr_estoque) /
+					parseFloat(tipoDeReagente.estoque_atual)) *
+				qtd_converted *
+				-1;
+
 			const createdItemMovimentacao = await database.ItensMovimentacao.create({
 				operacao: 2,
 				qtd_mov: new_qtd_mov,
-				valor_unit,
+				valor_tot,
 				comentario,
 				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: Number(id),
 			});
-
-			if (createdItemMovimentacao !== null) {
-				const tipoDeReagente = await database.TiposDeReagente.findOne({
-					where: { id: Number(id) },
-					attributes: ['vlr_estoque'],
-				});
-
-				const newValue = parseFloat(tipoDeReagente.vlr_estoque) - 1; // TODO passar valor total
-
-				await database.TiposDeReagente.update(
-					{ vlr_estoque: newValue },
-					{
-						where: { id: Number(id) },
-					}
-				);
-			}
 
 			return res.status(200).json(createdItemMovimentacao);
 		} catch (error) {
@@ -199,17 +187,25 @@ class TiposDeReagenteController {
 		const { qtd_mov, comentario, id_usuario, id_solicitacao } = req.body;
 		const { id } = req.params;
 
-		console.log(req.body);
-		console.log(id);
-
-		const valor_unit = 1; // TODO pegar valor unitário do banco
-
 		try {
+			const tipoDeReagente = await database.TiposDeReagente.findOne({
+				where: { id },
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						attributes: ['peso'],
+					},
+				],
+			});
+
+			const new_qtd_mov = qtd_mov * tipoDeReagente.un_de_medida.peso;
+
 			const createdItemMovimentacao = await database.ItensMovimentacao.create({
 				operacao: 1,
-				qtd_mov,
+				qtd_mov: new_qtd_mov,
 				comentario,
-				valor_unit,
+				valor_tot: 0,
 				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: Number(id),
 				id_solicitacao_fk: id_solicitacao,

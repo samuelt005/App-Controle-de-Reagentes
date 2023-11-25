@@ -19,7 +19,7 @@ module.exports = {
 			qtd_rec: {
 				type: Sequelize.FLOAT,
 			},
-			valor_unit: {
+			valor_tot: {
 				allowNull: false,
 				type: Sequelize.DECIMAL(10, 2),
 			},

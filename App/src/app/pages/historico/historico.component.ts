@@ -94,7 +94,14 @@ export class HistoricoComponent extends PageComponent implements OnInit {
   }
 
   public getTotalValue(row: HistoricosData) {
-    return (+row.valor_unit * Math.abs(row.qtd_mov)).toLocaleString('pt-BR', {
+    return parseFloat(row.valor_tot).toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  public getQuanty(row: HistoricosData) {
+    return (row.qtd_mov / row.tipo.un_de_medida.peso).toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });

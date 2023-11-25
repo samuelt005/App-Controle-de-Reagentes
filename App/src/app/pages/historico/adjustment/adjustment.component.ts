@@ -2,10 +2,12 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, switchMap } from 'rxjs';
 import { AdjustmentsDialog } from 'src/app/interfaces';
 import {
   HistoricoService,
   HistoricoUpdaterService,
+  TiposDeReagenteService,
   UserService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
@@ -19,6 +21,7 @@ export class AdjustmentComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: AdjustmentsDialog,
+    private tiposDeReagenteService: TiposDeReagenteService,
     private tableUpdaterService: HistoricoUpdaterService,
     private historicoService: HistoricoService,
     private userService: UserService,
@@ -33,8 +36,9 @@ export class AdjustmentComponent extends DialogComponent {
   // Atributos
   public form = new FormGroup({
     data: new FormControl('', [Validators.required, dateValidator()]),
-    valor_total: new FormControl('', [Validators.required]), // TODO Permitir inserir valores negativos
-    quantidade: new FormControl('', [Validators.required]),
+    valor_tot: new FormControl('', [Validators.required]), // TODO Permitir inserir valores negativos
+    qtd_mov: new FormControl('', [Validators.required]),
+    is_entry: new FormControl(null, [Validators.required]),
     comentario: new FormControl('', [Validators.required]),
   });
 
@@ -58,11 +62,14 @@ export class AdjustmentComponent extends DialogComponent {
 
         const formData = this.form.value as unknown as {
           data: Date;
-          valor_total: number;
-          quantidade: number;
+          valor_tot: number;
+          qtd_mov: number;
+          is_entry: boolean;
           comentario: string;
           id_usuario: string;
         };
+
+        console.log(formData);
 
         if (id_usuario !== null) {
           formData.id_usuario = id_usuario;
@@ -72,16 +79,27 @@ export class AdjustmentComponent extends DialogComponent {
         }
 
         if (this.id !== null) {
-          this.historicoService.addNew(this.id, formData).subscribe({
-            complete: () => {
-              this.openSnackBar(false);
-              this.tableUpdaterService.updateTable();
-            },
-            error: (e) => {
-              this.openSnackBar(true);
-              console.error('Ocorreu um erro:', e);
-            },
-          });
+          this.historicoService
+            .addNew(this.id, formData)
+            .pipe(
+              switchMap(() => {
+                if (this.id !== null) {
+                  return this.tiposDeReagenteService.updateTotals(this.id);
+                } else {
+                  return of();
+                }
+              })
+            )
+            .subscribe({
+              complete: () => {
+                this.tableUpdaterService.updateTable();
+                this.openSnackBar(false);
+              },
+              error: (e) => {
+                this.openSnackBar(true);
+                console.error('Ocorreu um erro:', e);
+              },
+            });
         } else {
           console.error('ID é nulo. Não foi possível salvar.');
           return;

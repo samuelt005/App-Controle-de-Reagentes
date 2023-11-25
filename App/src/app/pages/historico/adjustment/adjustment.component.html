@@ -29,33 +29,41 @@
           type="text"
           class="number-input body-large"
           placeholder="Valor Total"
-          formControlName="valor_total"
+          formControlName="valor_tot"
           mask="separator.2"
           thousandSeparator="."
           decimalMarker=","
+          [leadZero]="true"
+          maxlength="16"
           prefix="R$ "
-          maxlength="12"
-          [specialCharacters]="[]"
         />
-        <mat-error *ngIf="form.get('valor_total')?.hasError('required')">
+        <mat-error *ngIf="form.get('valor_tot')?.hasError('required')">
           Insira o valor total do ajuste.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="input" appearance="outline">
         <input
           matInput
-          type="text"
           class="number-input body-large"
           [placeholder]="quantidadePlaceholder"
-          formControlName="quantidade"
+          formControlName="qtd_mov"
           mask="separator.2"
           thousandSeparator="."
           decimalMarker=","
-          maxlength="12"
-          [specialCharacters]="[]"
+          [leadZero]="true"
+          maxlength="16"
         />
-        <mat-error *ngIf="form.get('valor_total')?.hasError('required')">
+        <mat-error *ngIf="form.get('qtd_mov')?.hasError('required')">
           Insira a quantidade do ajuste.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="input" appearance="outline">
+        <mat-select placeholder="Movimentação" formControlName="is_entry">
+          <mat-option [value]="false">Saída de Material</mat-option>
+          <mat-option [value]="true">Entrada de Material</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('is_entry')?.hasError('required')">
+          Escolhar o tipo de movimentação.
         </mat-error>
       </mat-form-field>
     </div>

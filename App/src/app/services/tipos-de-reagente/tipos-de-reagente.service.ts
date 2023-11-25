@@ -2,7 +2,11 @@ import { TokenService } from 'src/app/services';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListagemResponse, TipoDeReagente, TiposDeReagenteRequest } from 'src/app/interfaces';
+import {
+  ListagemResponse,
+  TipoDeReagente,
+  TiposDeReagenteRequest,
+} from 'src/app/interfaces';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -53,14 +57,21 @@ export class TiposDeReagenteService {
     );
   }
 
-  public addNew(body: TiposDeReagenteRequest): Observable<TiposDeReagenteRequest> {
+  public addNew(
+    body: TiposDeReagenteRequest
+  ): Observable<TiposDeReagenteRequest> {
     const headers = this.getHeaders();
-    return this.http.post<TiposDeReagenteRequest>(`${environment.apiUrl}/tiposdereagente`, body, {
-      headers,
-    });
+    return this.http.post<TiposDeReagenteRequest>(
+      `${environment.apiUrl}/tiposdereagente`,
+      body,
+      { headers }
+    );
   }
 
-  public edit(body: TiposDeReagenteRequest, id: number): Observable<TiposDeReagenteRequest> {
+  public edit(
+    body: TiposDeReagenteRequest,
+    id: number
+  ): Observable<TiposDeReagenteRequest> {
     const headers = this.getHeaders();
     return this.http.put<TiposDeReagenteRequest>(
       `${environment.apiUrl}/tiposdereagente/${id}`,
@@ -74,5 +85,15 @@ export class TiposDeReagenteService {
     return this.http.put<unknown>(`${environment.apiUrl}/tags/${id}`, body, {
       headers,
     });
+  }
+
+  public updateTotals(id: number): Observable<unknown> {
+    const headers = this.getHeaders();
+    const body = {};
+    return this.http.put<unknown>(
+      `${environment.apiUrl}/tiposdereagente/${id}/totais`,
+      body,
+      { headers }
+    );
   }
 }

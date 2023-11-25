@@ -64,6 +64,12 @@
       right: 10%;
     }
 
+    ::ng-deep .mat-datepicker-toggle-default-icon {
+      position: absolute;
+      bottom: 8%;
+      right: 10%;
+    }
+
     ::ng-deep .mat-mdc-form-field-icon-suffix {
       right: 2%;
       padding-bottom: 18px;

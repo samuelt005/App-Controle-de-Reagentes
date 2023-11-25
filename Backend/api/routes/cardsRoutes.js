@@ -7,7 +7,7 @@ const router = Router();
 router
 	// Rota para pegar os dados da página de listagem
 	.get(
-		'/cards/listing',
+		'/cards/listagem',
 		autorizacao(['Administrador']),
 		CardsController.getListingData
 	)

@@ -110,24 +110,27 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
         }
 
         // TODO validar quantidade em estoque antes de enviar as requests
-
-        let requestsCompleted = 0;
-
         requestArray.forEach((request) => {
           console.log(request);
           this.darBaixaService.addNew(request.id, request).subscribe({
-            complete: () => {
-              requestsCompleted++;
-
-              if (requestsCompleted === requestArray.length) {
-                this.router.navigate(['listagem/page/1']);
-                this.openSnackBar(false);
-              }
-            },
             error: (e) => {
               this.openSnackBar(true);
               console.error('Ocorreu um erro:', e);
               return;
+            },
+          });
+        });
+
+        requestArray.forEach((request) => {
+          this.tiposDeReagenteService.updateTotals(request.id).subscribe({
+            complete: () => {
+              console.log('Atualizado');
+              this.router.navigate(['listagem/page/1']);
+              this.openSnackBar(false);
+            },
+            error: (e) => {
+              this.openSnackBar(true);
+              console.error('Ocorreu um erro:', e);
             },
           });
         });

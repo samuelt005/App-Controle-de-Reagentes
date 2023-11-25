@@ -27,7 +27,7 @@ export class CardsService {
   public getListagemData(): Observable<ListagemPageData> {
     const headers = this.getHeaders();
     return this.http.get<ListagemPageData>(
-      `${environment.apiUrl}/cards/listing`,
+      `${environment.apiUrl}/cards/listagem`,
       { headers }
     );
   }

@@ -39,6 +39,56 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="text"
+        class="number-input body-large"
+        placeholder="Valor Total"
+        formControlName="valor_tot"
+        mask="separator.2"
+        thousandSeparator="."
+        decimalMarker=","
+        [leadZero]="true"
+        maxlength="16"
+        prefix="R$ "
+      />
+      <mat-error *ngIf="form.get('valor_tot')?.hasError('required')">
+        Insira o valor total do item.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        class="number-input body-large"
+        placeholder="Quantidade Recebida"
+        formControlName="qtd_rec"
+        mask="separator.2"
+        thousandSeparator="."
+        decimalMarker=","
+        [leadZero]="true"
+        maxlength="16"
+      />
+      <mat-error *ngIf="form.get('qtd_rec')?.hasError('required')">
+        Insira a quantidade do ajuste.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        minlength="10"
+        maxlength="10"
+        placeholder="Validade"
+        [matDatepicker]="picker"
+        formControlName="validade"
+      />
+      <mat-error *ngIf="form.get('validade')?.hasError('invalidDate')">
+        Insira uma data válida.
+      </mat-error>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </div>
   <div class="buttons">
     <app-normal-button mat-dialog-close [filled]="true" (click)="saveData()">

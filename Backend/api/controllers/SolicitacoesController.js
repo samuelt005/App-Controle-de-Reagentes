@@ -23,7 +23,7 @@ class SolicitacoesController {
 					{
 						model: database.TiposDeReagente,
 						as: 'tipo',
-						attributes: ['cod', 'descricao'],
+						attributes: ['id', 'cod', 'descricao'],
 						include: [
 							{
 								model: database.UnsDeMedida,
@@ -145,12 +145,54 @@ class SolicitacoesController {
 
 	// Método para atualizar um item de uma solicitação
 	static async updateItem(req, res) {
-		const { lote, nfe, recusado } = req.body;
+		const { lote, nfe, recusado, valor_tot, qtd_rec, validade } = req.body;
 		const { id } = req.params;
 
+		console.log(id);
+
 		try {
+			const itemMovimentacao = await database.ItensMovimentacao.findOne({
+				where: { id },
+				include: [
+					{
+						model: database.TiposDeReagente,
+						as: 'tipo',
+						attributes: ['id'],
+					},
+				],
+			});
+
+			const tipoDeReagente = await database.TiposDeReagente.findOne({
+				where: { id: itemMovimentacao.tipo.id },
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						attributes: ['peso'],
+					},
+				],
+			});
+
+			let new_qtd_rec;
+			if (qtd_rec != null) {
+				new_qtd_rec = qtd_rec * tipoDeReagente.un_de_medida.peso;
+			}
+
+			let new_valor_tot;
+			if (valor_tot == null) {
+				new_valor_tot = 0;
+			} else {
+				new_valor_tot = valor_tot;
+			}
+
 			await database.ItensMovimentacao.update(
-				{ id_lote_fk: lote, id_nfe_fk: nfe, recusado },
+				{
+					id_lote_fk: lote,
+					id_nfe_fk: nfe,
+					recusado,
+					valor_tot: new_valor_tot,
+					qtd_rec: new_qtd_rec,
+				},
 				{
 					where: { id: Number(id) },
 				}

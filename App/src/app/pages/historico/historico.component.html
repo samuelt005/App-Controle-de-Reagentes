@@ -57,12 +57,7 @@
             {{ getTotalValue(row) }}
           </p>
           <p class="quant body-medium">
-            {{
-              row.qtd_mov.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })
-            }}
+            {{ getQuanty(row) }}
           </p>
           <p class="un body-medium">
             {{ row.tipo.un_de_medida.sigla | uppercase }}

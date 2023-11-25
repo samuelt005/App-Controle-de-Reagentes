@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 			operacao: DataTypes.INTEGER,
 			qtd_mov: DataTypes.FLOAT,
 			qtd_rec: DataTypes.FLOAT,
-			valor_unit: DataTypes.DECIMAL,
+			valor_tot: DataTypes.DECIMAL,
 			novo: DataTypes.BOOLEAN,
 			recusado: DataTypes.BOOLEAN,
 			validade: DataTypes.DATEONLY,

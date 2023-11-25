@@ -28,9 +28,9 @@ export class DetalhesSolicitacaoService {
     );
   }
 
-  public updateItem(id: number, body: ItemSolicitacaoRequest): Observable<ItemSolicitacaoRequest[]> {
+  public updateItem(id: number, body: ItemSolicitacaoRequest): Observable<ItemSolicitacaoRequest> {
     const headers = this.getHeaders();
-    return this.http.put<ItemSolicitacaoRequest[]>(
+    return this.http.put<ItemSolicitacaoRequest>(
       `${environment.apiUrl}/solicitacao/item/${id}`,
       body,
       { headers }
