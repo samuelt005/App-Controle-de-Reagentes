@@ -2,7 +2,7 @@ const database = require('../models');
 const { Op } = require('sequelize');
 
 class SolicitacoesController {
-	// Método para pegar os itens de uma solicitação
+	// Função para pegar os itens de uma solicitação
 	static async getSolicitacaoItems(req, res) {
 		const { id } = req.params;
 		try {
@@ -40,7 +40,7 @@ class SolicitacoesController {
 		}
 	}
 
-	// Método para pegar 20 solicitações (paginação)
+	// Função para pegar 20 solicitações (paginação)
 	static async getSolicitacoes(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -106,7 +106,7 @@ class SolicitacoesController {
 		}
 	}
 
-	// Método para criar um solicitação
+	// Função para criar um solicitação
 	static async createSolicitacao(req, res) {
 		const { comentario, id_usuario } = req.body;
 
@@ -121,7 +121,7 @@ class SolicitacoesController {
 		}
 	}
 
-	// Método para atualizar o status de uma solicitação
+	// Função para atualizar o status de uma solicitação
 	static async updateStatus(req, res) {
 		const { id } = req.params;
 		const { status } = req.body;
@@ -138,67 +138,6 @@ class SolicitacoesController {
 				where: { id: Number(id) },
 			});
 			return res.status(200).json(updatedSolicitacao);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para atualizar um item de uma solicitação
-	static async updateItem(req, res) {
-		const { lote, nfe, recusado, valor_tot, qtd_rec, validade } = req.body;
-		const { id } = req.params;
-
-		console.log(id);
-
-		try {
-			const itemMovimentacao = await database.ItensMovimentacao.findOne({
-				where: { id },
-				include: [
-					{
-						model: database.TiposDeReagente,
-						as: 'tipo',
-						attributes: ['id'],
-					},
-				],
-			});
-
-			const tipoDeReagente = await database.TiposDeReagente.findOne({
-				where: { id: itemMovimentacao.tipo.id },
-				include: [
-					{
-						model: database.UnsDeMedida,
-						as: 'un_de_medida',
-						attributes: ['peso'],
-					},
-				],
-			});
-
-			let new_qtd_rec;
-			if (qtd_rec != null) {
-				new_qtd_rec = qtd_rec * tipoDeReagente.un_de_medida.peso;
-			}
-
-			let new_valor_tot;
-			if (valor_tot == null) {
-				new_valor_tot = 0;
-			} else {
-				new_valor_tot = valor_tot;
-			}
-
-			await database.ItensMovimentacao.update(
-				{
-					id_lote_fk: lote,
-					id_nfe_fk: nfe,
-					recusado,
-					valor_tot: new_valor_tot,
-					qtd_rec: new_qtd_rec,
-				},
-				{
-					where: { id: Number(id) },
-				}
-			);
-
-			return res.status(200).json({ message: 'Item atualizado com sucesso!' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

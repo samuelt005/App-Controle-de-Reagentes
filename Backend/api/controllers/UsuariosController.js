@@ -4,30 +4,7 @@ const { hash, compare } = require('bcryptjs');
 const uuid = require('uuid');
 
 class UsuariosController {
-	// Método para pegar um usuario específico
-	static async getUsuario(req, res) {
-		const { id } = req.params;
-		try {
-			const usuario = await database.Usuarios.findOne({
-				where: { id: id },
-				attributes: {
-					exclude: ['createdAt', 'updatedAt', 'id_perfil_fk', 'senha'],
-				},
-				include: [
-					{
-						model: database.Perfis,
-						as: 'perfil',
-						attributes: { exclude: ['createdAt', 'updatedAt'] },
-					},
-				],
-			});
-			return res.status(200).json(usuario);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para criar um usuario
+	// Função para criar um usuario
 	static async createUsuario(req, res) {
 		const { nome, email, nova_senha, ra, cpf } = req.body;
 
@@ -72,7 +49,7 @@ class UsuariosController {
 		}
 	}
 
-	// Método para atualizar um usuario
+	// Função para atualizar um usuario
 	static async updateUsuario(req, res) {
 		const { id } = req.params;
 		const { nome, email, nova_senha } = req.body;
@@ -102,6 +79,7 @@ class UsuariosController {
 		}
 	}
 
+	// Função para atualizar o perfil do usuário
 	static async updatePerfil(req, res) {
 		const { id } = req.params;
 		const { id_perfil } = req.body;
@@ -127,6 +105,7 @@ class UsuariosController {
 		}
 	}
 
+	// Função para atualizar a senha do usuário
 	static async updateSenha(req, res) {
 		const { id } = req.params;
 		const { old_password, new_password } = req.body;

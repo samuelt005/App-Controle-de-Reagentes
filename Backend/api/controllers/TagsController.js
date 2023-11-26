@@ -1,7 +1,7 @@
 const database = require('../models');
 
 class TagsController {
-	// Método para pegar todas as tags cadastradas
+	// Função para pegar todas as tags cadastradas
 	static async getAllTags(req, res) {
 		try {
 			const allTags = await database.Tags.findAll({
@@ -13,6 +13,7 @@ class TagsController {
 		}
 	}
 
+	// Função para atualizar tags vinculadas a um tipo
 	static async updateTags(req, res) {
     const { id } = req.params;
 		const { em, pf, pc, eb } = req.body;

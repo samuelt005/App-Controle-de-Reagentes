@@ -5,13 +5,6 @@ const TiposDeReagenteController = require('../controllers/TiposDeReagenteControl
 const router = Router();
 
 router
-	// Rota para listar um tipo de reagente
-	.get(
-		'/tiposdereagente/:id',
-		autorizacao(['Administrador']),
-		TiposDeReagenteController.getTipoDeReagente
-	)
-
 	// Rota para listar tipos de reagente com paginação
 	.get(
 		'/tiposdereagente/page/:page',
@@ -55,13 +48,6 @@ router
 		'/tiposdereagente/:id/ativo',
 		autorizacao(['Administrador']),
 		TiposDeReagenteController.updateAtivo
-	)
-
-	// Rota para atualizar o valor total do produto
-	.put(
-		'/tiposdereagente/:id/totais',
-		autorizacao(['Administrador']),
-		TiposDeReagenteController.updateTotals
 	);
 
 module.exports = router;

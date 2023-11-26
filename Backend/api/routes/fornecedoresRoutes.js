@@ -8,13 +8,6 @@ const router = Router();
 router.use(autenticado);
 
 router
-	// Rota para listar um fornecedor
-	.get(
-		'/fornecedores/:id',
-		autorizacao(['Administrador']),
-		FornecedoresController.getFornecedor
-	)
-
 	// Rota para listar fornecedores com paginação
 	.get(
 		'/fornecedores/page/:page',

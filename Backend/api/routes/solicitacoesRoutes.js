@@ -31,13 +31,6 @@ router
 		'/solicitacoes/:id',
 		autorizacao(['Administrador']),
 		SolicitacoesController.updateStatus
-	)
-
-	// Rota para atualizar um item de uma solicitação
-	.put(
-		'/solicitacao/item/:id',
-		autorizacao(['Administrador']),
-		SolicitacoesController.updateItem
 	);
 
 module.exports = router;

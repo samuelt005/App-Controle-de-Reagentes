@@ -1,23 +1,9 @@
 const database = require('../models');
-const { Fornecedores } = require('../models');
 const { Op } = require('sequelize');
+const { Fornecedores } = require('../models');
 
 class FornecedoresController {
-	// Método para pegar um fornecedor específico
-	static async getFornecedor(req, res) {
-		const { id } = req.params;
-		try {
-			const fornecedor = await database.Fornecedores.findOne({
-				where: { id: Number(id) },
-				attributes: { exclude: ['createdAt', 'updatedAt'] },
-			});
-			return res.status(200).json(fornecedor);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para pegar 20 fornecedores (paginação)
+	// Função para pegar 20 fornecedores (paginação)
 	static async getFornecedores(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -81,7 +67,7 @@ class FornecedoresController {
 		}
 	}
 
-	// Método para pegar todos os fornecedores
+	// Função para pegar todos os fornecedores
 	static async getAllFornecedores(req, res) {
 		try {
 			const fornecedores = await database.Fornecedores.findAll({
@@ -104,7 +90,7 @@ class FornecedoresController {
 		}
 	}
 
-	// Método para criar um fornecedor
+	// Função para criar um fornecedor
 	static async createFornecedor(req, res) {
 		const { razao_social, cnpj } = req.body;
 
@@ -131,7 +117,7 @@ class FornecedoresController {
 		}
 	}
 
-	// Método para atualizar um fornecedor
+	// Função para atualizar um fornecedor
 	static async updateFornecedor(req, res) {
 		const { id } = req.params;
 		const { razao_social, cnpj } = req.body;

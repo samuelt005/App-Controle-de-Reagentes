@@ -4,8 +4,8 @@ const ItensMovimentacaoController = require('../controllers/ItensMovimentacaoCon
 
 const router = Router();
 
-// Rota para listar 20 históricos de movimentação
 router
+	// Rota para listar 20 históricos de movimentação
 	.get(
 		'/historico/item/:id/page/:page',
 		autorizacao(['Administrador']),
@@ -31,6 +31,13 @@ router
 		'/movimentacao/solicitacao/:id',
 		autorizacao(['Administrador']),
 		ItensMovimentacaoController.newRequestItem
+	)
+
+	// Rota para atualizar um item de uma solicitação
+	.put(
+		'/movimentacao/item/:id',
+		autorizacao(['Administrador']),
+		ItensMovimentacaoController.updateRequestItem
 	);
 
 module.exports = router;

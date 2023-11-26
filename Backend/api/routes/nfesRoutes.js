@@ -5,9 +5,6 @@ const NfesController = require('../controllers/NfesController');
 const router = Router();
 
 router
-	// Rota para listar um nfe
-	.get('/nfes/:id', autorizacao(['Administrador']), NfesController.getNfe)
-
 	// Rota para listar nfes com paginação
 	.get(
 		'/nfes/page/:page',

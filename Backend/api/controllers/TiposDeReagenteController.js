@@ -3,35 +3,7 @@ const { Op } = require('sequelize');
 const { TiposDeReagente } = require('../models');
 
 class TiposDeReagenteController {
-	// Método para pegar um tipo de reagente específico
-	static async getTipoDeReagente(req, res) {
-		const { id } = req.params;
-		try {
-			const TipoDeReagente = await database.TiposDeReagente.findOne({
-				where: { id: Number(id) },
-				attributes: {
-					exclude: ['createdAt', 'updatedAt', 'id_un_de_medida_fk'],
-				},
-				include: [
-					{
-						model: database.UnsDeMedida,
-						as: 'un_de_medida',
-						attributes: { exclude: ['createdAt', 'updatedAt'] },
-					},
-					{
-						model: database.Tags,
-						through: { attributes: [] },
-						attributes: { exclude: ['createdAt', 'updatedAt'] },
-					},
-				],
-			});
-			return res.status(200).json(TipoDeReagente);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para pegar 20 tipos de reagente
+	// Função para pegar 20 tipos de reagente
 	static async getTiposDeReagente(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -102,7 +74,7 @@ class TiposDeReagenteController {
 		}
 	}
 
-	// Método para pegar 20 tipos de reagente ativos
+	// Função para pegar 20 tipos de reagente ativos
 	static async getTiposDeReagenteActive(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -175,7 +147,7 @@ class TiposDeReagenteController {
 		}
 	}
 
-	// Método para pegar todos os tipos de reagente ativos
+	// Função para pegar todos os tipos de reagente ativos
 	static async getAllTiposDeReagenteActive(req, res) {
 		try {
 			const tiposDeReagente = await database.TiposDeReagente.findAll({
@@ -191,7 +163,7 @@ class TiposDeReagenteController {
 		}
 	}
 
-	// Método para pegar 20 tipos de reagente, ativos e filtrado
+	// Função para pegar 20 tipos de reagente, ativos e filtrado
 	// TODO criar outro método de filtragem
 	/*static async getTiposDeReagenteFiltered(req, res) {
 		const {
@@ -308,7 +280,7 @@ class TiposDeReagenteController {
 		}
 	}*/
 
-	// Método para criar um tipo de reagente
+	// Função para criar um tipo de reagente
 	static async createTipoDeReagente(req, res) {
 		const { cod, descricao, loc_estoque, id_un_de_medida } = req.body;
 
@@ -337,7 +309,7 @@ class TiposDeReagenteController {
 		}
 	}
 
-	// Método para atualizar os dados de um tipo de reagente
+	// Função para atualizar os dados de um tipo de reagente
 	static async updateTipoDeReagente(req, res) {
 		const { id } = req.params;
 		const { cod, descricao, loc_estoque, id_un_de_medida } = req.body;
@@ -378,7 +350,7 @@ class TiposDeReagenteController {
 		}
 	}
 
-	// Método para atualizar se esta atívo ou não
+	// Função para atualizar se esta atívo ou não
 	static async updateAtivo(req, res) {
 		const { id } = req.params;
 
@@ -403,69 +375,6 @@ class TiposDeReagenteController {
 				where: { id: Number(id) },
 			});
 			return res.status(200).json(updatedTipoDeReagente);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para atualizar se esta atívo ou não
-	static async updateTotals(req, res) {
-		const { id } = req.params;
-
-		try {
-			const totalEntriesValue = await database.ItensMovimentacao.sum(
-				'valor_tot',
-				{
-					where: {
-						operacao: 1,
-						id_tipo_de_reagente_fk: id,
-						qtd_rec: { [Op.not]: null },
-					},
-				}
-			);
-
-			const totalEntriesQuanty = await database.ItensMovimentacao.sum(
-				'qtd_mov',
-				{
-					where: {
-						operacao: 1,
-						id_tipo_de_reagente_fk: id,
-						qtd_rec: { [Op.not]: null },
-					},
-				}
-			);
-
-			const totalOthersValue = await database.ItensMovimentacao.sum(
-				'valor_tot',
-				{
-					where: {
-						operacao: { [Op.not]: 1 },
-						id_tipo_de_reagente_fk: id,
-					},
-				}
-			);
-
-			const totalOthersQuanty = await database.ItensMovimentacao.sum(
-				'qtd_mov',
-				{
-					where: {
-						operacao: { [Op.not]: 1 },
-						id_tipo_de_reagente_fk: id,
-					},
-				}
-			);
-
-			const totalValue = totalEntriesValue + totalOthersValue;
-			const totalQuanty = totalEntriesQuanty + totalOthersQuanty;
-
-			await database.TiposDeReagente.update(
-				{ vlr_estoque: totalValue, estoque_atual: totalQuanty },
-				{
-					where: { id: Number(id) },
-				}
-			);
-
-			return res.status(200).json({ message: 'Valor total atualizado!' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

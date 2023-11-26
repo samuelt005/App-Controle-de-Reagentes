@@ -1,7 +1,7 @@
 const database = require('../models');
 
 class CardsController {
-	// Método para pegar os dados dos cards da página de listagem
+	// Função para pegar os dados dos cards da página de listagem
 	static async getListingData(req, res) {
 		try {
 			const total_items = await database.TiposDeReagente.count({
@@ -29,7 +29,7 @@ class CardsController {
 		}
 	}
 
-	// Método para pegar os dados dos cards da página de histórico
+	// Função para pegar os dados dos cards da página de histórico
 	static async getHistoricoData(req, res) {
 		const { id } = req.params;
 
@@ -73,7 +73,7 @@ class CardsController {
 		}
 	}
 
-	// Método para pegar os dados dos cards da página de histórico
+	// Função para pegar os dados dos cards da página de solicitação
 	static async getSolicitacaoData(req, res) {
 		const { id } = req.params;
 

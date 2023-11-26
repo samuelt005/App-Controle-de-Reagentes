@@ -1,23 +1,9 @@
 const database = require('../models');
-const { LotesDeCompra } = require('../models');
 const { Op } = require('sequelize');
+const { LotesDeCompra } = require('../models');
 
 class LotesDeCompraController {
-	// Método para pegar um lote de compra específico
-	static async getLoteDeCompra(req, res) {
-		const { id } = req.params;
-		try {
-			const lotedecompra = await database.LotesDeCompra.findOne({
-				where: { id: Number(id) },
-				attributes: { exclude: ['createdAt', 'updatedAt'] },
-			});
-			return res.status(200).json(lotedecompra);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para pegar 20 lotes de compra (paginação)
+	// Função para pegar 20 lotes de compra (paginação)
 	static async getLotesDeCompra(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -75,7 +61,7 @@ class LotesDeCompraController {
 		}
 	}
 
-	// Método para pegar todos os lotes de compra
+	// Função para pegar todos os lotes de compra
 	static async getAllLotesDeCompra(req, res) {
 		try {
 			const resData = await database.LotesDeCompra.findAll({
@@ -90,7 +76,7 @@ class LotesDeCompraController {
 		}
 	}
 
-	// Método para criar um lote de compra
+	// Função para criar um lote de compra
 	static async createLoteDeCompra(req, res) {
 		const { numero } = req.body;
 
@@ -116,8 +102,8 @@ class LotesDeCompraController {
 		}
 	}
 
-	// Método para atualizar o número do lote de compra
-	static async updateNumero(req, res) {
+	// Função para atualizar o número do lote de compra
+	static async updateLoteDeCompra(req, res) {
 		const { id } = req.params;
 		const { numero } = req.body;
 
@@ -140,35 +126,6 @@ class LotesDeCompraController {
 					where: { id: Number(id) },
 				}
 			);
-			const updatedLoteDeCompra = await database.LotesDeCompra.findOne({
-				where: { id: Number(id) },
-			});
-			return res.status(200).json(updatedLoteDeCompra);
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Método para atualizar a quantidade de itens vinculados ao lote de compra
-	static async updateItensVinculados(req, res) {
-		//TODO remover esta rota e jogar a lógica para o controller de ItensMovimentação
-		const { id } = req.params;
-		const { soma } = req.body;
-
-		try {
-			const loteDeCompra = await LotesDeCompra.findOne({
-				where: { id: Number(id) },
-			});
-
-			const newValue = soma
-				? loteDeCompra.itens_vinculados + 1
-				: loteDeCompra.itens_vinculados - 1;
-
-			await database.LotesDeCompra.update(
-				{ itens_vinculados: newValue },
-				{ where: { id: Number(id) } }
-			);
-
 			const updatedLoteDeCompra = await database.LotesDeCompra.findOne({
 				where: { id: Number(id) },
 			});
