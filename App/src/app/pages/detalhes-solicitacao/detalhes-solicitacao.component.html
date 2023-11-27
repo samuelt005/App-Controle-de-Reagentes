@@ -21,7 +21,7 @@
         <div
           *ngFor="let row of tableData"
           class="solicitacao-row"
-          [ngClass]="{effects : !row.recusado}"
+          [ngClass]="{ effects: !row.recusado }"
           matRipple
           [matRippleDisabled]="row.recusado"
           (click)="openItemDialog(row)"
@@ -37,7 +37,9 @@
                 })
               }}
             </p>
-            <p class="un body-medium">{{ row.tipo.un_de_medida.sigla }}</p>
+            <p class="un body-medium">
+              {{ row.tipo.un_de_medida.sigla | titlecase }}
+            </p>
             <p class="lote body-medium">
               {{ row.lote?.numero !== null ? row.lote?.numero : "-" }}
             </p>

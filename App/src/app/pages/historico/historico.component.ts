@@ -101,10 +101,23 @@ export class HistoricoComponent extends PageComponent implements OnInit {
   }
 
   public getQuanty(row: HistoricosData) {
-    return (row.qtd_mov / row.tipo.un_de_medida.peso).toLocaleString('pt-BR', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    if (row.qtd_rec) {
+      return (row.qtd_rec / row.tipo.un_de_medida.peso).toLocaleString(
+        'pt-BR',
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }
+      );
+    } else {
+      return (row.qtd_mov / row.tipo.un_de_medida.peso).toLocaleString(
+        'pt-BR',
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }
+      );
+    }
   }
 
   public openCommentary(

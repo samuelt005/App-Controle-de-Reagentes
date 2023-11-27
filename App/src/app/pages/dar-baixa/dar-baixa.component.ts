@@ -103,6 +103,7 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
         if (id_usuario !== null) {
           requestArray.forEach((request) => {
             request.id_usuario = id_usuario;
+            request.data = new Date();
           });
         } else {
           console.error('ID do usuário é nulo.');
@@ -113,24 +114,14 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
         requestArray.forEach((request) => {
           console.log(request);
           this.darBaixaService.addNew(request.id, request).subscribe({
-            error: (e) => {
-              this.openSnackBar(true);
-              console.error('Ocorreu um erro:', e);
-              return;
-            },
-          });
-        });
-
-        requestArray.forEach((request) => {
-          this.tiposDeReagenteService.updateTotals(request.id).subscribe({
             complete: () => {
-              console.log('Atualizado');
               this.router.navigate(['listagem/page/1']);
               this.openSnackBar(false);
             },
             error: (e) => {
               this.openSnackBar(true);
               console.error('Ocorreu um erro:', e);
+              return;
             },
           });
         });

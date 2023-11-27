@@ -13,23 +13,12 @@ export interface HistoricosData {
   qtd_mov: number;
   qtd_rec: number;
   valor_tot: string;
-  novo: boolean;
-  recusado: boolean;
   comentario: string;
   data: string;
-  data_ajuste: string;
   nfe: {
     numero: number;
-    id_emitente: number;
     emitente: {
-      cnpj: string;
       razao_social: string;
-    };
-  };
-  solicitacao: {
-    id_responsavel: number;
-    responsavel_solicitacao: {
-      nome: string;
     };
   };
   tipo: {

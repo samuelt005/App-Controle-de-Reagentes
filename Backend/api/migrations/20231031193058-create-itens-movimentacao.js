@@ -34,7 +34,7 @@ module.exports = {
 			validade: {
 				type: Sequelize.DATEONLY,
 			},
-			data_ajuste: {
+			data: {
 				type: Sequelize.DATEONLY,
 			},
 			comentario: {

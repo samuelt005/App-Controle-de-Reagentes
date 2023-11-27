@@ -43,39 +43,20 @@ class ItensMovimentacaoController {
 							'validade',
 							'updatedAt',
 							'id_usuario_fk',
-						],
-						include: [
-							[
-								Sequelize.fn(
-									'date',
-									Sequelize.col('ItensMovimentacao.updatedAt')
-								),
-								'data',
-							],
+							'novo',
+							'recusado',
 						],
 					},
 					include: [
 						{
 							model: database.Nfes,
 							as: 'nfe',
-							attributes: ['numero', ['id_fornecedor_fk', 'id_emitente']],
+							attributes: ['numero'],
 							include: [
 								{
 									model: database.Fornecedores,
 									as: 'emitente',
-									attributes: ['cnpj', 'razao_social'],
-								},
-							],
-						},
-						{
-							model: database.Solicitacoes,
-							as: 'solicitacao',
-							attributes: [['id_usuario_fk', 'id_responsavel']],
-							include: [
-								{
-									model: database.Usuarios,
-									as: 'responsavel_solicitacao',
-									attributes: ['nome'],
+									attributes: ['razao_social'],
 								},
 							],
 						},
@@ -97,7 +78,7 @@ class ItensMovimentacaoController {
 							attributes: ['nome'],
 						},
 					],
-					order: [['updatedAt', 'ASC']],
+					order: [['data', 'DESC']],
 				});
 
 			const totalItems = itensmovimentacao.count;
@@ -116,7 +97,7 @@ class ItensMovimentacaoController {
 		}
 	}
 
-  // Função para criar um item de ajuste
+	// Função para criar um item de ajuste
 	static async newAdjustment(req, res) {
 		const { data, valor_tot, qtd_mov, is_entry, comentario, id_usuario } =
 			req.body;
@@ -140,7 +121,7 @@ class ItensMovimentacaoController {
 				operacao: 3,
 				qtd_mov: is_entry ? new_qtd_mov * 1 : new_qtd_mov * -1,
 				valor_tot: is_entry ? valor_tot * 1 : valor_tot * -1,
-				data_ajuste: data,
+				data,
 				comentario,
 				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: id,
@@ -156,10 +137,10 @@ class ItensMovimentacaoController {
 		}
 	}
 
-  // Função para criar um item de baixa
+	// Função para criar um item de baixa
 	static async newWriteOff(req, res) {
 		// TODO adicionar data da baixa
-		const { qtd_mov, comentario, peso_un, id_usuario } = req.body;
+		const { qtd_mov, comentario, peso_un, id_usuario, data } = req.body;
 		const { id } = req.params;
 
 		try {
@@ -180,6 +161,7 @@ class ItensMovimentacaoController {
 				qtd_mov: new_qtd_mov,
 				valor_tot,
 				comentario,
+				data,
 				id_usuario_fk: id_usuario,
 				id_tipo_de_reagente_fk: Number(id),
 			});
@@ -231,7 +213,8 @@ class ItensMovimentacaoController {
 
 	// Função para atualizar um item de uma solicitação
 	static async updateRequestItem(req, res) {
-		const { lote, nfe, recusado, valor_tot, qtd_rec, validade } = req.body;
+		const { lote, nfe, recusado, valor_tot, qtd_rec, validade, data } =
+			req.body;
 		const { id } = req.params;
 
 		try {
@@ -269,20 +252,24 @@ class ItensMovimentacaoController {
 				new_valor_tot = valor_tot;
 			}
 
-			await database.ItensMovimentacao.update(
+			const updatedItemMovimentacao = await database.ItensMovimentacao.update(
 				{
 					id_lote_fk: lote,
 					id_nfe_fk: nfe,
 					recusado,
 					valor_tot: new_valor_tot,
 					qtd_rec: new_qtd_rec,
+					validade,
+					data,
 				},
 				{
 					where: { id: Number(id) },
 				}
 			);
 
-			Shared.updateTotals(id);
+			if (updatedItemMovimentacao) {
+				Shared.updateTotals(tipoDeReagente.id);
+			}
 
 			return res.status(200).json({ message: 'Item atualizado com sucesso!' });
 		} catch (error) {

@@ -4,6 +4,9 @@ export interface ItemSolicitacao {
   recusado: boolean;
   comentario: string;
   qtd_mov: number;
+  valor_tot: string;
+  qtd_rec: string;
+  validade: string;
   status?: number;
   lote?: {
     id: number;
@@ -19,6 +22,7 @@ export interface ItemSolicitacao {
     descricao: string;
     un_de_medida: {
       sigla: string;
+      nome: string;
     };
   };
 }
@@ -30,6 +34,7 @@ export interface ItemSolicitacaoRequest {
   valor_tot?: string | null;
   qtd_rec?: string | null;
   validade?: Date | null;
+  data?: string;
 }
 
 export interface SolicitacaoPageData {

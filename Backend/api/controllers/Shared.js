@@ -46,7 +46,7 @@ class Shared {
 			);
 
 			const totalEntriesQuanty = await database.ItensMovimentacao.sum(
-				'qtd_mov',
+				'qtd_rec',
 				{
 					where: {
 						operacao: 1,

@@ -108,7 +108,7 @@ module.exports = {
 				novo: 0,
 				recusado: randomOperation == 1 ? 0 : null,
 				validade: randomOperation == 1 ? randomDate : null,
-				data_ajuste: randomOperation == 3 ? randomDate : null,
+				data: randomDate,
 				comentario: generateRandomLorem(10),
 				id_solicitacao_fk:
 					randomOperation == 1 ? Math.floor(Math.random() * 36) + 1 : null,

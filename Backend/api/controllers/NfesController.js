@@ -94,7 +94,7 @@ class NfesController {
 		try {
 			const resData = await database.Nfes.findAll({
 				where: {},
-				attributes: ['id', 'numero'],
+				attributes: ['id', 'numero', 'data_emissao'],
 				include: [
 					{
 						model: database.Fornecedores,

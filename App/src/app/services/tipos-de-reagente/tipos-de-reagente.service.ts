@@ -86,14 +86,4 @@ export class TiposDeReagenteService {
       headers,
     });
   }
-
-  public updateTotals(id: number): Observable<unknown> {
-    const headers = this.getHeaders();
-    const body = {};
-    return this.http.put<unknown>(
-      `${environment.apiUrl}/tiposdereagente/${id}/totais`,
-      body,
-      { headers }
-    );
-  }
 }

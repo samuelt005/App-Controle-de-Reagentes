@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { of, switchMap } from 'rxjs';
 import {
   ItemSolicitacao,
   ItemSolicitacaoRequest,
@@ -40,10 +39,13 @@ export class EditItemComponent extends DialogComponent implements OnInit {
     this.form.setValue({
       lote: dialogData.lote?.id.toString() || '',
       nfe: dialogData.nfe?.id.toString() || '',
-      valor_tot: '', // TODO alterar para pegar dado do banco
-      qtd_rec: '', // TODO alterar para pegar dado do banco
-      validade: '', // TODO alterar para pegar dado do banco
+      valor_tot: dialogData.valor_tot,
+      qtd_rec: dialogData.qtd_rec,
+      validade: dialogData.validade,
     });
+
+    this.quantidadePlaceholder =
+      'Quant. recebida em ' + dialogData.tipo.un_de_medida.nome;
   }
 
   // Atributos
@@ -57,6 +59,8 @@ export class EditItemComponent extends DialogComponent implements OnInit {
 
   public nfesSelectData: NfesData[] = [];
   public lotesSelectData: LotesDeCompraData[] = [];
+
+  public quantidadePlaceholder = '';
 
   // Métodos
   public onLoteSelectionChange() {
@@ -106,6 +110,7 @@ export class EditItemComponent extends DialogComponent implements OnInit {
           valor_tot: string | null;
           qtd_rec: string | null;
           validade: Date | null;
+          data: string;
         };
 
         if (formData.lote == '' && this.form.get('nfe')?.disabled) {
@@ -126,20 +131,19 @@ export class EditItemComponent extends DialogComponent implements OnInit {
           formData.validade = null;
         }
 
+        const selectedNfe = this.nfesSelectData.find(
+          (nfe) => nfe.id.toString() === formData.nfe
+        );
+
+        console.log(selectedNfe);
+
+        if (selectedNfe) {
+          formData.data = selectedNfe?.data_emissao;
+        }
+
         if (this.dialogData.id !== null) {
           this.detalhesSolicitacaoService
             .updateItem(this.dialogData.id, formData)
-            .pipe(
-              switchMap(() => {
-                if (this.dialogData.id !== null) {
-                  return this.tiposDeReagenteService.updateTotals(
-                    this.dialogData.tipo.id
-                  );
-                } else {
-                  return of();
-                }
-              })
-            )
             .subscribe({
               complete: () => {
                 this.tableUpdaterService.updateTable();
@@ -170,6 +174,9 @@ export class EditItemComponent extends DialogComponent implements OnInit {
 
     if (this.dialogData.lote !== null) {
       this.form.get('nfe')?.enable();
+      this.form.get('valor_tot')?.enable();
+      this.form.get('qtd_rec')?.enable();
+      this.form.get('validade')?.enable();
     }
   }
 }

@@ -36,16 +36,12 @@
             {{ getIconType(i) }}
           </mat-icon>
           <p class="data body-medium">
-            {{
-              row.operacao === 3
-                ? getFormattedDate(row.data_ajuste)
-                : getFormattedDate(row.data)
-            }}
+            {{ getFormattedDate(row.data) }}
           </p>
           <p class="forn-resp body-medium">
             {{
               row.operacao === 1
-                ? row.solicitacao.responsavel_solicitacao.nome
+                ? row.nfe.emitente.razao_social
                 : row.responsavel_movimentacao.nome
             }}
           </p>
@@ -60,7 +56,7 @@
             {{ getQuanty(row) }}
           </p>
           <p class="un body-medium">
-            {{ row.tipo.un_de_medida.sigla | uppercase }}
+            {{ row.tipo.un_de_medida.sigla | titlecase }}
           </p>
         </div>
       </div>

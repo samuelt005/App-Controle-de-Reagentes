@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 			novo: DataTypes.BOOLEAN,
 			recusado: DataTypes.BOOLEAN,
 			validade: DataTypes.DATEONLY,
-			data_ajuste: DataTypes.DATEONLY,
+			data: DataTypes.DATEONLY,
 			comentario: DataTypes.STRING,
 		},
 		{
