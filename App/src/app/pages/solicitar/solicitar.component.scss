@@ -1,1 +1,35 @@
 @import "../../shared/styles/pages";
+
+.bottom-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 0 10px;
+
+  .commentary {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 40px !important;
+  }
+  
+  ::ng-deep .mat-mdc-input-element {
+    position: relative !important;
+    top: -5px !important;
+  }
+  
+  ::ng-deep .mat-mdc-select-trigger {
+    position: relative !important;
+    top: -8px !important;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-error-wrapper {
+    padding: 0;
+    padding-top: 2px;
+  }
+  
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}

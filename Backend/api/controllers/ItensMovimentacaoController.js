@@ -1,7 +1,5 @@
 const database = require('../models');
 const { Op } = require('sequelize');
-const Sequelize = require('sequelize');
-const Shared = require('./Shared');
 
 class ItensMovimentacaoController {
 	// Função para pegar 20 itens (paginação)
@@ -128,7 +126,7 @@ class ItensMovimentacaoController {
 			});
 
 			if (createdItemMovimentacao) {
-				Shared.updateTotals(id);
+				ItensMovimentacaoController.updateTotals(id);
 			}
 
 			return res.status(200).json(createdItemMovimentacao);
@@ -139,7 +137,6 @@ class ItensMovimentacaoController {
 
 	// Função para criar um item de baixa
 	static async newWriteOff(req, res) {
-		// TODO adicionar data da baixa
 		const { qtd_mov, comentario, peso_un, id_usuario, data } = req.body;
 		const { id } = req.params;
 
@@ -167,7 +164,7 @@ class ItensMovimentacaoController {
 			});
 
 			if (createdItemMovimentacao) {
-				Shared.updateTotals(id);
+				ItensMovimentacaoController.updateTotals(id);
 			}
 
 			return res.status(200).json(createdItemMovimentacao);
@@ -178,7 +175,8 @@ class ItensMovimentacaoController {
 
 	// Função para criar um item de uma solicitação
 	static async newRequestItem(req, res) {
-		const { qtd_mov, comentario, id_usuario, id_solicitacao } = req.body;
+		const { qtd_mov, comentario, peso_un, id_usuario, id_solicitacao } =
+			req.body;
 		const { id } = req.params;
 
 		try {
@@ -193,11 +191,11 @@ class ItensMovimentacaoController {
 				],
 			});
 
-			const new_qtd_mov = qtd_mov * tipoDeReagente.un_de_medida.peso;
+			const qtd_converted = qtd_mov * peso_un;
 
 			const createdItemMovimentacao = await database.ItensMovimentacao.create({
 				operacao: 1,
-				qtd_mov: new_qtd_mov,
+				qtd_mov: qtd_converted,
 				comentario,
 				valor_tot: 0,
 				id_usuario_fk: id_usuario,
@@ -243,13 +241,8 @@ class ItensMovimentacaoController {
 			let new_qtd_rec;
 			if (qtd_rec != null) {
 				new_qtd_rec = qtd_rec * tipoDeReagente.un_de_medida.peso;
-			}
-
-			let new_valor_tot;
-			if (valor_tot == null) {
-				new_valor_tot = 0;
 			} else {
-				new_valor_tot = valor_tot;
+				new_qtd_rec = null;
 			}
 
 			const updatedItemMovimentacao = await database.ItensMovimentacao.update(
@@ -257,7 +250,7 @@ class ItensMovimentacaoController {
 					id_lote_fk: lote,
 					id_nfe_fk: nfe,
 					recusado,
-					valor_tot: new_valor_tot,
+					valor_tot,
 					qtd_rec: new_qtd_rec,
 					validade,
 					data,
@@ -268,12 +261,50 @@ class ItensMovimentacaoController {
 			);
 
 			if (updatedItemMovimentacao) {
-				Shared.updateTotals(tipoDeReagente.id);
+				ItensMovimentacaoController.updateTotals(tipoDeReagente.id);
 			}
 
 			return res.status(200).json({ message: 'Item atualizado com sucesso!' });
 		} catch (error) {
 			return res.status(500).json(error.message);
+		}
+	}
+
+	// Função para atualizar os totais do item
+	static async updateTotals(id) {
+		try {
+			const totalValue = await database.ItensMovimentacao.sum('valor_tot', {
+				where: {
+					id_tipo_de_reagente_fk: id,
+					valor_tot: { [Op.not]: null },
+				},
+			});
+
+			const totalRec = await database.ItensMovimentacao.sum('qtd_rec', {
+				where: {
+					operacao: 1,
+					id_tipo_de_reagente_fk: id,
+					qtd_rec: { [Op.not]: null },
+				},
+			});
+
+			const totalMov = await database.ItensMovimentacao.sum('qtd_mov', {
+				where: {
+					operacao: { [Op.not]: 1 },
+					id_tipo_de_reagente_fk: id,
+				},
+			});
+
+			const totalQuanty = totalRec + totalMov;
+
+			await database.TiposDeReagente.update(
+				{ vlr_estoque: totalValue, estoque_atual: totalQuanty },
+				{
+					where: { id: Number(id) },
+				}
+			);
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }

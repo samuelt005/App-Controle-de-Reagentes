@@ -30,16 +30,6 @@ module.exports = {
 				type: Sequelize.DECIMAL(12, 2),
 				defaultValue: '0',
 			},
-			entradas: {
-				allowNull: false,
-				type: Sequelize.INTEGER,
-				defaultValue: '0',
-			},
-			saidas: {
-				allowNull: false,
-				type: Sequelize.INTEGER,
-				defaultValue: '0',
-			},
 			ativo: {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,

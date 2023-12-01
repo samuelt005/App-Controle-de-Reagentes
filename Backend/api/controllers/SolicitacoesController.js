@@ -8,7 +8,16 @@ class SolicitacoesController {
 		try {
 			const solicitacao = await database.ItensMovimentacao.findAll({
 				where: { id_solicitacao_fk: Number(id) },
-				attributes: ['id', 'novo', 'recusado', 'comentario', 'qtd_mov', 'valor_tot', 'qtd_rec', 'validade'],
+				attributes: [
+					'id',
+					'novo',
+					'recusado',
+					'comentario',
+					'qtd_mov',
+					'valor_tot',
+					'qtd_rec',
+					'validade',
+				],
 				include: [
 					{
 						model: database.LotesDeCompra,
@@ -28,7 +37,7 @@ class SolicitacoesController {
 							{
 								model: database.UnsDeMedida,
 								as: 'un_de_medida',
-								attributes: ['sigla', 'nome'],
+								attributes: ['sigla', 'nome', 'peso'],
 							},
 						],
 					},

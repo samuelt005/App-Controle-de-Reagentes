@@ -14,14 +14,13 @@ module.exports = {
 			},
 			qtd_mov: {
 				allowNull: false,
-				type: Sequelize.FLOAT,
+				type: Sequelize.DECIMAL(14, 4),
 			},
 			qtd_rec: {
-				type: Sequelize.FLOAT,
+				type: Sequelize.DECIMAL(14, 4),
 			},
 			valor_tot: {
-				allowNull: false,
-				type: Sequelize.DECIMAL(10, 2),
+				type: Sequelize.DECIMAL(12, 2),
 			},
 			novo: {
 				allowNull: false,

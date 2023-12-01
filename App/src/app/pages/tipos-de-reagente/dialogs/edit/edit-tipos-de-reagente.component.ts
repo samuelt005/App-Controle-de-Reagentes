@@ -1,15 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TiposDeReagenteDialog, Tag, UnDeMedida } from 'src/app/interfaces';
+import { TiposDeReagenteDialog, Tag } from 'src/app/interfaces';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { EditTagsComponent } from '../tags/edit-tags.component';
 import { ConfirmInactivationComponent } from '../inactivation/confirm-inactivation.component';
 import {
   TiposDeReagenteService,
   TiposDeReagenteUpdaterService,
-  UnsDeMedidaService,
 } from 'src/app/services';
 
 @Component({
@@ -18,14 +17,12 @@ import {
 })
 export class EditTiposDeReagenteComponent
   extends DialogComponent
-  implements OnInit
 {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: TiposDeReagenteDialog,
     private tableUpdaterService: TiposDeReagenteUpdaterService,
     private tiposDeReagenteService: TiposDeReagenteService,
-    private unsDeMedidaService: UnsDeMedidaService,
     private dialog: MatDialog,
     snackBar: MatSnackBar
   ) {
@@ -63,8 +60,6 @@ export class EditTiposDeReagenteComponent
   public active = false;
   public deactivatable = false;
   public tags: Tag[];
-
-  public selectData: UnDeMedida[] = [];
 
   // Métodos
   public openTags(
@@ -148,12 +143,6 @@ export class EditTiposDeReagenteComponent
       } else {
         this.dialog.closeAll();
       }
-    });
-  }
-
-  public ngOnInit(): void {
-    this.unsDeMedidaService.listAll().subscribe((responseData) => {
-      this.selectData = responseData;
     });
   }
 }

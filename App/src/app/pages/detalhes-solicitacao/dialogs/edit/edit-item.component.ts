@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
@@ -13,7 +13,6 @@ import {
   DetalhesSolicitacaoUpdaterService,
   LotesDeCompraService,
   NfesService,
-  TiposDeReagenteService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 import { dateValidator } from 'src/app/utils';
@@ -28,7 +27,6 @@ export class EditItemComponent extends DialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: ItemSolicitacao,
     private tableUpdaterService: DetalhesSolicitacaoUpdaterService,
     private detalhesSolicitacaoService: DetalhesSolicitacaoService,
-    private tiposDeReagenteService: TiposDeReagenteService,
     private lotesDeCompraService: LotesDeCompraService,
     private nfesService: NfesService,
     private dialog: MatDialog,
@@ -36,11 +34,20 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   ) {
     super(snackBar);
 
+    const qtd_rec = dialogData.qtd_rec
+      ? (
+          parseFloat(dialogData.qtd_rec) / dialogData.tipo.un_de_medida.peso
+        ).toString()
+      : '';
+
+    const valor_tot =
+      dialogData.valor_tot === '0.00' ? '' : dialogData.valor_tot;
+
     this.form.setValue({
       lote: dialogData.lote?.id.toString() || '',
       nfe: dialogData.nfe?.id.toString() || '',
-      valor_tot: dialogData.valor_tot,
-      qtd_rec: dialogData.qtd_rec,
+      valor_tot,
+      qtd_rec,
       validade: dialogData.validade,
     });
 
@@ -52,10 +59,17 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   public form = new FormGroup({
     lote: new FormControl(''),
     nfe: new FormControl({ value: '', disabled: true }),
-    valor_tot: new FormControl({ value: '', disabled: true }),
-    qtd_rec: new FormControl({ value: '', disabled: true }),
-    validade: new FormControl({ value: '', disabled: true }, [dateValidator()]),
-  }); // TODO validar form
+    valor_tot: new FormControl({ value: '', disabled: true }, [
+      Validators.required,
+    ]),
+    qtd_rec: new FormControl({ value: '', disabled: true }, [
+      Validators.required,
+    ]),
+    validade: new FormControl({ value: '', disabled: true }, [
+      dateValidator(),
+      Validators.required,
+    ]),
+  });
 
   public nfesSelectData: NfesData[] = [];
   public lotesSelectData: LotesDeCompraData[] = [];
@@ -65,6 +79,9 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   // Métodos
   public onLoteSelectionChange() {
     this.form.get('nfe')?.enable();
+  }
+
+  public onNfeSelectionChange() {
     this.form.get('valor_tot')?.enable();
     this.form.get('qtd_rec')?.enable();
     this.form.get('validade')?.enable();
@@ -86,10 +103,13 @@ export class EditItemComponent extends DialogComponent implements OnInit {
   }
 
   public clearNfeValue() {
-    const nfeControl = this.form.get('nfe');
-    if (nfeControl) {
-      nfeControl?.setValue('');
-    }
+    this.form.get('nfe')?.setValue('');
+    this.form.get('valor_tot')?.setValue('');
+    this.form.get('qtd_rec')?.setValue('');
+    this.form.get('validade')?.setValue('');
+    this.form.get('valor_tot')?.disable();
+    this.form.get('qtd_rec')?.disable();
+    this.form.get('validade')?.disable();
   }
 
   public saveData(
@@ -135,8 +155,6 @@ export class EditItemComponent extends DialogComponent implements OnInit {
           (nfe) => nfe.id.toString() === formData.nfe
         );
 
-        console.log(selectedNfe);
-
         if (selectedNfe) {
           formData.data = selectedNfe?.data_emissao;
         }
@@ -174,6 +192,9 @@ export class EditItemComponent extends DialogComponent implements OnInit {
 
     if (this.dialogData.lote !== null) {
       this.form.get('nfe')?.enable();
+    }
+
+    if (this.dialogData.nfe !== null) {
       this.form.get('valor_tot')?.enable();
       this.form.get('qtd_rec')?.enable();
       this.form.get('validade')?.enable();

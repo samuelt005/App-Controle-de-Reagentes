@@ -21,7 +21,7 @@ export class SolicitarService {
   }
 
   public addNewSolicitacao(
-    comentario: string,
+    comentario: string | null | undefined,
     id_usuario: string
   ): Observable<number> {
     const body = {
@@ -34,7 +34,10 @@ export class SolicitarService {
     });
   }
 
-  public addNewItem(id: number, body: solicitacaoRequest): Observable<solicitacaoRequest> {
+  public addNewItem(
+    id: number,
+    body: solicitacaoRequest
+  ): Observable<solicitacaoRequest> {
     const headers = this.getHeaders();
     return this.http.post<solicitacaoRequest>(
       `${environment.apiUrl}/movimentacao/solicitacao/${id}`,

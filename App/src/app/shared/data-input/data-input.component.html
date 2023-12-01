@@ -2,7 +2,7 @@
   <div class="inputs" [formGroup]="form">
     <div class="first-line">
       <mat-form-field class="select" appearance="outline">
-        <!-- TODO Incluir pesquisa neste select -->
+        <!-- TODO Incluir pesquisa nos selects -->
         <mat-select placeholder="Item" formControlName="id">
           <mat-option
             *ngFor="let item of tiposSelectData"
@@ -20,7 +20,7 @@
           class="number-input body-large"
           placeholder="Quantidade"
           formControlName="qtd_mov"
-          mask="separator.2"
+          mask="separator.4"
           thousandSeparator="."
           decimalMarker=","
           [leadZero]="true"

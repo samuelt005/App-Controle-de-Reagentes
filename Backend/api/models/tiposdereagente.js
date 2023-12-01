@@ -25,8 +25,6 @@ module.exports = (sequelize, DataTypes) => {
 			loc_estoque: DataTypes.STRING,
 			estoque_atual: DataTypes.DECIMAL,
 			vlr_estoque: DataTypes.DECIMAL,
-			entradas: DataTypes.INTEGER,
-			saidas: DataTypes.INTEGER,
 			ativo: DataTypes.BOOLEAN,
 		},
 		{

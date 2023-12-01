@@ -23,6 +23,7 @@ export interface ItemSolicitacao {
     un_de_medida: {
       sigla: string;
       nome: string;
+      peso: number;
     };
   };
 }

@@ -20,7 +20,19 @@
         </div>
       </div>
     </div>
-    <div class="button-container">
+    <div class="bottom-container" [formGroup]="form">
+      <mat-form-field class="commentary" appearance="outline">
+        <input
+          matInput
+          type="text"
+          class="body-large"
+          placeholder="Comentário da Solicitação (Opcional)"
+          formControlName="solicitacaoComentario"
+        />
+        <!-- <mat-error *ngIf="form.get('comentario')?.hasError('required')">
+          Preencha uma justificativa.
+        </mat-error> -->
+      </mat-form-field>
       <app-normal-button
         (click)="saveData()"
         [filled]="true"

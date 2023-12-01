@@ -106,7 +106,7 @@ export class HistoricoComponent extends PageComponent implements OnInit {
         'pt-BR',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 4,
         }
       );
     } else {
@@ -114,7 +114,7 @@ export class HistoricoComponent extends PageComponent implements OnInit {
         'pt-BR',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 4,
         }
       );
     }

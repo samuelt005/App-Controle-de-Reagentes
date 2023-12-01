@@ -75,7 +75,7 @@ export class DetalhesSolicitacaoComponent
   public tableData: ItemSolicitacao[] = [];
 
   private id = 1;
-  private commentary = '';
+  public commentary = '';
 
   // Métodos
   public openCommentary(
@@ -110,6 +110,26 @@ export class DetalhesSolicitacaoComponent
         exitAnimationDuration,
         data: row,
       });
+    }
+  }
+
+  public getQuanty(row: ItemSolicitacao) {
+    if (row.qtd_rec) {
+      return (row.qtd_mov / row.tipo.un_de_medida.peso).toLocaleString(
+        'pt-BR',
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4,
+        }
+      );
+    } else {
+      return (row.qtd_mov / row.tipo.un_de_medida.peso).toLocaleString(
+        'pt-BR',
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4,
+        }
+      );
     }
   }
 
@@ -200,24 +220,24 @@ export class DetalhesSolicitacaoComponent
     });
 
     if (itemsScore === 0) {
+      this.infoCards[2].data = '1';
       if (solicitacaoData.status !== 1) {
-        this.infoCards[2].data = '1';
         this.updateSolicitacaoStatus(solicitacaoData.id, 1);
       }
     } else if (itemsScore < totalItemsScore) {
+      this.infoCards[2].data = '2';
       if (solicitacaoData.status !== 2) {
-        this.infoCards[2].data = '2';
         this.updateSolicitacaoStatus(solicitacaoData.id, 2);
       }
     } else if (itemsScore === totalItemsScore) {
+      this.infoCards[2].data = '3';
       if (solicitacaoData.status !== 3) {
-        this.infoCards[2].data = '3';
         this.updateSolicitacaoStatus(solicitacaoData.id, 3);
       }
     }
   }
 
-  private updateTableData(id: number): void {
+  private updateTableData(): void {
     this.tableData = [];
     this.loading = true;
 
@@ -229,12 +249,11 @@ export class DetalhesSolicitacaoComponent
         this.loading = false;
       });
 
-    this.cardsService.getSolicitacaoData(id).subscribe((responseData) => {
+    this.cardsService.getSolicitacaoData(this.id).subscribe((responseData) => {
       this.infoCards[0].data = responseData.id.toString();
       this.infoCards[1].data = this.getFormattedDate(
         responseData.data.toString()
       );
-      this.infoCards[2].data = responseData.status.toString();
       this.infoCards[3].data = responseData.responsavel;
       this.commentary = responseData.comentario;
       this.checkSolicitacaoStatus(responseData);
@@ -242,13 +261,13 @@ export class DetalhesSolicitacaoComponent
   }
 
   private refreshTable(): void {
-    this.updateTableData(this.id);
+    this.updateTableData();
   }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
-      this.updateTableData(this.id);
+      this.updateTableData();
     });
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {

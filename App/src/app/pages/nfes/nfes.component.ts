@@ -38,7 +38,6 @@ export class NfesComponent extends PageComponent implements OnInit {
     enterAnimationDuration = '100ms',
     exitAnimationDuration = '100ms'
   ): void {
-    console.log(rowData);
     this.dialog.open(EditNfeComponent, {
       enterAnimationDuration,
       exitAnimationDuration,

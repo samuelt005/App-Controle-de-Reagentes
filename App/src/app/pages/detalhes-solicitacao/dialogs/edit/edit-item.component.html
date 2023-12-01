@@ -23,7 +23,12 @@
       </button>
     </mat-form-field>
     <mat-form-field class="input" appearance="outline">
-      <mat-select placeholder="Nota Fiscal" formControlName="nfe">
+      <mat-select
+        placeholder="Nota Fiscal"
+        formControlName="nfe"
+        (selectionChange)="onNfeSelectionChange()"
+        [ngClass]="{ disabled: this.form.get('nfe')?.disabled }"
+      >
         <mat-option
           *ngFor="let item of nfesSelectData"
           [value]="item.id.toString()"
@@ -60,17 +65,18 @@
     <mat-form-field class="input" appearance="outline">
       <input
         matInput
+        type="text"
         class="number-input body-large"
         [placeholder]="quantidadePlaceholder"
         formControlName="qtd_rec"
-        mask="separator.2"
+        mask="separator.4"
         thousandSeparator="."
         decimalMarker=","
         [leadZero]="true"
         maxlength="16"
       />
       <mat-error *ngIf="form.get('qtd_rec')?.hasError('required')">
-        Insira a quantidade do ajuste.
+        Insira a quantidade recebida.
       </mat-error>
     </mat-form-field>
     <mat-form-field class="input" appearance="outline">
@@ -82,7 +88,12 @@
         [matDatepicker]="picker"
         formControlName="validade"
       />
-      <mat-error *ngIf="form.get('validade')?.hasError('invalidDate')">
+      <mat-error
+        *ngIf="
+          form.get('validade')?.hasError('required') ||
+          form.get('validade')?.hasError('invalidDate')
+        "
+      >
         Insira uma data válida.
       </mat-error>
       <mat-datepicker-toggle matIconSuffix [for]="picker">
@@ -91,7 +102,13 @@
     </mat-form-field>
   </div>
   <div class="buttons">
-    <app-normal-button mat-dialog-close [filled]="true" (click)="saveData()">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="saveData()"
+      [inactive]="!form.valid ? true : false"
+      [disabled]="!form.valid ? true : false"
+    >
       Salvar
     </app-normal-button>
     <app-normal-button mat-dialog-close> Cancelar </app-normal-button>

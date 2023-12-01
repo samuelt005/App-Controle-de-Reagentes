@@ -66,8 +66,6 @@ export class AdjustmentComponent extends DialogComponent {
           id_usuario: string;
         };
 
-        console.log(formData);
-
         if (id_usuario !== null) {
           formData.id_usuario = id_usuario;
         } else {

@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UnDeMedida } from 'src/app/interfaces';
 import {
   TiposDeReagenteService,
   TiposDeReagenteUpdaterService,
-  UnsDeMedidaService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 
@@ -16,13 +14,11 @@ import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
 })
 export class NewTiposDeReagenteComponent
   extends DialogComponent
-  implements OnInit
 {
   // Construtor
   constructor(
     private tableUpdaterService: TiposDeReagenteUpdaterService,
     private tiposDeReagenteService: TiposDeReagenteService,
-    private unsDeMedidaService: UnsDeMedidaService,
     private dialog: MatDialog,
     snackBar: MatSnackBar
   ) {
@@ -39,8 +35,6 @@ export class NewTiposDeReagenteComponent
     loc_estoque: new FormControl(''),
     id_un_de_medida: new FormControl('', [Validators.required]),
   });
-
-  public selectData: UnDeMedida[] = [];
 
   // Métodos
   public saveData(
@@ -79,12 +73,6 @@ export class NewTiposDeReagenteComponent
       } else {
         this.dialog.closeAll();
       }
-    });
-  }
-
-  public ngOnInit(): void {
-    this.unsDeMedidaService.listAll().subscribe((responseData) => {
-      this.selectData = responseData;
     });
   }
 }

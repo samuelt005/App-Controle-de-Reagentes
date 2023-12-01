@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {
   PageTitle,
   TipoDeReagente,
-  UnDeMedida,
   solicitacaoRequest,
 } from 'src/app/interfaces';
 import {
-  UnsDeMedidaService,
   TiposDeReagenteService,
   UserService,
   SolicitarService,
@@ -29,7 +32,6 @@ export class SolicitarComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
     private tiposDeReagenteService: TiposDeReagenteService,
-    private unsDeMedidaService: UnsDeMedidaService,
     private solicitarService: SolicitarService,
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -41,18 +43,19 @@ export class SolicitarComponent extends PageComponent implements OnInit {
   }
 
   // Atributos
+  public form = new FormGroup({
+    solicitacaoComentario: new FormControl(''),
+  });
+
   public pageTitle: PageTitle = {
     iconColor: 'var(--sucesso-2)',
     icon: 'file_download',
     title: 'Cadastrar Solicitação de Compra',
   };
 
-  public unsSelectData: UnDeMedida[] = [];
   public tiposSelectData: TipoDeReagente[] = [];
 
   protected formsArray: FormGroup[] = [];
-
-  public comentario = 'Teste';
 
   // Métodos
   public isFormsArrayValid(): boolean {
@@ -97,7 +100,10 @@ export class SolicitarComponent extends PageComponent implements OnInit {
 
         if (id_usuario !== null) {
           this.solicitarService
-            .addNewSolicitacao(this.comentario, id_usuario)
+            .addNewSolicitacao(
+              this.form.get('solicitacaoComentario')?.value,
+              id_usuario
+            )
             .subscribe(
               (id_solicitacao) => {
                 const requestArray: solicitacaoRequest[] = [];
@@ -146,10 +152,6 @@ export class SolicitarComponent extends PageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.unsDeMedidaService.listAll().subscribe((responseData) => {
-      this.unsSelectData = responseData;
-    });
-
     this.tiposDeReagenteService.listAll().subscribe((responseData) => {
       this.tiposSelectData = responseData;
     });

@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 	ItensMovimentacao.init(
 		{
 			operacao: DataTypes.INTEGER,
-			qtd_mov: DataTypes.FLOAT,
-			qtd_rec: DataTypes.FLOAT,
+			qtd_mov: DataTypes.DECIMAL,
+			qtd_rec: DataTypes.DECIMAL,
 			valor_tot: DataTypes.DECIMAL,
 			novo: DataTypes.BOOLEAN,
 			recusado: DataTypes.BOOLEAN,

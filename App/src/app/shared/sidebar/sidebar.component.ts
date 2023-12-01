@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuOption, UserData } from 'src/app/interfaces';
 import { UserService } from 'src/app/services';
 import { ProfileComponent } from './dialogs/profile/profile.component';
@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   // Construtor
   constructor(
     private userService: UserService,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
   ) {
@@ -112,8 +113,13 @@ export class SidebarComponent implements OnInit {
   }
 
   public returnPage() {
+    const currentPage = this.router.url;
     setTimeout(() => {
-      this.router.navigate(['/listagem/page/1']);
+      if (currentPage.includes('/solicitacao/')) {
+        this.router.navigate(['/solicitacoes/page/1']);
+      } else {
+        this.router.navigate(['/listagem/page/1']);
+      }
     }, 500);
   }
 

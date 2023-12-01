@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PaginatorData } from 'src/app/interfaces';
+import { PaginatorData, UnDeMedida } from 'src/app/interfaces';
 
 @Component({
   template: '',
@@ -17,6 +17,38 @@ export abstract class PageComponent {
   protected search: string | null = null;
   protected showSearchError = false;
 
+  public unsSelectData: UnDeMedida[] = [
+    {
+      id: 1,
+      sigla: 'ml',
+      nome: 'Mililitros',
+      peso: 1,
+    },
+    {
+      id: 2,
+      sigla: 'lt',
+      nome: 'Litros',
+      peso: 1000,
+    },
+    {
+      id: 3,
+      sigla: 'mg',
+      nome: 'Miligramas',
+      peso: 0.001,
+    },
+    {
+      id: 4,
+      sigla: 'gr',
+      nome: 'Gramas',
+      peso: 1,
+    },
+    {
+      id: 5,
+      sigla: 'kg',
+      nome: 'Kilogramas',
+      peso: 1000,
+    },
+  ];
 
   // Métodos
   protected getFormattedDate(dateTimeStr: string): string {

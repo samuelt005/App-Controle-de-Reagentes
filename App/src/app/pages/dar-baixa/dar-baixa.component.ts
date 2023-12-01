@@ -6,13 +6,11 @@ import { Router } from '@angular/router';
 import {
   PageTitle,
   TipoDeReagente,
-  UnDeMedida,
   darBaixaRequest,
 } from 'src/app/interfaces';
 import {
   DarBaixaService,
   TiposDeReagenteService,
-  UnsDeMedidaService,
   UserService,
 } from 'src/app/services';
 import {
@@ -30,7 +28,6 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
     private tiposDeReagenteService: TiposDeReagenteService,
-    private unsDeMedidaService: UnsDeMedidaService,
     private darBaixaService: DarBaixaService,
     private userService: UserService,
     private formBuilder: FormBuilder,
@@ -48,7 +45,6 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
     title: 'Cadastrar Baixa de Reagentes e Materiais',
   };
 
-  public unsSelectData: UnDeMedida[] = [];
   public tiposSelectData: TipoDeReagente[] = [];
 
   protected formsArray: FormGroup[] = [];
@@ -112,7 +108,6 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
 
         // TODO validar quantidade em estoque antes de enviar as requests
         requestArray.forEach((request) => {
-          console.log(request);
           this.darBaixaService.addNew(request.id, request).subscribe({
             complete: () => {
               this.router.navigate(['listagem/page/1']);
@@ -132,10 +127,6 @@ export class DarBaixaComponent extends PageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.unsDeMedidaService.listAll().subscribe((responseData) => {
-      this.unsSelectData = responseData;
-    });
-
     this.tiposDeReagenteService.listAll().subscribe((responseData) => {
       this.tiposSelectData = responseData;
     });

@@ -30,12 +30,7 @@
             <p class="cod body-medium">{{ row.tipo.cod }}</p>
             <p class="desc body-medium">{{ row.tipo.descricao }}</p>
             <p class="qtd body-medium">
-              {{
-                row.qtd_mov.toLocaleString("pt-BR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })
-              }}
+              {{ getQuanty(row) }}
             </p>
             <p class="un body-medium">
               {{ row.tipo.un_de_medida.sigla | titlecase }}
@@ -68,7 +63,7 @@
       </div>
     </div>
     <div class="button-container">
-      <app-normal-button (click)="openCommentary()">
+      <app-normal-button *ngIf="this.commentary" (click)="openCommentary()">
         Ver Comentário
       </app-normal-button>
     </div>

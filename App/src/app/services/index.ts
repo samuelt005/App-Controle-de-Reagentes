@@ -10,7 +10,6 @@ export * from './solicitacoes/solicitacoes-updater.service';
 export * from './solicitar/solicitar.service';
 export * from './detalhes-solicitacao/detalhes-solicitacao.service';
 export * from './detalhes-solicitacao/detalhes-solicitacao-updater.service';
-export * from './uns-de-medida/uns-de-medida.service';
 export * from './historico/historico.service';
 export * from './historico/historico-updater.service';
 export * from './tipos-de-reagente/tipos-de-reagente.service';

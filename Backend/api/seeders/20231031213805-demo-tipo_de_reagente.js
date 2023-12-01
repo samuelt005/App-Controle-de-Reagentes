@@ -55,8 +55,6 @@ module.exports = {
 					(Math.floor(Math.random() * 3) + 1),
         estoque_atual: active ? randomDecimal2 : 0.0,
 				vlr_estoque: active ? randomDecimal4 : 0.0,
-				entradas: Math.floor(Math.random() * 50) + 1,
-				saidas: Math.floor(Math.random() * 50) + 1,
 				ativo: active,
 				id_un_de_medida_fk: Math.floor(Math.random() * 5) + 1,
 				createdAt: new Date(),

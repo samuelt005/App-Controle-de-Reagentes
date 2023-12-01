@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserData } from 'src/app/interfaces';
@@ -9,7 +9,7 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent extends DialogComponent implements OnInit {
+export class ProfileComponent extends DialogComponent {
   // Construtor
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: UserData,
@@ -47,11 +47,5 @@ export class ProfileComponent extends DialogComponent implements OnInit {
       exitAnimationDuration,
       data: id,
     });
-  }
-
-  // TODO adicionar alteração de email
-
-  ngOnInit(): void {
-    console.log('');
   }
 }
