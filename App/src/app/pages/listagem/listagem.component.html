@@ -1,5 +1,5 @@
 <div class="page-container">
-  <app-sidebar [filtersHidden]="false" />
+  <app-sidebar (filterEvent)="handleFiltering($event)" [filtersHidden]="false" />
   <div class="main-content">
     <header class="header">
       <app-page-title [pageTitle]="pageTitle" />
@@ -9,11 +9,11 @@
           matInput
           type="text"
           class="number-input"
-          [(ngModel)]="search"
+          [(ngModel)]="filtersValue.search"
           (keyup.enter)="doSearch()"
         />
         <button
-          *ngIf="this.search"
+          *ngIf="this.filtersValue.search"
           matSuffix
           mat-icon-button
           (click)="clearSearchValue()"

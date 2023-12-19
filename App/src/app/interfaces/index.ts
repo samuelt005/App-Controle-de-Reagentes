@@ -18,3 +18,4 @@ export * from './shared/page-title';
 export * from './shared/paginator';
 export * from './shared/snackbar';
 export * from './shared/user';
+export * from './shared/filters-value';

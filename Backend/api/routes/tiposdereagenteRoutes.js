@@ -27,7 +27,10 @@ router
 	)
 
 	// Rota para listar tipos de reagente com paginação, ativos e filtrados
-	// .get('/tiposdereagente/page/:page/filtered', TiposDeReagenteController.getTiposDeReagenteFiltered)
+	.get(
+		'/tiposdereagente/page/:page/filtered',
+		TiposDeReagenteController.getTiposDeReagenteFiltered
+	)
 
 	// Rota para criar um tipo de reagente
 	.post(

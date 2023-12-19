@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 				through: 'TiposDeReagenteTags',
 				foreignKey: 'id_tag_tipo_de_reagente_fk',
 				otherKey: 'id_tipo_de_reagente_tag_fk',
+        as: 'tags'
 			});
     }
 	}

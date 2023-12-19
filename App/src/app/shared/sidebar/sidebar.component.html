@@ -67,19 +67,19 @@
           <div class="filter-option">
             <h3 class="body-large">Unidade de Medida</h3>
             <mat-form-field class="select-input" appearance="outline">
-              <mat-label>Selecione</mat-label>
-              <mat-select [(ngModel)]="filtersValue.un">
+              <mat-select [(ngModel)]="filtersInputs.un" placeholder="Selecione">
                 <mat-option selected></mat-option>
-                <mat-option value="kg">Kilogramas</mat-option>
-                <mat-option value="l">Litros</mat-option>
-                <mat-option value="gr">Gramas</mat-option>
                 <mat-option value="ml">Mililitros</mat-option>
+                <mat-option value="l">Litros</mat-option>
+                <mat-option value="mg">Miligramas</mat-option>
+                <mat-option value="gr">Gramas</mat-option>
+                <mat-option value="kg">Kilogramas</mat-option>
               </mat-select>
               <button
-                *ngIf="filtersValue.un"
+                *ngIf="filtersInputs.un"
                 matSuffix
                 mat-icon-button
-                (click)="filtersValue.un = ''"
+                (click)="filtersInputs.un = ''"
               >
                 <mat-icon>close</mat-icon>
               </button>
@@ -89,8 +89,7 @@
           <div class="filter-option">
             <h3 class="body-large">Tag</h3>
             <mat-form-field class="select-input" appearance="outline">
-              <mat-label>Selecione</mat-label>
-              <mat-select [(ngModel)]="filtersValue.tag">
+              <mat-select [(ngModel)]="filtersInputs.tag" placeholder="Selecione">
                 <mat-option selected></mat-option>
                 <mat-option value="em">Estoque Mínimo</mat-option>
                 <mat-option value="pf">Polícia Federal</mat-option>
@@ -98,10 +97,10 @@
                 <mat-option value="eb">Exército Brasileiro</mat-option>
               </mat-select>
               <button
-                *ngIf="filtersValue.tag"
+                *ngIf="filtersInputs.tag"
                 matSuffix
                 mat-icon-button
-                (click)="filtersValue.tag = ''"
+                (click)="filtersInputs.tag = ''"
               >
                 <mat-icon>close</mat-icon>
               </button>
@@ -112,69 +111,86 @@
             <h3 class="body-large">Quantidade</h3>
             <div class="min-max">
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Min</mat-label>
                 <input
                   matInput
-                  type="number"
+                  placeholder="Min"
+                  type="text"
                   class="number-input"
-                  [(ngModel)]="filtersValue.qtdMin"
+                  [(ngModel)]="filtersInputs.qtdMin"
+                  mask="separator.4"
+                  thousandSeparator="."
+                  decimalMarker=","
+                  maxlength="10"
                 />
               </mat-form-field>
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Max</mat-label>
                 <input
                   matInput
-                  type="number"
+                  placeholder="Max"
+                  type="text"
                   class="number-input"
-                  [(ngModel)]="filtersValue.qtdMax"
+                  [(ngModel)]="filtersInputs.qtdMax"
+                  mask="separator.4"
+                  thousandSeparator="."
+                  decimalMarker=","
+                  maxlength="10"
                 />
               </mat-form-field>
             </div>
           </div>
-          <hr class="drawer-line" />
+          <!-- TODO adicionar filtragem por valor unitário -->
+          <!-- <hr class="drawer-line" />
           <div class="filter-option">
             <h3 class="body-large">Valor Unitário</h3>
             <div class="min-max">
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Min</mat-label>
                 <input
                   matInput
+                  placeholder="Min"
                   type="number"
                   class="number-input"
-                  [(ngModel)]="filtersValue.vlrUnitMin"
+                  [(ngModel)]="filtersInputs.vlrUnitMin"
                 />
               </mat-form-field>
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Max</mat-label>
                 <input
                   matInput
+                  placeholder="Max"
                   type="number"
                   class="number-input"
-                  [(ngModel)]="filtersValue.vlrUnitMax"
+                  [(ngModel)]="filtersInputs.vlrUnitMax"
                 />
               </mat-form-field>
             </div>
-          </div>
+          </div> -->
           <hr class="drawer-line" />
           <div class="filter-option">
             <h3 class="body-large">Valor Total</h3>
             <div class="min-max">
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Min</mat-label>
                 <input
                   matInput
-                  type="number"
+                  placeholder="Min"
+                  type="text"
                   class="number-input"
-                  [(ngModel)]="filtersValue.vlrTotMin"
+                  [(ngModel)]="filtersInputs.vlrTotMin"
+                  mask="separator.2"
+                  thousandSeparator="."
+                  decimalMarker=","
+                  maxlength="10"
                 />
               </mat-form-field>
               <mat-form-field class="min-max-input" appearance="outline">
-                <mat-label>Max</mat-label>
                 <input
                   matInput
-                  type="number"
+                  placeholder="Max"
+                  type="text"
                   class="number-input"
-                  [(ngModel)]="filtersValue.vlrTotMax"
+                  [(ngModel)]="filtersInputs.vlrTotMax"
+                  mask="separator.2"
+                  thousandSeparator="."
+                  decimalMarker=","
+                  maxlength="10"
                 />
               </mat-form-field>
             </div>
@@ -183,18 +199,18 @@
           <div class="filter-option">
             <h3 class="body-large">Localização no Estoque</h3>
             <mat-form-field class="text-input" appearance="outline">
-              <mat-label>Localização</mat-label>
               <input
                 matInput
+                placeholder="Localização"
                 type="text"
                 class="number-input"
-                [(ngModel)]="filtersValue.loc"
+                [(ngModel)]="filtersInputs.loc"
               />
               <button
-                *ngIf="filtersValue.loc"
+                *ngIf="filtersInputs.loc"
                 matSuffix
                 mat-icon-button
-                (click)="filtersValue.loc = ''"
+                (click)="filtersInputs.loc = ''"
               >
                 <mat-icon>close</mat-icon>
               </button>

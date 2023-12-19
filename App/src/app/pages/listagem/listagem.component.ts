@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PageTitle, Card, ListagemData } from 'src/app/interfaces';
+import {
+  PageTitle,
+  Card,
+  ListagemData,
+  FiltersValue,
+} from 'src/app/interfaces';
 import {
   ListagemService,
   CardsService,
@@ -52,6 +57,19 @@ export class ListagemComponent extends PageComponent implements OnInit {
     },
   ];
 
+  public filtersValue: FiltersValue = {
+    search: null,
+    un: null,
+    tag: null,
+    qtdMin: null,
+    qtdMax: null,
+    vlrUnitMin: null,
+    vlrUnitMax: null,
+    vlrTotMin: null,
+    vlrTotMax: null,
+    loc: null,
+  };
+
   public tableData: ListagemData[] = [];
 
   // Métodos
@@ -64,37 +82,48 @@ export class ListagemComponent extends PageComponent implements OnInit {
   public doSearch(): void {
     if (this.search) {
       this.router.navigate(['listagem/page/1']);
-      this.updateTableData(this.page, this.search);
+      this.updateTableData(this.page, this.filtersValue);
       this.showSearchError = true;
     } else {
-      this.updateTableData(this.page);
+      this.updateTableData(this.page, this.filtersValue);
       this.showSearchError = false;
     }
   }
 
   public clearSearchValue() {
-    this.search = null;
+    this.filtersValue.search = null;
     this.refreshTable();
   }
 
-  private updateTableData(page: number, search: string | null = null): void {
+  public handleFiltering(filters: FiltersValue) {
+    this.filtersValue.un = filters.un;
+    this.filtersValue.tag = filters.tag;
+    this.filtersValue.qtdMin = filters.qtdMin;
+    this.filtersValue.qtdMax = filters.qtdMax;
+    this.filtersValue.vlrUnitMin = filters.vlrUnitMin;
+    this.filtersValue.vlrUnitMax = filters.vlrUnitMax;
+    this.filtersValue.vlrTotMin = filters.vlrTotMin;
+    this.filtersValue.vlrTotMax = filters.vlrTotMax;
+    this.filtersValue.loc = filters.loc;
+    this.doSearch();
+  }
+
+  private updateTableData(page: number, filtersValue: FiltersValue): void {
     this.tableData = [];
     this.loading = true;
 
-    const observable = search
-      ? this.listagemService.listPerPage(page, search)
-      : this.listagemService.listPerPage(page);
-
-    observable.subscribe((responseData) => {
-      const { currentPage, totalPages, totalItems } = responseData;
-      this.paginatorData = {
-        currentPage: currentPage,
-        totalPages: totalPages,
-        totalItems: totalItems,
-      };
-      this.tableData = responseData.data;
-      this.loading = false;
-    });
+    this.listagemService
+      .listPerPageFiltered(page, filtersValue)
+      .subscribe((responseData) => {
+        const { currentPage, totalPages, totalItems } = responseData;
+        this.paginatorData = {
+          currentPage: currentPage,
+          totalPages: totalPages,
+          totalItems: totalItems,
+        };
+        this.tableData = responseData.data;
+        this.loading = false;
+      });
 
     this.cardsService.getListagemData().subscribe((responseData) => {
       this.infoCards[0].data = responseData.total_items.toString();
@@ -111,13 +140,13 @@ export class ListagemComponent extends PageComponent implements OnInit {
   }
 
   private refreshTable(): void {
-    this.updateTableData(this.page, this.search);
+    this.updateTableData(this.page, this.filtersValue);
   }
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
-      this.updateTableData(this.page, this.search);
+      this.updateTableData(this.page, this.filtersValue);
     });
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {

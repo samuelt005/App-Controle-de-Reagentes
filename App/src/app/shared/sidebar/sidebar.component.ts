@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MenuOption, UserData } from 'src/app/interfaces';
+import { Router } from '@angular/router';
+import { FiltersValue, MenuOption, UserData } from 'src/app/interfaces';
 import { UserService } from 'src/app/services';
 import { ProfileComponent } from './dialogs/profile/profile.component';
 
@@ -14,7 +14,6 @@ export class SidebarComponent implements OnInit {
   // Construtor
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
   ) {
@@ -32,17 +31,18 @@ export class SidebarComponent implements OnInit {
   public isChecked = false;
   private userData: UserData | null = null;
   @Input() public filtersHidden = false;
+  @Output() filterEvent = new EventEmitter<FiltersValue>();
 
-  public filtersValue = {
-    un: '',
-    tag: '',
+  public filtersInputs: FiltersValue = {
+    un: null,
+    tag: null,
     qtdMin: null,
     qtdMax: null,
     vlrUnitMin: null,
     vlrUnitMax: null,
     vlrTotMin: null,
     vlrTotMax: null,
-    loc: '',
+    loc: null,
   };
 
   public menuOptions: MenuOption[] = [
@@ -88,15 +88,6 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  public filtersOptions = {
-    un: false,
-    quantidade: false,
-    vlr_unit: false,
-    vlr_tot: false,
-    tag: false,
-    localizacao: false,
-  };
-
   // Métodos
   public toggleMenusDrawer() {
     this.menusDrawer = !this.menusDrawer;
@@ -135,19 +126,51 @@ export class SidebarComponent implements OnInit {
   }
 
   public applyFilters() {
-    this.cleanFilters();
+    const filtersValue = { ...this.filtersInputs };
+    const { qtdMin, qtdMax, un } = this.filtersInputs;
+
+    switch (un) {
+      case 'l':
+        if (qtdMin) {
+          filtersValue.qtdMin = qtdMin * 1000;
+        }
+        if (qtdMax) {
+          filtersValue.qtdMax = qtdMax * 1000;
+        }
+        break;
+      case 'mg':
+        if (qtdMin) {
+          filtersValue.qtdMin = qtdMin * 0.001;
+        }
+        if (qtdMax) {
+          filtersValue.qtdMax = qtdMax * 0.001;
+        }
+        break;
+      case 'kg':
+        if (qtdMin) {
+          filtersValue.qtdMin = qtdMin * 1000;
+        }
+        if (qtdMax) {
+          filtersValue.qtdMax = qtdMax * 1000;
+        }
+        break;
+      default:
+        break;
+    }
+
+    this.filterEvent.emit(filtersValue);
   }
 
   public cleanFilters() {
-    this.filtersValue.un = '';
-    this.filtersValue.tag = '';
-    this.filtersValue.qtdMin = null;
-    this.filtersValue.qtdMax = null;
-    this.filtersValue.vlrUnitMin = null;
-    this.filtersValue.vlrUnitMax = null;
-    this.filtersValue.vlrTotMin = null;
-    this.filtersValue.vlrTotMax = null;
-    this.filtersValue.loc = '';
+    this.filtersInputs.un = '';
+    this.filtersInputs.tag = '';
+    this.filtersInputs.qtdMin = null;
+    this.filtersInputs.qtdMax = null;
+    this.filtersInputs.vlrUnitMin = null;
+    this.filtersInputs.vlrUnitMax = null;
+    this.filtersInputs.vlrTotMin = null;
+    this.filtersInputs.vlrTotMax = null;
+    this.filtersInputs.loc = '';
   }
 
   public openProfile(

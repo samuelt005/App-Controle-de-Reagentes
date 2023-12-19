@@ -112,14 +112,14 @@ class TiposDeReagenteController {
 						as: 'un_de_medida',
 						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
+					{
+						model: database.Tags,
+						as: 'tags',
+						through: { attributes: [] },
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
 				],
 			});
-
-			for (const tipoDeReagente of tiposDeReagente) {
-				tipoDeReagente.dataValues.tags = await tipoDeReagente.getTags({
-					attributes: ['sigla'],
-				});
-			}
 
 			let totalItems;
 			if (search) {
@@ -164,11 +164,10 @@ class TiposDeReagenteController {
 	}
 
 	// Função para pegar 20 tipos de reagente, ativos e filtrado
-	// TODO criar outro método de filtragem
-	/*static async getTiposDeReagenteFiltered(req, res) {
+	static async getTiposDeReagenteFiltered(req, res) {
 		const {
 			page,
-			searchInput,
+			search,
 			unmedida,
 			qtdMin,
 			qtdMax,
@@ -183,30 +182,25 @@ class TiposDeReagenteController {
 		const offset = (pageNumber - 1) * itemsPerPage;
 
 		try {
-			const whereTags = {};
 			const whereUn = {};
 			const where = {
 				ativo: true,
 			};
 
-			if (searchInput) {
-				if (!isNaN(searchInput)) {
+			if (search) {
+				if (!isNaN(search)) {
 					where.cod = {
-						[Op.like]: `%${searchInput}%`,
+						[Op.like]: `%${search}%`,
 					};
 				} else {
 					where.descricao = {
-						[Op.like]: `%${searchInput}%`,
+						[Op.like]: `%${search}%`,
 					};
 				}
 			}
 
 			if (unmedida) {
 				whereUn.sigla = unmedida;
-			}
-
-			if (tag) {
-				whereTags.sigla = tag;
 			}
 
 			if (qtdMin !== undefined) {
@@ -221,6 +215,8 @@ class TiposDeReagenteController {
 					[Op.lte]: qtdMax,
 				};
 			}
+
+			// TODO filtrar por valor unitário
 
 			if (vlrTotMin !== undefined) {
 				where.vlr_estoque = {
@@ -241,6 +237,28 @@ class TiposDeReagenteController {
 				};
 			}
 
+			// Busca os itens que inclui a tag e salva num array o id do item
+			if (tag) {
+				const itensWithTag = await database.TiposDeReagente.findAll({
+					attributes: ['id'],
+					include: [
+						{
+							model: database.Tags,
+							as: 'tags',
+							through: { attributes: [] },
+							where: { sigla: tag },
+						},
+					],
+					order: [['id', 'ASC']],
+				});
+
+				const ids = itensWithTag.map((item) => item.id);
+
+				where.id = {
+					[Op.in]: ids,
+				};
+			}
+
 			const tiposdereagente = await database.TiposDeReagente.findAll({
 				where: where,
 				limit: itemsPerPage,
@@ -257,14 +275,25 @@ class TiposDeReagenteController {
 					},
 					{
 						model: database.Tags,
+						as: 'tags',
 						through: { attributes: [] },
-						where: whereTags,
 						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 			});
 
-			const totalItems = tiposdereagente.count;
+			const totalItems = await database.TiposDeReagente.count({
+				where: where,
+				include: [
+					{
+						model: database.UnsDeMedida,
+						as: 'un_de_medida',
+						where: whereUn,
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
+					},
+				],
+			});
+
 			const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 			const resData = {
@@ -278,7 +307,7 @@ class TiposDeReagenteController {
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
-	}*/
+	}
 
 	// Função para criar um tipo de reagente
 	static async createTipoDeReagente(req, res) {
