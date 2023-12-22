@@ -4,7 +4,7 @@
   matRippleColor="rgba(255, 255, 255, 0.1)"
   [ngClass]="activated ? 'activated' : ''"
 >
-  <mat-icon class="material-icons-outlined">
+  <mat-icon class="material-icons-outlined" [style.color]="customColor">
     <ng-content />
   </mat-icon>
 </div>

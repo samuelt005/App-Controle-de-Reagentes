@@ -14,8 +14,8 @@ module.exports = (app) => {
 	app.use(bodyParser.json());
 	app.use(
 		auth,
-		fornecedores,
 		usuarios,
+		fornecedores,
 		lotesdecompra,
 		nfes,
 		solicitacoes,

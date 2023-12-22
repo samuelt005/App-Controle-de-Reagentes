@@ -88,6 +88,10 @@ export class UserService {
     return user ? user : null;
   }
 
+  public getUserRole() {
+    return this.userSubject.value?.perfil;
+  }
+
   private checkTokenValidity() {
     const token = this.tokenService.returnToken();
     const decodedToken = jwtDecode(token);
@@ -104,11 +108,33 @@ export class UserService {
   public updatePassword(body: updatePassword, id: string): Observable<unknown> {
     const headers = this.getHeaders();
     return this.http.put<unknown>(
-      `${environment.apiUrl}/usuarios/${id}/senha`,
+      `${environment.apiUrl}/usuario/${id}/senha`,
       body,
       {
         headers,
       }
     );
   }
+
+  public checkEmailConfirmed(): Observable<boolean> {
+    const headers = this.getHeaders();
+    const id = this.getUserId();
+    return this.http.get<boolean>(
+      `${environment.apiUrl}/usuario/${id}/emailconfirmado`,
+      {
+        headers,
+      }
+    );
+  }
+
+  // public createAccount(body: updatePassword, id: string): Observable<unknown> {
+  //   const headers = this.getHeaders();
+  //   return this.http.put<unknown>(
+  //     `${environment.apiUrl}/usuarios/${id}/senha`,
+  //     body,
+  //     {
+  //       headers,
+  //     }
+  //   );
+  // }
 }

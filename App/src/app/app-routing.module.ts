@@ -14,6 +14,7 @@ import {
   LotesDeCompraComponent,
   NotFoundComponent,
   DetalhesSolicitacaoComponent,
+  CadastrarSeComponent,
 } from './pages';
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'cadastrar',
+    component: CadastrarSeComponent,
   },
   {
     path: 'listagem/page/:page',

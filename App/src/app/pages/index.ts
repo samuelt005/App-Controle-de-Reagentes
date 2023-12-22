@@ -1,5 +1,6 @@
 export * from './listagem/listagem.component';
 export * from './login/login.component';
+export * from './cadastrar-se/cadastrar-se.component';
 export * from './nfes/nfes.component';
 export * from './nfes/dialogs/edit-nfe/edit-nfe.component';
 export * from './nfes/dialogs/new-nfe/new-nfe.component';

@@ -7,46 +7,43 @@
       <div class="login-content">
         <div class="content" [formGroup]="form">
           <mat-form-field appearance="outline">
-            <mat-label>E-mail</mat-label>
+            <mat-label>RA</mat-label>
             <input
               matInput
-              type="email"
-              placeholder="Informe seu E-mail"
-              formControlName="email"
+              type="text"
+              placeholder="Informe seu RA"
+              formControlName="ra"
             />
-            <mat-error *ngIf="form.get('email')?.hasError('required')">
-              Insira seu e-mail.
-            </mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('email')">
-              Formato inválido para e-mail.
+            <mat-error *ngIf="form.get('ra')?.hasError('required')">
+              Insira seu RA.
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <mat-label>Senha</mat-label>
+            <mat-label>Código Único</mat-label>
             <input
               matInput
-              type="password"
-              placeholder="Informe seu Senha"
-              formControlName="senha"
+              type="text"
+              placeholder="Informe seu Código Único"
+              formControlName="codigo"
             />
-            <mat-error *ngIf="form.get('senha')?.hasError('required')">
-              Insira sua senha.
+            <mat-error *ngIf="form.get('codigo')?.hasError('required')">
+              Insira seu código único.
             </mat-error>
           </mat-form-field>
           <hr />
-          <p class="login-error">{{ loginError }}</p>
+          <p class="login-error">{{ registerError }}</p>
           <app-normal-button
-            (click)="login()"
+            (click)="signup()"
             [filled]="true"
             [matRippleDisabled]="!form.valid"
             customWidth="258px"
             [inactive]="!form.valid ? true : false"
             [disabled]="!form.valid ? true : false"
           >
-            Entrar
+            Validar
           </app-normal-button>
-          <app-normal-button customWidth="258px" (click)="signup()"> Cadastrar-se </app-normal-button>
-          <p matRipple class="forgot-password">Esqueceu sua senha?</p>
+          <app-normal-button customWidth="258px" (click)="return()"> Voltar </app-normal-button>
+          <div class="small-spacer"></div>
         </div>
       </div>
     </section>

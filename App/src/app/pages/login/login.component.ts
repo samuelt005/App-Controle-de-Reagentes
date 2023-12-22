@@ -45,6 +45,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  public signup() {
+    setTimeout(() => {
+      this.router.navigate(['/cadastrar']);
+    }, 500);
+  }
+
   public ngOnInit(): void {
     if (this.userService.isLogged()) {
       this.router.navigate(['/listagem/page/1']);

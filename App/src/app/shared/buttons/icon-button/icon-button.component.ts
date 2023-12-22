@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class IconButtonComponent {
   // Atributos
   @Input() public activated = false;
+  @Input() public customColor = "";
 }

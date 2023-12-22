@@ -1,0 +1,20 @@
+.snackbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .message {
+      color: var(--base-branco);
+    }
+
+    .warning {
+      color: var(--aviso-1);
+    }
+  }
+}

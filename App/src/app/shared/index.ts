@@ -16,6 +16,7 @@ export * from './sidebar/dialogs/change-password/change-password.component';
 export * from './sidebar/menu-option/menu-option.component';
 export * from './tags/tags.component';
 export * from './snackbar/snackbar.component';
+export * from './notification/notification.component';
 
 export * from './page/page.component';
 export * from './dialogs/dialog/dialog.component';

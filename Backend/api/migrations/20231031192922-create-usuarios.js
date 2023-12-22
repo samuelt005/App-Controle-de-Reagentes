@@ -14,16 +14,25 @@ module.exports = {
 				type: Sequelize.STRING(100),
 			},
 			email: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING(100),
 			},
-			senha: {
+			confirmed_email: {
+        defaultValue: false,
 				allowNull: false,
+				type: Sequelize.BOOLEAN,
+			},
+			senha: {
+				allowNull: true,
 				type: Sequelize.STRING(100),
 			},
 			ra: {
 				allowNull: false,
 				type: Sequelize.STRING(8),
+			},
+			codigo_unico: {
+				allowNull: true,
+				type: Sequelize.STRING(10),
 			},
 			cpf: {
 				allowNull: false,

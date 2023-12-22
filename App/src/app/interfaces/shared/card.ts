@@ -4,4 +4,5 @@ export interface Card {
   title: string;
   data: string;
   isStatus?: boolean;
+  onlyAdmin?: boolean;
 }

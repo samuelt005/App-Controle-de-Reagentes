@@ -2,11 +2,25 @@ const database = require('../models');
 const { Usuarios } = require('../models');
 const { hash, compare } = require('bcryptjs');
 const uuid = require('uuid');
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
+const fs = require('fs');
+const path = require('path');
+const templatePath = path.join(__dirname, '..', 'templates\\');
+
+const transport = nodemailer.createTransport({
+	host: 'sandbox.smtp.mailtrap.io',
+	port: 2525,
+	auth: {
+		user: 'fc1b95d3667817',
+		pass: 'ca9b2286d31272',
+	},
+});
 
 class UsuariosController {
 	// Função para criar um usuario
 	static async createUsuario(req, res) {
-		const { nome, email, nova_senha, ra, cpf } = req.body;
+		const { nome, ra, cpf, email } = req.body;
 
 		try {
 			const existingRa = await Usuarios.findOne({
@@ -17,7 +31,7 @@ class UsuariosController {
 
 			if (existingRa) {
 				return res.status(400).json({
-					message: 'Já existe um Usuário com o mesmo RA.',
+					message: 'Já existe um Usuário com o mesmo RA',
 				});
 			}
 
@@ -29,51 +43,206 @@ class UsuariosController {
 
 			if (existingCpf) {
 				return res.status(400).json({
-					message: 'Já existe um Usuário com o mesmo CPF.',
+					message: 'Já existe um Usuário com o mesmo CPF',
 				});
 			}
 
-			const senha = await hash(nova_senha, 8);
+			const sameEmail = await database.Usuarios.findOne({
+				where: { email },
+			});
+
+			if (sameEmail) {
+				return res.status(400).json({
+					message: 'E-mail já utilizado',
+				});
+			}
+
+			const uniqueCode = uuid.v4().split('-')[0];
 
 			const createdUsuario = await Usuarios.create({
 				id: uuid.v4(),
 				nome,
 				email,
-				senha,
 				ra,
 				cpf,
+				codigo_unico: uniqueCode,
 			});
-			return res.status(200).json(createdUsuario);
+
+			const usuario = await database.Usuarios.findOne({
+				where: { ra, cpf },
+				attributes: ['createdAt', 'nome', 'ra'],
+			});
+
+			if (createdUsuario) {
+				const signupLink = 'http://localhost:4200/cadastrar';
+				const template = fs.readFileSync(
+					templatePath + 'registered.ejs',
+					'utf-8'
+				);
+
+				const templateVariables = {
+					nome: usuario.nome,
+					ra: usuario.ra,
+					uniqueCode,
+					signupLink,
+				};
+
+				const compiledTemplate = ejs.compile(template);
+				const htmlContent = compiledTemplate(templateVariables);
+
+				const emailData = {
+					from: 'samuel.thomas@gmail.com',
+					to: email,
+					subject: 'Seu Usuário - Biopark Controle de Regentes',
+					html: htmlContent,
+				};
+
+				transport.sendMail(emailData, function (error) {
+					if (error) {
+						console.error('Erro ao enviar email: ' + error);
+					} else {
+						console.log('Email enviado para: ' + email);
+					}
+				});
+			}
+
+			return res.status(200).json({ message: 'Usuário criado com sucesso' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
 	}
 
-	// Função para atualizar um usuario
-	static async updateUsuario(req, res) {
-		const { id } = req.params;
-		const { nome, email, nova_senha } = req.body;
+	// Função para validar ra e codigo_unico
+	static async validateNewUser(req, res) {
+		const { ra, codigo } = req.body;
 
 		try {
-			const senha = await hash(nova_senha, 8);
+			const usuario = await database.Usuarios.findOne({
+				where: { ra, codigo_unico: codigo },
+			});
+
+			if (!usuario) {
+				return res.status(400).json(false);
+			}
+
+			return res.status(200).json(true);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Função para efetuar o signup
+	static async signup(req, res) {
+		const { ra, codigo, new_password } = req.body;
+
+		try {
+			const hashedPassword = await hash(new_password, 8);
+
+			const usuario = await database.Usuarios.findOne({
+				where: { ra, codigo_unico: codigo },
+			});
+
+			if (!usuario) {
+				return res.status(404).json({
+					message: 'Usuário não encontrado',
+				});
+			}
 
 			await database.Usuarios.update(
 				{
-					nome,
-					email,
-					senha,
+					senha: hashedPassword,
+					codigo_unico: null,
 				},
 				{
-					where: { id: id },
+					where: { ra, codigo_unico: codigo },
 				}
 			);
-			const updatedUsuario = await database.Usuarios.findOne({
-				where: { id: id },
-				attributes: {
-					exclude: ['createdAt', 'updatedAt', 'id_perfil_fk', 'senha'],
-				},
+
+			const validateEmailLink = 'http://localhost:4200/cadastrar';
+			const template = fs.readFileSync(
+				templatePath + 'verifyEmail.ejs',
+				'utf-8'
+			);
+
+			const templateVariables = {
+				nome: usuario.nome,
+				validateEmailLink,
+			};
+
+			const compiledTemplate = ejs.compile(template);
+			const htmlContent = compiledTemplate(templateVariables);
+
+			const emailData = {
+				from: 'samuel.thomas@gmail.com',
+				to: usuario.email,
+				subject: 'Validar E-mail - Biopark Controle de Regentes',
+				html: htmlContent,
+			};
+
+			transport.sendMail(emailData, function (error) {
+				if (error) {
+					console.error('Erro ao enviar email: ' + error);
+				} else {
+					console.log('Email enviado para: ' + email);
+				}
 			});
-			return res.status(200).json(updatedUsuario);
+
+			return res
+				.status(200)
+				.json({ message: 'Usuário cadastrado com sucesso' });
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Função para verificar se o email está confirmado
+	static async isEmailConfirmed(req, res) {
+		const { id } = req.params;
+
+		try {
+			const usuario = await database.Usuarios.findOne({
+				where: { id },
+			});
+
+			if (!usuario.confirmed_email) {
+				return res.status(200).json(false);
+			}
+
+			return res.status(200).json(true);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Função para confirmar o email
+	static async confirmEmail(req, res) {
+		const { ra, email } = req.body;
+
+		try {
+			const usuario = await database.Usuarios.findOne({
+				where: { ra, email },
+			});
+
+			if (!usuario) {
+				return res.status(404).json({
+					message: 'Usuário não encontrado',
+				});
+			}
+
+			await database.Usuarios.update(
+				{
+					confirmed_email: true,
+				},
+				{
+					where: { ra, email },
+				}
+			);
+
+			// TODO melhorar a segurança da validação de emails.
+
+			return res.status(200).json({
+				message: 'E-mail confirmado com sucesso',
+			});
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

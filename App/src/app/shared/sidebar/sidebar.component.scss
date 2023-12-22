@@ -42,6 +42,10 @@
 
     .icon-button {
       cursor: pointer;
+
+      mat-icon {
+        color: var(--base-preto);
+      }
     }
 
     mat-icon {
@@ -160,34 +164,34 @@
           ::ng-deep .mat-mdc-text-field-wrapper {
             height: 38px;
           }
-      
+
           ::ng-deep .mat-mdc-input-element {
             position: relative;
             top: -8px;
           }
-      
+
           ::ng-deep .mat-mdc-select-trigger {
             position: relative;
             top: -8px;
           }
-      
+
           ::ng-deep .mat-mdc-form-field-error-wrapper {
             padding: 0;
             padding-top: 2px;
           }
-      
+
           ::ng-deep .mat-mdc-button-touch-target,
           ::ng-deep .mat-mdc-icon-button {
             height: 30px;
             width: 30px;
           }
-      
+
           ::ng-deep .mat-icon {
             position: absolute;
             bottom: 8%;
             right: 10%;
           }
-      
+
           ::ng-deep .mat-mdc-form-field-icon-suffix {
             right: 2%;
             padding-bottom: 18px;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   PageTitle,
@@ -10,8 +11,10 @@ import {
   ListagemService,
   CardsService,
   ListagemUpdaterService,
+  UserService,
+  LoginService,
 } from 'src/app/services';
-import { PageComponent } from 'src/app/shared';
+import { NotificationComponent, PageComponent } from 'src/app/shared';
 
 @Component({
   templateUrl: './listagem.component.html',
@@ -20,13 +23,20 @@ import { PageComponent } from 'src/app/shared';
 export class ListagemComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
+    private userService: UserService,
     private tableUpdaterService: ListagemUpdaterService,
     private listagemService: ListagemService,
+    private loginService: LoginService,
     private cardsService: CardsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notification: MatSnackBar
   ) {
     super();
+    const role = this.userService.getUserRole();
+    if (role === 'Administrador') {
+      this.isAdmin = true;
+    }
   }
 
   // Atributos
@@ -42,18 +52,21 @@ export class ListagemComponent extends PageComponent implements OnInit {
       icon: 'format_list_bulleted',
       title: 'Total de Itens',
       data: '-',
+      onlyAdmin: false,
     },
     {
       iconColor: '',
       icon: 'calculate',
       title: 'Valor total',
       data: 'R$ -',
+      onlyAdmin: true,
     },
     {
       iconColor: '',
       icon: 'data_usage',
       title: 'Mais Utilizado',
       data: '-',
+      onlyAdmin: false,
     },
   ];
 
@@ -71,12 +84,15 @@ export class ListagemComponent extends PageComponent implements OnInit {
   };
 
   public tableData: ListagemData[] = [];
+  public isAdmin = false;
 
   // Métodos
   public openHistory(id: number): void {
-    setTimeout(() => {
-      this.router.navigate([`historico/item/${id}/page/1`]);
-    }, 500);
+    if (this.isAdmin) {
+      setTimeout(() => {
+        this.router.navigate([`historico/item/${id}/page/1`]);
+      }, 500);
+    }
   }
 
   public doSearch(): void {
@@ -88,6 +104,37 @@ export class ListagemComponent extends PageComponent implements OnInit {
       this.updateTableData(this.page, this.filtersValue);
       this.showSearchError = false;
     }
+  }
+
+  public checkIsAdmin(card: Card) {
+    if (card.onlyAdmin && !this.isAdmin) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private checkValidatedEmail() {
+    this.userService.checkEmailConfirmed().subscribe((responseData) => {
+      !responseData ? console.log('Teste') : null;
+      if (!responseData) {
+        const message = 'Seu e-mail ainda não foi confirmado.';
+        const description = 'Por favor verifique sua caixa de entrada!';
+        this.notification.openFromComponent(NotificationComponent, {
+          data: { warning: true, message, description },
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+      } else {
+        const message = 'Seja bem vindo de volta!';
+        this.notification.openFromComponent(NotificationComponent, {
+          duration: 4000,
+          data: { warning: false, message },
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+      }
+    });
   }
 
   public clearSearchValue() {
@@ -151,6 +198,10 @@ export class ListagemComponent extends PageComponent implements OnInit {
 
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {
       this.refreshTable();
+    });
+
+    this.loginService.getLoginSuccessObservable().subscribe(() => {
+      this.checkValidatedEmail();
     });
   }
 }

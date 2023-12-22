@@ -1,5 +1,8 @@
 <div class="page-container">
-  <app-sidebar (filterEvent)="handleFiltering($event)" [filtersHidden]="false" />
+  <app-sidebar
+    (filterEvent)="handleFiltering($event)"
+    [filtersHidden]="false"
+  />
   <div class="main-content">
     <header class="header">
       <app-page-title [pageTitle]="pageTitle" />
@@ -26,19 +29,21 @@
       </mat-form-field>
     </header>
     <div class="cards-container">
-      <app-info-card *ngFor="let card of infoCards" [card]="card" />
+      <ng-container *ngFor="let card of infoCards">
+        <app-info-card *ngIf="checkIsAdmin(card)" [card]="card" />
+      </ng-container>
     </div>
     <div class="table-spacer">
       <div *ngIf="tableData.length !== 0" class="table-container">
         <div class="table-header">
           <p class="cod body-medium">Código</p>
           <p class="desc body-medium">Descrição</p>
-          <p class="tags body-medium">Tags</p>
+          <p class="tags body-medium" *ngIf="isAdmin">Tags</p>
           <p class="estoque body-medium">Estoque Atual</p>
           <p class="un body-medium">Un</p>
           <p class="localizacao body-medium">Loc. no Estoque</p>
-          <p class="valor-un body-medium">Valor Unitário</p>
-          <p class="valor-tot body-medium">Valor Total</p>
+          <p class="valor-un body-medium" *ngIf="isAdmin">Valor Unitário</p>
+          <p class="valor-tot body-medium" *ngIf="isAdmin">Valor Total</p>
         </div>
         <div
           *ngFor="let row of tableData"
@@ -48,7 +53,7 @@
         >
           <p class="cod body-medium">{{ row.cod }}</p>
           <p class="desc body-medium">{{ row.descricao }}</p>
-          <app-tags [tags]="row.tags"></app-tags>
+          <app-tags [tags]="row.tags" *ngIf="isAdmin"></app-tags>
           <p class="estoque body-medium">
             {{
               (+row.estoque_atual / +row.un_de_medida.peso).toLocaleString(
@@ -59,7 +64,7 @@
           </p>
           <p class="un body-medium">{{ row.un_de_medida.sigla | titlecase }}</p>
           <p class="localizacao body-medium">{{ row.loc_estoque }}</p>
-          <p class="valor-un body-medium">
+          <p class="valor-un body-medium" *ngIf="isAdmin">
             R$
             {{
               +row.estoque_atual !== 0
@@ -73,7 +78,7 @@
                 : "0,00"
             }}
           </p>
-          <p class="valor-tot body-medium">
+          <p class="valor-tot body-medium" *ngIf="isAdmin">
             R$
             {{
               (+row.vlr_estoque).toLocaleString("pt-BR", {

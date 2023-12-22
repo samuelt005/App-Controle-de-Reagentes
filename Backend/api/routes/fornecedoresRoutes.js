@@ -5,12 +5,11 @@ const FornecedoresController = require('../controllers/FornecedoresController');
 
 const router = Router();
 
-router.use(autenticado);
-
 router
 	// Rota para listar fornecedores com paginação
 	.get(
 		'/fornecedores/page/:page',
+    autenticado,
 		autorizacao(['Administrador']),
 		FornecedoresController.getFornecedores
 	)
@@ -18,6 +17,7 @@ router
 	// Rota para listar todos os fornecedores
 	.get(
 		'/fornecedores',
+    autenticado,
 		autorizacao(['Administrador']),
 		FornecedoresController.getAllFornecedores
 	)
@@ -25,6 +25,7 @@ router
 	// Rota para criar um fornecedor
 	.post(
 		'/fornecedores',
+    autenticado,
 		autorizacao(['Administrador']),
 		FornecedoresController.createFornecedor
 	)
@@ -32,6 +33,7 @@ router
 	// Rota para atualizar um fornecedor
 	.put(
 		'/fornecedores/:id',
+    autenticado,
 		autorizacao(['Administrador']),
 		FornecedoresController.updateFornecedor
 	);

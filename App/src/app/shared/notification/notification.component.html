@@ -1,0 +1,21 @@
+<div class="snackbar-content">
+  <div class="text">
+    <span [ngClass]="[warning ? 'warning' : 'message']">
+      {{ this.message }}
+    </span>
+    <span
+      *ngIf="description"
+      [ngClass]="[warning ? 'warning' : 'message']"
+    >
+      {{ this.description }}
+    </span>
+  </div>
+  <app-icon-button
+    *ngIf="warning"
+    class="icon-button"
+    (click)="dismissNotification()"
+  >
+    close
+  </app-icon-button>
+  <mat-icon *ngIf="!warning">login</mat-icon>
+</div>
