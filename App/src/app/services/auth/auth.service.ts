@@ -4,14 +4,12 @@ import { Observable, tap } from 'rxjs';
 import { AuthRequest, AuthResponse } from 'src/app/interfaces';
 import { UserService } from '../user/user.service';
 import { environment } from 'src/environments/environment.development';
-import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(
-    private loginService: LoginService,
     private userService: UserService,
     private http: HttpClient
   ) {}
@@ -25,7 +23,6 @@ export class AuthService {
         tap((response) => {
           if (response.body) {
             this.userService.saveToken(response.body?.accessToken);
-            this.loginService.triggerLoginSuccessEvent();
           }
         })
       );

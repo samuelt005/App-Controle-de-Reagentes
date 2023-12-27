@@ -1,49 +1,157 @@
-<div class="login-bg">
+<div class="signup-bg">
   <div class="container">
-    <section class="login-container">
-      <header class="login-header">
+    <section class="signup-container">
+      <header class="signup-header">
         <img src="/assets/logos/colored.png" alt="Logo do Biopark" />
       </header>
-      <div class="login-content">
-        <div class="content" [formGroup]="form">
-          <mat-form-field appearance="outline">
-            <mat-label>RA</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Informe seu RA"
-              formControlName="ra"
-            />
-            <mat-error *ngIf="form.get('ra')?.hasError('required')">
-              Insira seu RA.
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Código Único</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Informe seu Código Único"
-              formControlName="codigo"
-            />
-            <mat-error *ngIf="form.get('codigo')?.hasError('required')">
-              Insira seu código único.
-            </mat-error>
-          </mat-form-field>
-          <hr />
-          <p class="login-error">{{ registerError }}</p>
-          <app-normal-button
-            (click)="signup()"
-            [filled]="true"
-            [matRippleDisabled]="!form.valid"
-            customWidth="258px"
-            [inactive]="!form.valid ? true : false"
-            [disabled]="!form.valid ? true : false"
-          >
-            Validar
-          </app-normal-button>
-          <app-normal-button customWidth="258px" (click)="return()"> Voltar </app-normal-button>
-          <div class="small-spacer"></div>
+      <div class="signup-content">
+        <div class="content">
+          <div *ngIf="!secondStep" class="first-step" [formGroup]="firstForm">
+            <mat-form-field appearance="outline">
+              <mat-label>RA</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Informe seu RA"
+                formControlName="ra"
+                mask="9999999999"
+                maxlength="10"
+              />
+              <mat-error *ngIf="firstForm.get('ra')?.hasError('required')">
+                Insira seu RA.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Código Único</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Informe seu Código Único"
+                formControlName="codigo"
+                maxlength="8"
+              />
+              <mat-error *ngIf="firstForm.get('codigo')?.hasError('required')">
+                Insira seu código único.
+              </mat-error>
+            </mat-form-field>
+            <hr />
+            <p class="signup-error">{{ registerError }}</p>
+            <app-normal-button
+              (click)="validateBeforePassword()"
+              [filled]="true"
+              [matRippleDisabled]="!firstForm.valid"
+              customWidth="258px"
+              [inactive]="!firstForm.valid ? true : false"
+              [disabled]="!firstForm.valid ? true : false"
+            >
+              Validar
+            </app-normal-button>
+            <app-normal-button customWidth="258px" (click)="returnLogin()">
+              Voltar
+            </app-normal-button>
+            <div class="small-spacer"></div>
+          </div>
+
+          <div *ngIf="secondStep" class="second-step" [formGroup]="secondForm">
+            <mat-form-field class="input" appearance="outline">
+              <mat-label>Sua Senha</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="Insira sua Senha"
+                formControlName="password"
+              />
+              <mat-error
+                *ngIf="secondForm.get('password')?.hasError('required')"
+              >
+                Insira sua senha!
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  !secondForm.get('password')?.hasError('required') &&
+                  secondForm.get('password')?.hasError('notValid')
+                "
+              >
+                Senha não atende os requisitos!
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="input" appearance="outline">
+              <mat-label>Confire sua Senha</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="Informe a Confirmação da Senha"
+                formControlName="confirm_password"
+              />
+              <mat-error
+                *ngIf="secondForm.get('confirm_password')?.hasError('required')"
+              >
+                Confirme sua senha!
+              </mat-error>
+            </mat-form-field>
+            <div class="requirements">
+              <div class="requirements-icons">
+                <mat-icon
+                  [ngClass]="{
+                    'valid-icon': hasMinLength,
+                    'not-valid-icon': !hasMinLength
+                  }"
+                  >check</mat-icon
+                >
+                <mat-icon
+                  [ngClass]="{
+                    'valid-icon': hasNumber,
+                    'not-valid-icon': !hasNumber
+                  }"
+                  >check</mat-icon
+                >
+                <mat-icon
+                  [ngClass]="{
+                    'valid-icon': hasLowerCase,
+                    'not-valid-icon': !hasLowerCase
+                  }"
+                  >check</mat-icon
+                >
+                <mat-icon
+                  [ngClass]="{
+                    'valid-icon': hasUpperCase,
+                    'not-valid-icon': !hasUpperCase
+                  }"
+                  >check</mat-icon
+                >
+                <mat-icon
+                  [ngClass]="{
+                    'valid-icon': hasSpecialChar,
+                    'not-valid-icon': !hasSpecialChar
+                  }"
+                  >check</mat-icon
+                >
+              </div>
+              <div class="requirements-text">
+                <p>No mínimo 8 caracteres.</p>
+                <p>Pelo menos um número.</p>
+                <p>Pelo menos um caractere minúsculo.</p>
+                <p>Pelo menos um caractere maiúsculo.</p>
+                <p>Pelo menos um caractere especial.</p>
+              </div>
+            </div>
+            <hr />
+            <p class="signup-error">{{ changePasswordError }}</p>
+            <app-normal-button
+              (click)="(saveData())"
+              [filled]="true"
+              [matRippleDisabled]="!secondForm.valid"
+              customWidth="258px"
+              [inactive]="!secondForm.valid ? true : false"
+              [disabled]="!secondForm.valid ? true : false"
+            >
+              Cadastrar-se
+            </app-normal-button>
+            <app-normal-button customWidth="258px" (click)="returnFirstStep()">
+              Voltar
+            </app-normal-button>
+            <div class="small-spacer"></div>
+          </div>
         </div>
       </div>
     </section>

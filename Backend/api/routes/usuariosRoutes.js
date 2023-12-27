@@ -10,7 +10,7 @@ router
 	.post('/usuarios', UsuariosController.createUsuario)
 
 	// Rota para validar ra e codigo_unico
-	.get('/validarnovousuario', UsuariosController.validateNewUser)
+	.get('/validarnovousuario/:ra/:codigo_unico', UsuariosController.validateNewUser)
 
 	// Rota para efetuar o signup
 	.put('/registrarse', UsuariosController.signup)

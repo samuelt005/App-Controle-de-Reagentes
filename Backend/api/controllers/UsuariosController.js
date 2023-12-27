@@ -114,15 +114,15 @@ class UsuariosController {
 
 	// Função para validar ra e codigo_unico
 	static async validateNewUser(req, res) {
-		const { ra, codigo } = req.body;
+		const { ra, codigo_unico } = req.params;
 
 		try {
 			const usuario = await database.Usuarios.findOne({
-				where: { ra, codigo_unico: codigo },
+				where: { ra, codigo_unico },
 			});
 
 			if (!usuario) {
-				return res.status(400).json(false);
+				return res.status(200).json(false);
 			}
 
 			return res.status(200).json(true);
@@ -133,13 +133,14 @@ class UsuariosController {
 
 	// Função para efetuar o signup
 	static async signup(req, res) {
-		const { ra, codigo, new_password } = req.body;
+		const { ra, codigo_unico, password } = req.body;
 
 		try {
-			const hashedPassword = await hash(new_password, 8);
+      console.log(password)
+			const hashedPassword = await hash(password, 8);
 
 			const usuario = await database.Usuarios.findOne({
-				where: { ra, codigo_unico: codigo },
+				where: { ra, codigo_unico },
 			});
 
 			if (!usuario) {
@@ -154,7 +155,7 @@ class UsuariosController {
 					codigo_unico: null,
 				},
 				{
-					where: { ra, codigo_unico: codigo },
+					where: { ra, codigo_unico },
 				}
 			);
 

@@ -1,4 +1,4 @@
-.login-bg {
+.signup-bg {
   width: 100vw;
   height: 100vh;
   background-image: url(/assets/background.jpg);
@@ -14,17 +14,17 @@
     width: 100vw;
     height: 100vh;
 
-    .login-container {
+    .signup-container {
       display: flex;
       flex-direction: column;
 
-      .login-header {
+      .signup-header {
         padding: 20px 40px;
         background-color: var(--cinza-1);
         border-radius: 5px 5px 0px 0px;
       }
 
-      .login-content {
+      .signup-content {
         display: flex;
         justify-content: center;
         padding: 20px;
@@ -32,11 +32,14 @@
         border-radius: 0px 0px 5px 5px;
 
         .content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 15px;
-          width: 290px;
+          .first-step,
+          .second-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 290px;
+          }
 
           mat-form-field {
             width: 290px;
@@ -54,7 +57,7 @@
             margin: 0;
           }
 
-          .login-error {
+          .signup-error {
             height: 16px;
             color: var(--erro-2);
             margin: 0;
@@ -71,6 +74,35 @@
             font-weight: 400;
             line-height: 16px;
             color: var(--informativo-2);
+          }
+
+          .requirements {
+            display: flex;
+            margin-bottom: 10px;
+            gap: 5px;
+
+            .requirements-text,
+            .requirements-icons {
+              display: flex;
+              flex-direction: column;
+              gap: 5px;
+
+              p {
+                margin: 0;
+                height: 24px;
+                justify-self: center;
+                line-height: 24px;
+                font-size: 14px;
+              }
+
+              .not-valid-icon {
+                color: var(--cinza-1);
+              }
+
+              .valid-icon {
+                color: var(--sucesso-2);
+              }
+            }
           }
 
           .small-spacer {

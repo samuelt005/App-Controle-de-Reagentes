@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
-import { UserData, updatePassword } from 'src/app/interfaces';
+import { UserData, UpdatePassword, NewUser } from 'src/app/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -105,7 +105,7 @@ export class UserService {
     }
   }
 
-  public updatePassword(body: updatePassword, id: string): Observable<unknown> {
+  public updatePassword(body: UpdatePassword, id: string): Observable<unknown> {
     const headers = this.getHeaders();
     return this.http.put<unknown>(
       `${environment.apiUrl}/usuario/${id}/senha`,
@@ -127,14 +127,27 @@ export class UserService {
     );
   }
 
-  // public createAccount(body: updatePassword, id: string): Observable<unknown> {
-  //   const headers = this.getHeaders();
-  //   return this.http.put<unknown>(
-  //     `${environment.apiUrl}/usuarios/${id}/senha`,
-  //     body,
-  //     {
-  //       headers,
-  //     }
-  //   );
-  // }
+  public validateBeforePassword(
+    ra: string,
+    codigo_unico: string
+  ): Observable<boolean> {
+    const headers = this.getHeaders();
+    return this.http.get<boolean>(
+      `${environment.apiUrl}/validarnovousuario/${ra}/${codigo_unico}`,
+      {
+        headers,
+      }
+    );
+  }
+
+  public createAccount(body: NewUser): Observable<unknown> {
+    const headers = this.getHeaders();
+    return this.http.put<unknown>(
+      `${environment.apiUrl}/registrarse`,
+      body,
+      {
+        headers,
+      }
+    );
+  }
 }

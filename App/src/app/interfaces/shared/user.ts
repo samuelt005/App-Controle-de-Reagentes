@@ -20,8 +20,14 @@ export interface SignupData {
   new_password: string;
 }
 
-export interface updatePassword {
+export interface UpdatePassword {
   old_password: string;
   new_password: string;
   confirm_password: string;
+}
+
+export interface NewUser {
+  ra: string;
+  codigo_unico: string;
+  password: string;
 }

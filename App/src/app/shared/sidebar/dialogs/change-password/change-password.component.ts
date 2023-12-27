@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogComponent } from 'src/app/shared/dialogs/dialog/dialog.component';
 import { passwordValidator } from 'src/app/utils';
-import { updatePassword } from 'src/app/interfaces';
+import { UpdatePassword } from 'src/app/interfaces';
 
 @Component({
   templateUrl: './change-password.component.html',
@@ -59,7 +59,7 @@ export class ChangePasswordComponent extends DialogComponent implements OnInit {
   }
 
   public saveData() {
-    const formData = this.form.value as updatePassword as {
+    const formData = this.form.value as UpdatePassword as {
       old_password: string;
       new_password: string;
       confirm_password: string;

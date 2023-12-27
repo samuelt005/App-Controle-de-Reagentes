@@ -10,13 +10,13 @@ import { SnackbarData } from 'src/app/interfaces';
 export class SnackbarComponent {
   // Construtor
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData) {
-    if (!data.error) {
+    if (!data.error && !data.message) {
       this.message = 'Salvo com sucesso.';
-    } else if (!data.message) {
+    } else if (data.error && !data.message) {
       this.error = true;
       this.message = 'Erro ao salvar. Tente novamente.';
     } else {
-      this.error = true;
+      this.error = data.error;
       this.message = data.message;
     }
   }

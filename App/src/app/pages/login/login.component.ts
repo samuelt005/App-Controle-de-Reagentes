@@ -2,7 +2,7 @@ import { UserService } from './../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services';
+import { AuthService, LoginService } from 'src/app/services';
 
 @Component({
   templateUrl: './login.component.html',
@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services';
 export class LoginComponent implements OnInit {
   // Construtor
   constructor(
+    private loginService: LoginService,
     private authService: AuthService,
     private userService: UserService,
     private router: Router
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
       next: () => {
         setTimeout(() => {
           this.router.navigate(['/listagem/page/1']);
+          this.loginService.triggerLoginSuccessEvent();
         }, 500);
       },
       error: (e) => {

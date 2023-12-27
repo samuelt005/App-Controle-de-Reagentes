@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -20,7 +20,7 @@ import { NotificationComponent, PageComponent } from 'src/app/shared';
   templateUrl: './listagem.component.html',
   styleUrls: ['./listagem.component.scss'],
 })
-export class ListagemComponent extends PageComponent implements OnInit {
+export class ListagemComponent extends PageComponent implements OnInit, AfterViewInit {
   // Construtor
   constructor(
     private userService: UserService,
@@ -116,7 +116,6 @@ export class ListagemComponent extends PageComponent implements OnInit {
 
   private checkValidatedEmail() {
     this.userService.checkEmailConfirmed().subscribe((responseData) => {
-      !responseData ? console.log('Teste') : null;
       if (!responseData) {
         const message = 'Seu e-mail ainda não foi confirmado.';
         const description = 'Por favor verifique sua caixa de entrada!';
@@ -199,7 +198,9 @@ export class ListagemComponent extends PageComponent implements OnInit {
     this.tableUpdaterService.getUpdateObservable().subscribe(() => {
       this.refreshTable();
     });
+  }
 
+  public ngAfterViewInit(): void {
     this.loginService.getLoginSuccessObservable().subscribe(() => {
       this.checkValidatedEmail();
     });
