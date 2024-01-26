@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 			nome: DataTypes.STRING,
 			email: DataTypes.STRING,
 			confirmed_email: DataTypes.BOOLEAN,
+      confirmation_code: DataTypes.STRING,
 			senha: DataTypes.STRING,
 			ra: DataTypes.STRING,
       codigo_unico: DataTypes.STRING,

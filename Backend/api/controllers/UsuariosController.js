@@ -9,12 +9,12 @@ const path = require('path');
 const templatePath = path.join(__dirname, '..', 'templates\\');
 
 const transport = nodemailer.createTransport({
-	host: 'sandbox.smtp.mailtrap.io',
-	port: 2525,
-	auth: {
-		user: 'fc1b95d3667817',
-		pass: 'ca9b2286d31272',
-	},
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "3e2ae97ec6c1d2",
+    pass: "574eb1a056f13d"
+  }
 });
 
 class UsuariosController {
@@ -58,11 +58,13 @@ class UsuariosController {
 			}
 
 			const uniqueCode = uuid.v4().split('-')[0];
+      const confirmation_code = uuid.v4().replace(/-/g, '');
 
 			const createdUsuario = await Usuarios.create({
 				id: uuid.v4(),
 				nome,
 				email,
+        confirmation_code,
 				ra,
 				cpf,
 				codigo_unico: uniqueCode,
@@ -93,7 +95,7 @@ class UsuariosController {
 				const emailData = {
 					from: 'samuel.thomas@gmail.com',
 					to: email,
-					subject: 'Seu Usuário - Biopark Controle de Regentes',
+					subject: 'Continue seu Cadastro - Biopark Controle de Regentes',
 					html: htmlContent,
 				};
 
@@ -159,7 +161,7 @@ class UsuariosController {
 				}
 			);
 
-			const validateEmailLink = 'http://localhost:4200/cadastrar';
+			const validateEmailLink = `http://localhost:4200/confirmaremail/${usuario.confirmation_code}`;
 			const template = fs.readFileSync(
 				templatePath + 'verifyEmail.ejs',
 				'utf-8'
@@ -196,6 +198,64 @@ class UsuariosController {
 		}
 	}
 
+  // Função para reenviar o email para confirmar
+  static async resendConfirmationEmail(req, res) {
+		const { ra } = req.params;
+
+    try {
+			const usuario = await database.Usuarios.findOne({
+				where: { ra },
+			});
+
+			if (!usuario) {
+				return res.status(404).json({
+					message: 'Usuário não encontrado',
+				});
+			}
+
+      if (usuario.confirmed_email) {
+				return res.status(400).json({
+					message: 'E-mail já confirmado',
+				});
+			}
+
+      const validateEmailLink = `http://localhost:4200/confirmaremail/${usuario.confirmation_code}`;
+			const template = fs.readFileSync(
+				templatePath + 'verifyEmail.ejs',
+				'utf-8'
+			);
+
+			const templateVariables = {
+				nome: usuario.nome,
+				validateEmailLink,
+			};
+
+			const compiledTemplate = ejs.compile(template);
+			const htmlContent = compiledTemplate(templateVariables);
+
+			const emailData = {
+				from: 'samuel.thomas@gmail.com',
+				to: usuario.email,
+				subject: 'Confirmação de E-mail - Biopark Controle de Regentes',
+				html: htmlContent,
+			};
+
+			transport.sendMail(emailData, function (error) {
+				if (error) {
+					console.error('Erro ao enviar email: ' + error);
+				} else {
+					console.log('E-mail enviado para: ' + email);
+				}
+			});
+
+			return res
+				.status(200)
+				.json({ message: 'E-mail enviado com sucesso' });
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+  }
+
 	// Função para verificar se o email está confirmado
 	static async isEmailConfirmed(req, res) {
 		const { id } = req.params;
@@ -216,12 +276,12 @@ class UsuariosController {
 	}
 
 	// Função para confirmar o email
-	static async confirmEmail(req, res) {
-		const { ra, email } = req.body;
+	static async confirmarEmail(req, res) {
+		const { confirmation_code } = req.params;
 
 		try {
 			const usuario = await database.Usuarios.findOne({
-				where: { ra, email },
+				where: { confirmation_code },
 			});
 
 			if (!usuario) {
@@ -230,16 +290,20 @@ class UsuariosController {
 				});
 			}
 
+      if (usuario.confirmed_email) {
+				return res.status(400).json({
+					message: 'E-mail já confirmado',
+				});
+			}
+
 			await database.Usuarios.update(
 				{
 					confirmed_email: true,
 				},
 				{
-					where: { ra, email },
+					where: { confirmation_code },
 				}
 			);
-
-			// TODO melhorar a segurança da validação de emails.
 
 			return res.status(200).json({
 				message: 'E-mail confirmado com sucesso',

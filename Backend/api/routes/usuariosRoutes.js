@@ -15,6 +15,9 @@ router
 	// Rota para efetuar o signup
 	.put('/registrarse', UsuariosController.signup)
 
+	// Rota para reenviar o email para confirmar
+	.get('/reenviaremail/:ra', UsuariosController.resendConfirmationEmail)
+
 	// Rota para verificar se o email está confirmado
 	.get(
 		'/usuario/:id/emailconfirmado',
@@ -24,7 +27,7 @@ router
 	)
 
 	// Rota para confirmar o email
-	.put('/confirmemail', UsuariosController.confirmEmail)
+	.get('/confirmaremail/:confirmation_code', UsuariosController.confirmarEmail)
 
 	// Rota para atualizar o perfil de um usuário
 	.put(

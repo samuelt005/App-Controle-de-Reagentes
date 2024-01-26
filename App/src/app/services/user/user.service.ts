@@ -116,6 +116,16 @@ export class UserService {
     );
   }
 
+  public confirmEmail(confirmationId: string): Observable<unknown> {
+    const headers = this.getHeaders();
+    return this.http.get<unknown>(
+      `${environment.apiUrl}/confirmaremail/${confirmationId}`,
+      {
+        headers,
+      }
+    );
+  }
+
   public checkEmailConfirmed(): Observable<boolean> {
     const headers = this.getHeaders();
     const id = this.getUserId();

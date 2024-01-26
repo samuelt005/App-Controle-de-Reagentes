@@ -1,0 +1,30 @@
+<div class="confirm-email-bg">
+  <div class="container">
+    <section class="confirm-email-container">
+      <header class="confirm-email-header">
+        <img src="/assets/logos/colored.png" alt="Logo do Biopark" />
+      </header>
+
+      <div *ngIf="isLoading" class="loading-spinner">
+        <p class="title-medium">Confirmando seu e-mail...</p>
+        <mat-spinner [diameter]="80"></mat-spinner>
+      </div>
+
+      <div class="confirm-email-content">
+        <div class="content">
+          <p *ngIf="!isLoading" class="title-medium">
+            {{ confirmationText }}
+          </p>
+          <app-normal-button
+            *ngIf="!isLoading"
+            (click)="goToLogin()"
+            [filled]="true"
+            customWidth="258px"
+          >
+            Efetuar Login
+          </app-normal-button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

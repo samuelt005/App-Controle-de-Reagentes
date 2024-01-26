@@ -15,6 +15,7 @@ import {
   NotFoundComponent,
   DetalhesSolicitacaoComponent,
   CadastrarSeComponent,
+  ConfirmarEmailComponent,
 } from './pages';
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'cadastrar',
     component: CadastrarSeComponent,
+  },
+  {
+    path: 'confirmaremail/:id',
+    component: ConfirmarEmailComponent,
   },
   {
     path: 'listagem/page/:page',

@@ -10,13 +10,101 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
-		<title>Email Template</title>
+		<title>Continue seu Cadastro - Biopark Controle de Regentes</title>
+
+		<style>
+			.email-body {
+				display: flex;
+				justify-content: center;
+			}
+
+			.main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background-color: #FFFFFF;
+				border: 0.5px solid #a1a1a1;
+				border-radius: 10px;
+			}
+
+      h1, h2, p, button a {
+        font-family: "Roboto", sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+        padding: 0 20px;
+        margin-top: 40px;
+      }
+
+      h2 {
+        font-size: 22px;
+        padding: 0 20px;
+        font-weight: normal;
+      }
+
+      hr {
+				width: 80%;
+        height: 0.5px;
+				background-color: #a1a1a1;
+        border: none;
+      }
+
+      p {
+        font-size: 18px;
+        padding: 0 20px;
+      }
+
+      button {
+        height: 40px;
+        width: 200px;
+        border-radius: 100px;
+        border: none;
+        background-color: #d82e4a;
+      }
+
+      button a {
+        font-size: 18px;
+        color: white;
+        text-decoration: none;
+        width: 100%;
+        text-align: center;
+      }
+
+      .image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 40px;
+        background-color: #283745;
+        height: 120px;
+        width: 100%;
+				border-radius: 0 0 10px 10px;
+      }
+		</style>
 	</head>
-	<body>
-		<h1>Olá, <%= nome %>!</h1>
-		<p>Seu número de RA é <%= ra %> e seu Código Único é <%= uniqueCode %>.</p>
-		<button>
-			<a href="<%= signupLink %>">Registrar-se</a>
-		</button>
-	</body>
+
+	<div class="email-body">
+		<div class="main-content">
+			<h1>Olá, <%= nome %>!</h1>
+			<h2>Seja bem-vindo ao sistema de Controle de Reagentes do Biopark!</h2>
+      <hr>
+      <p>Para completar o seu cadastro acesse o link no botão abaixo.</p>
+			<p>
+				O seu Código Único é <b><%= uniqueCode %></b>
+			</p>
+			<button>
+				<a href="<%= signupLink %>">Completar cadastro</a>
+			</button>
+			<div class="image-container">
+				<img
+					src="https://biopark.com.br/_next/image/?url=%2Flogo%2Fbranco.png&w=256&q=75"
+					alt=""
+				/>
+			</div>
+		</div>
+	</div>
+  
 </html>

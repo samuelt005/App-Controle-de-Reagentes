@@ -22,6 +22,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
 			},
+			confirmation_code: {
+				allowNull: true,
+				type: Sequelize.STRING(32),
+			},
 			senha: {
 				allowNull: true,
 				type: Sequelize.STRING(100),

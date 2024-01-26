@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   LoginComponent,
   CadastrarSeComponent,
+  ConfirmarEmailComponent,
   ListagemComponent,
   HistoricoComponent,
   AdjustmentComponent,
@@ -73,7 +74,7 @@ import {
   SmallButtonComponent,
   TagsComponent,
   SnackbarComponent,
-  NotificationComponent
+  NotificationComponent,
 } from './shared';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import {
@@ -98,6 +99,7 @@ export const CUSTOM_FORMAT: MatDateFormats = {
     AppComponent,
     LoginComponent,
     CadastrarSeComponent,
+    ConfirmarEmailComponent,
     ListagemComponent,
     SidebarComponent,
     ProfileComponent,
