@@ -1,0 +1,25 @@
+@import "../../shared/styles/pages";
+
+.nome, .email {
+  width: 200px;
+}
+
+.ra,
+.perfil {
+  width: 100px;
+}
+
+.cpf, .data {
+  width: 120px;
+}
+
+.ra,
+.cpf,
+.perfil,
+.email {
+  text-align: center;
+}
+
+.data {
+  text-align: end;
+}

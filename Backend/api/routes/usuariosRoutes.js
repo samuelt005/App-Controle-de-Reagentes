@@ -9,6 +9,14 @@ router
 	// Rota para criar um usuario
 	.post('/usuarios', UsuariosController.createUsuario)
 
+  // // Rota para listar usuários com paginação
+  .get(
+		'/usuarios/page/:page',
+		autenticado,
+		autorizacao(['Administrador']),
+		UsuariosController.getUsuarios
+	)
+
 	// Rota para validar ra e codigo_unico
 	.get('/validarnovousuario/:ra/:codigo_unico', UsuariosController.validateNewUser)
 

@@ -70,4 +70,17 @@ export abstract class PageComponent {
       return 'CNPJ inválido';
     }
   }
+
+  protected getFormattedCpf(cpf: number): string {
+    const stringCpf = new String(cpf);
+    if (stringCpf.length == 11) {
+      const formattedCpf = stringCpf.replace(
+        /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
+        '$1.$2.$3-$4'
+      );
+      return formattedCpf;
+    } else {
+      return 'CPF inválido';
+    }
+  }
 }

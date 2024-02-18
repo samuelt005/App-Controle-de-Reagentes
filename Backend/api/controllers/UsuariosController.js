@@ -9,12 +9,12 @@ const path = require('path');
 const templatePath = path.join(__dirname, '..', 'templates\\');
 
 const transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "3e2ae97ec6c1d2",
-    pass: "574eb1a056f13d"
-  }
+	host: 'sandbox.smtp.mailtrap.io',
+	port: 2525,
+	auth: {
+		user: '3e2ae97ec6c1d2',
+		pass: '574eb1a056f13d',
+	},
 });
 
 class UsuariosController {
@@ -58,13 +58,13 @@ class UsuariosController {
 			}
 
 			const uniqueCode = uuid.v4().split('-')[0];
-      const confirmation_code = uuid.v4().replace(/-/g, '');
+			const confirmation_code = uuid.v4().replace(/-/g, '');
 
 			const createdUsuario = await Usuarios.create({
 				id: uuid.v4(),
 				nome,
 				email,
-        confirmation_code,
+				confirmation_code,
 				ra,
 				cpf,
 				codigo_unico: uniqueCode,
@@ -114,6 +114,79 @@ class UsuariosController {
 		}
 	}
 
+	static async getUsuarios(req, res) {
+		const { search } = req.query;
+		const { page } = req.params;
+
+		const pageNumber = parseInt(page) || 1;
+		const itemsPerPage = 20;
+
+		const offset = (pageNumber - 1) * itemsPerPage;
+
+		try {
+			const where = {};
+
+			// TODO alterar o search
+			// if (search) {
+			// 	if (!isNaN(search)) {
+			// 		where.numero = {
+			// 			[Op.like]: `%${search}%`,
+			// 		};
+			// 	} else {
+			// 		whereEmitente.razao_social = {
+			// 			[Op.like]: `%${search}%`,
+			// 		};
+			// 	}
+			// }
+
+			const usuarios = await database.Usuarios.findAll({
+				where: where,
+				limit: itemsPerPage,
+				offset: offset,
+				include: [
+					{
+						model: database.Perfis,
+						as: 'perfil',
+						attributes: { exclude: ['id', 'createdAt', 'updatedAt'] },
+					},
+				],
+				attributes: {
+					exclude: [
+						'id',
+						'confirmation_code',
+						'senha',
+						'codigo_unico',
+						'updatedAt',
+						'id_perfil_fk',
+					],
+				},
+				order: [['createdAt', 'DESC']],
+			});
+
+			let totalItems;
+			if (search) {
+				totalItems = await database.Usuarios.count({
+					where: where,
+				});
+			} else {
+				totalItems = await database.Usuarios.count();
+			}
+
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+			const resData = {
+				currentPage: pageNumber,
+				totalPages: totalPages,
+				totalItems: totalItems,
+				data: usuarios,
+			};
+
+			return res.status(200).json(resData);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
 	// Função para validar ra e codigo_unico
 	static async validateNewUser(req, res) {
 		const { ra, codigo_unico } = req.params;
@@ -138,7 +211,6 @@ class UsuariosController {
 		const { ra, codigo_unico, password } = req.body;
 
 		try {
-      console.log(password)
 			const hashedPassword = await hash(password, 8);
 
 			const usuario = await database.Usuarios.findOne({
@@ -198,11 +270,11 @@ class UsuariosController {
 		}
 	}
 
-  // Função para reenviar o email para confirmar
-  static async resendConfirmationEmail(req, res) {
+	// Função para reenviar o email para confirmar
+	static async resendConfirmationEmail(req, res) {
 		const { ra } = req.params;
 
-    try {
+		try {
 			const usuario = await database.Usuarios.findOne({
 				where: { ra },
 			});
@@ -213,13 +285,13 @@ class UsuariosController {
 				});
 			}
 
-      if (usuario.confirmed_email) {
+			if (usuario.confirmed_email) {
 				return res.status(400).json({
 					message: 'E-mail já confirmado',
 				});
 			}
 
-      const validateEmailLink = `http://localhost:4200/confirmaremail/${usuario.confirmation_code}`;
+			const validateEmailLink = `http://localhost:4200/confirmaremail/${usuario.confirmation_code}`;
 			const template = fs.readFileSync(
 				templatePath + 'verifyEmail.ejs',
 				'utf-8'
@@ -248,13 +320,11 @@ class UsuariosController {
 				}
 			});
 
-			return res
-				.status(200)
-				.json({ message: 'E-mail enviado com sucesso' });
+			return res.status(200).json({ message: 'E-mail enviado com sucesso' });
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}
-  }
+	}
 
 	// Função para verificar se o email está confirmado
 	static async isEmailConfirmed(req, res) {
@@ -290,7 +360,7 @@ class UsuariosController {
 				});
 			}
 
-      if (usuario.confirmed_email) {
+			if (usuario.confirmed_email) {
 				return res.status(400).json({
 					message: 'E-mail já confirmado',
 				});

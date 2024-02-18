@@ -86,6 +86,11 @@ export class SidebarComponent implements OnInit {
       page: 'lotesdecompra/page/1',
       authorized: ['Administrador'],
     },
+    {
+      title: 'Gerir Usuários',
+      page: 'usuarios/page/1',
+      authorized: ['Administrador'],
+    },
   ];
 
   // Métodos

@@ -21,3 +21,5 @@ export * from './fornecedores/fornecedores.service';
 export * from './fornecedores/fornecedores-updater.service';
 export * from './lotes-de-compra/lotes-de-compra.service';
 export * from './lotes-de-compra/lotes-de-compra-updater.service';
+export * from './usuarios/usuarios.service';
+export * from './usuarios/usuarios-updater.service';

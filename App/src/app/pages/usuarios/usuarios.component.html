@@ -1,0 +1,79 @@
+<div class="page-container">
+  <app-sidebar [filtersHidden]="true" />
+  <div class="main-content">
+    <header class="header">
+      <app-page-title [pageTitle]="pageTitle" />
+      <mat-form-field class="search-input" appearance="outline">
+        <mat-label>Pesquisar por Nome ou RA</mat-label>
+        <input
+          matInput
+          type="text"
+          class="number-input"
+          [(ngModel)]="search"
+          (keyup.enter)="doSearch()"
+        />
+        <button
+          *ngIf="this.search"
+          matSuffix
+          mat-icon-button
+          (click)="clearSearchValue()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button (click)="doSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </header>
+    <div class="table-spacer">
+      <div *ngIf="tableData.length !== 0" class="table-container">
+        <div class="table-header">
+          <p class="nome body-medium">Nome</p>
+          <p class="email body-medium">E-mail</p>
+          <p class="ra body-medium">RA</p>
+          <p class="cpf body-medium">CPF</p>
+          <p class="perfil body-medium">Perfil</p>
+          <p class="data body-medium">Data de Criação</p>
+        </div>
+        <div
+          *ngFor="let row of tableData"
+          class="table-row"
+          (click)="openEditItem(row)"
+        >
+          <p class="nome body-medium">{{ row.nome }}</p>
+          <p class="email body-medium">{{ row.email }}</p>
+          <p class="ra body-medium">{{ row.ra }}</p>
+          <p class="cpf body-medium">{{ getFormattedCpf(row.cpf) }}</p>
+          <p class="perfil body-medium">{{ row.perfil.nome }}</p>
+          <p class="data body-medium">
+            {{ getFormattedDate(row.createdAt) }}
+          </p>
+        </div>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading && showSearchError"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">search</mat-icon>
+        <h2 class="title-large">Nenhum item encontrado!</h2>
+      </div>
+      <div
+        *ngIf="tableData.length === 0 && !loading && !showSearchError"
+        class="empty-container"
+      >
+        <mat-icon class="empty-icon">web_asset_off</mat-icon>
+        <h2 class="title-large">Nenhum item para ser exibido aqui!</h2>
+      </div>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </div>
+    <app-paginator [data]="paginatorData" />
+
+    <div class="button-container">
+      <app-normal-button [filled]="true">
+        Incluir Novo
+      </app-normal-button>
+    </div>
+  </div>
+</div>

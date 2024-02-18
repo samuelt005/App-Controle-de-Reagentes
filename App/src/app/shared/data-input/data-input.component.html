@@ -62,6 +62,8 @@
       class="delete-button body-medium"
       (click)="deleteThisSection()"
       *ngIf="!isFirstItem"
+      matRipple
+      matRippleColor="rgba(255, 255, 255, 0.1)"
     >
       <mat-icon class="material-icons-outlined"> remove </mat-icon>
     </button>

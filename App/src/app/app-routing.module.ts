@@ -16,6 +16,7 @@ import {
   DetalhesSolicitacaoComponent,
   CadastrarSeComponent,
   ConfirmarEmailComponent,
+  UsuariosComponent,
 } from './pages';
 
 const routes: Routes = [
@@ -79,6 +80,10 @@ const routes: Routes = [
   {
     path: 'lotesdecompra/page/:page',
     component: LotesDeCompraComponent,
+  },
+  {
+    path: 'usuarios/page/:page',
+    component: UsuariosComponent,
   },
   {
     path: '**',
