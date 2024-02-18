@@ -1,5 +1,5 @@
+require('dotenv').config();
 const database = require('../models');
-const jsonSecret = require('../config/jsonSecret');
 const { sign } = require('jsonwebtoken');
 const { compare } = require('bcryptjs');
 
@@ -46,7 +46,7 @@ class AuthController {
 					email: usuario.email,
 					perfil: usuario.perfil.nome,
 				},
-				jsonSecret.secret,
+				(process.env.SECRET),
 				{ expiresIn: 86400 }
 			);
 

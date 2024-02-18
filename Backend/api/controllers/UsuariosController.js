@@ -1,3 +1,4 @@
+require('dotenv').config();
 const database = require('../models');
 const { Usuarios } = require('../models');
 const { hash, compare } = require('bcryptjs');
@@ -9,11 +10,11 @@ const path = require('path');
 const templatePath = path.join(__dirname, '..', 'templates\\');
 
 const transport = nodemailer.createTransport({
-	host: 'sandbox.smtp.mailtrap.io',
-	port: 2525,
+	host: (process.env.HOST),
+	port: (process.env.PORT),
 	auth: {
-		user: '3e2ae97ec6c1d2',
-		pass: '574eb1a056f13d',
+		user: (process.env.AUTH_USER),
+		pass: (process.env.AUTH_PASS),
 	},
 });
 

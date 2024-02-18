@@ -1,6 +1,6 @@
+require('dotenv').config();
 const database = require('../models');
 const { verify, decode } = require('jsonwebtoken');
-const jsonSecret = require('../config/jsonSecret');
 
 module.exports = async (req, res, next) => {
 	const token = req.headers.authorization;
@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
 			return res.status(401).send('Token inválido');
 		}
 
-		verify(accessToken, jsonSecret.secret);
+		verify(accessToken, (process.env.SECRET));
 
 		const { id, email } = await decode(accessToken);
 
