@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, NfesData } from 'src/app/interfaces';
 import { NfesService, NfesUpdaterService } from 'src/app/services';
-import { EditNfeComponent } from './dialogs/edit-nfe/edit-nfe.component';
-import { NewNfeComponent } from './dialogs/new-nfe/new-nfe.component';
+import { EditNfeComponent } from './dialogs/edit/edit-nfe.component';
+import { NewNfeComponent } from './dialogs/new/new-nfe.component';
 import { PageComponent } from 'src/app/shared';
 
 @Component({

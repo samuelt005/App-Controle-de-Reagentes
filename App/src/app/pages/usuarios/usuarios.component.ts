@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageTitle, UsuariosData } from 'src/app/interfaces';
 import { UsuariosService, UsuariosUpdaterService } from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
+import { EditUsuarioComponent } from './dialogs/edit/edit-usuario.component';
+import { NewUsuarioComponent } from './dialogs/new/new-usuario.component';
 
 @Component({
   templateUrl: './usuarios.component.html',
@@ -36,23 +38,21 @@ export class UsuariosComponent extends PageComponent implements OnInit {
     enterAnimationDuration = '100ms',
     exitAnimationDuration = '100ms'
   ): void {
-    console.log('EDITAR')
-    // this.dialog.open(EditNfeComponent, {
-    //   enterAnimationDuration,
-    //   exitAnimationDuration,
-    //   data: rowData,
-    // });
+    this.dialog.open(EditUsuarioComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: rowData,
+    });
   }
 
   public openNewItem(
     enterAnimationDuration = '100ms',
     exitAnimationDuration = '100ms'
   ): void {
-    console.log('ADICIONAR')
-    // this.dialog.open(NewNfeComponent, {
-    //   enterAnimationDuration,
-    //   exitAnimationDuration,
-    // });
+    this.dialog.open(NewUsuarioComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
   public doSearch(): void {
@@ -96,6 +96,7 @@ export class UsuariosComponent extends PageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.openNewItem();
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
       this.updateTableData(this.page, this.search);

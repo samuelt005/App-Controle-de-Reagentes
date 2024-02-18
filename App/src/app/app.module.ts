@@ -56,7 +56,9 @@ import {
   EditFornecedoresComponent,
   EditLotesDeCompraComponent,
   NewLotesDeCompraComponent,
-  UsuariosComponent
+  UsuariosComponent,
+  NewUsuarioComponent,
+  EditUsuarioComponent
 } from './pages';
 import {
   SidebarComponent,
@@ -143,7 +145,9 @@ export const CUSTOM_FORMAT: MatDateFormats = {
     NotificationComponent,
     NewLotesDeCompraComponent,
     EditLotesDeCompraComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    EditUsuarioComponent,
+    NewUsuarioComponent
   ],
   imports: [
     BrowserModule,

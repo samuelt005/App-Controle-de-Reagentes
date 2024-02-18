@@ -33,6 +33,7 @@ class UsuariosController {
 			if (existingRa) {
 				return res.status(400).json({
 					message: 'Já existe um Usuário com o mesmo RA',
+          field: 'RA'
 				});
 			}
 
@@ -45,6 +46,7 @@ class UsuariosController {
 			if (existingCpf) {
 				return res.status(400).json({
 					message: 'Já existe um Usuário com o mesmo CPF',
+          field: 'CPF'
 				});
 			}
 
@@ -55,6 +57,7 @@ class UsuariosController {
 			if (sameEmail) {
 				return res.status(400).json({
 					message: 'E-mail já utilizado',
+          field: 'E-mail'
 				});
 			}
 

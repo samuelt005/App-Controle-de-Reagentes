@@ -18,5 +18,8 @@ export interface UsuariosData {
 }
 
 export interface UsuariosRequest {
-  placeholder: number;
+  nome: string;
+  email: string;
+  ra: string;
+  cpf: string;
 }

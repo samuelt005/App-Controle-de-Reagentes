@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UsuariosResponse } from 'src/app/interfaces';
+import { UsuariosRequest, UsuariosResponse } from 'src/app/interfaces';
 import { TokenService } from '../token/token.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -30,5 +30,12 @@ export class UsuariosService {
     }
 
     return this.http.get<UsuariosResponse>(url, { headers });
+  }
+  
+  public addNew(body: UsuariosRequest): Observable<UsuariosRequest> {
+    const headers = this.getHeaders();
+    return this.http.post<UsuariosRequest>(`${environment.apiUrl}/usuarios`, body, {
+      headers,
+    });
   }
 }

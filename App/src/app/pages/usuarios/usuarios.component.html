@@ -44,7 +44,7 @@
           <p class="email body-medium">{{ row.email }}</p>
           <p class="ra body-medium">{{ row.ra }}</p>
           <p class="cpf body-medium">{{ getFormattedCpf(row.cpf) }}</p>
-          <p class="perfil body-medium">{{ row.perfil.nome }}</p>
+          <p class="perfil body-medium">{{ row.perfil ? row.perfil.nome : '-' }}</p>
           <p class="data body-medium">
             {{ getFormattedDate(row.createdAt) }}
           </p>
@@ -71,7 +71,7 @@
     <app-paginator [data]="paginatorData" />
 
     <div class="button-container">
-      <app-normal-button [filled]="true">
+      <app-normal-button (click)="openNewItem()" [filled]="true">
         Incluir Novo
       </app-normal-button>
     </div>
