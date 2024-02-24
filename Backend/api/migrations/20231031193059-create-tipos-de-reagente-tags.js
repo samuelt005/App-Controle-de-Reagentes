@@ -2,6 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
+    // Criação da tabela
 		await queryInterface.createTable('TiposDeReagenteTags', {
       id_tag_tipo_de_reagente_fk: {
 				allowNull: false,

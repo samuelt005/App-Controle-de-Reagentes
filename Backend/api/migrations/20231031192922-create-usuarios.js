@@ -1,7 +1,21 @@
 'use strict';
+
+const database = require('../models');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	async up(queryInterface, Sequelize) {
+		// Criação da tabela
+		let defaultPerfil;
+		try {
+			defaultPerfil = await database.Perfis.findOne({
+				where: { nome: 'Aluno' },
+			});
+			console.log(defaultPerfil.id);
+		} catch (e) {
+			console.error('Erro ao buscar o perfil: ', e);
+		}
+
 		await queryInterface.createTable('Usuarios', {
 			id: {
 				allowNull: false,
@@ -18,7 +32,7 @@ module.exports = {
 				type: Sequelize.STRING(100),
 			},
 			confirmed_email: {
-        defaultValue: false,
+				defaultValue: false,
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
 			},
@@ -43,7 +57,7 @@ module.exports = {
 				type: Sequelize.BIGINT,
 			},
 			id_perfil_fk: {
-				defaultValue: null,
+				defaultValue: defaultPerfil.id,
 				type: Sequelize.UUID,
 				references: { model: 'Perfis', key: 'id' },
 			},

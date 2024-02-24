@@ -35,8 +35,8 @@
         class="body-large"
         placeholder="RA"
         formControlName="ra"
-        mask="9999999999"
-        maxlength="10"
+        mask="99999999"
+        maxlength="8"
       />
       <mat-error *ngIf="form.get('ra')?.hasError('required')">
         Insira o RA.
