@@ -15,7 +15,7 @@ export class NewUsuarioComponent extends DialogComponent {
   // Construtor
   constructor(
     private tableUpdaterService: UsuariosUpdaterService,
-    private UsuariosService: UsuariosService,
+    private usuariosService: UsuariosService,
     private dialog: MatDialog,
     snackBar: MatSnackBar
   ) {
@@ -50,7 +50,7 @@ export class NewUsuarioComponent extends DialogComponent {
           cpf: string;
         }; // TODO ver se tem uma maneira melhor de fazer esta parte
 
-        this.UsuariosService.addNew(formData).subscribe({
+        this.usuariosService.addNew(formData).subscribe({
           complete: () => {
             this.openSnackBar(false);
             this.tableUpdaterService.updateTable();

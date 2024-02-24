@@ -1,5 +1,6 @@
 require('dotenv').config();
 const database = require('../models');
+const { Op } = require('sequelize');
 const { Usuarios } = require('../models');
 const { hash, compare } = require('bcryptjs');
 const uuid = require('uuid');
@@ -10,11 +11,11 @@ const path = require('path');
 const templatePath = path.join(__dirname, '..', 'templates\\');
 
 const transport = nodemailer.createTransport({
-	host: (process.env.HOST),
-	port: (process.env.PORT),
+	host: process.env.HOST,
+	port: process.env.PORT,
 	auth: {
-		user: (process.env.AUTH_USER),
-		pass: (process.env.AUTH_PASS),
+		user: process.env.AUTH_USER,
+		pass: process.env.AUTH_PASS,
 	},
 });
 
@@ -33,7 +34,7 @@ class UsuariosController {
 			if (existingRa) {
 				return res.status(400).json({
 					message: 'Já existe um Usuário com o mesmo RA',
-          field: 'RA'
+					field: 'RA',
 				});
 			}
 
@@ -46,7 +47,7 @@ class UsuariosController {
 			if (existingCpf) {
 				return res.status(400).json({
 					message: 'Já existe um Usuário com o mesmo CPF',
-          field: 'CPF'
+					field: 'CPF',
 				});
 			}
 
@@ -57,7 +58,7 @@ class UsuariosController {
 			if (sameEmail) {
 				return res.status(400).json({
 					message: 'E-mail já utilizado',
-          field: 'E-mail'
+					field: 'E-mail',
 				});
 			}
 
@@ -118,6 +119,86 @@ class UsuariosController {
 		}
 	}
 
+	// Função para atualizar um usuario
+	static async updateUsuario(req, res) {
+		const { id } = req.params;
+		const { nome, ra, cpf, email, id_perfil } = req.body;
+
+		try {
+			const existingRa = await Usuarios.findOne({
+				where: {
+					ra,
+				},
+			});
+
+			if (existingRa && existingRa.id !== id) {
+				return res.status(400).json({
+					message: 'Já existe um usuário com o mesmo número de RA.',
+				});
+			}
+
+			const existingCpf = await Usuarios.findOne({
+				where: {
+					cpf,
+				},
+			});
+
+			if (existingCpf && existingCpf.id !== id) {
+				return res.status(400).json({
+					message: 'Já existe um usuário com o mesmo número de CPF.',
+				});
+			}
+
+			if (email !== undefined) {
+				const existingEmail = await Usuarios.findOne({
+					where: {
+						email,
+					},
+				});
+
+				if (existingEmail && existingEmail.id !== id) {
+					return res.status(400).json({
+						message: 'Já existe um usuário com o mesmo E-mail.',
+					});
+				}
+
+				await database.Usuarios.update(
+					{
+						nome,
+						ra,
+						cpf,
+						id_perfil_fk: id_perfil,
+						email,
+					},
+					{
+						where: { id: id },
+					}
+				);
+			} else {
+				await database.Usuarios.update(
+					{
+						nome,
+						ra,
+						cpf,
+						id_perfil_fk: id_perfil,
+					},
+					{
+						where: { id: id },
+					}
+				);
+			}
+
+			const updatedUsuario = await database.Usuarios.findOne({
+				where: { id: id },
+				attributes: ['nome', 'ra', 'cpf', 'email'],
+			});
+			return res.status(200).json(updatedUsuario);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
+
+	// Função para listar usuários com paginação
 	static async getUsuarios(req, res) {
 		const { search } = req.query;
 		const { page } = req.params;
@@ -130,18 +211,17 @@ class UsuariosController {
 		try {
 			const where = {};
 
-			// TODO alterar o search
-			// if (search) {
-			// 	if (!isNaN(search)) {
-			// 		where.numero = {
-			// 			[Op.like]: `%${search}%`,
-			// 		};
-			// 	} else {
-			// 		whereEmitente.razao_social = {
-			// 			[Op.like]: `%${search}%`,
-			// 		};
-			// 	}
-			// }
+			if (search) {
+				if (!isNaN(search)) {
+					where.ra = {
+						[Op.like]: `%${search}%`,
+					};
+				} else {
+					where.nome = {
+						[Op.like]: `%${search}%`,
+					};
+				}
+			}
 
 			const usuarios = await database.Usuarios.findAll({
 				where: where,
@@ -151,12 +231,11 @@ class UsuariosController {
 					{
 						model: database.Perfis,
 						as: 'perfil',
-						attributes: { exclude: ['id', 'createdAt', 'updatedAt'] },
+						attributes: { exclude: ['createdAt', 'updatedAt'] },
 					},
 				],
 				attributes: {
 					exclude: [
-						'id',
 						'confirmation_code',
 						'senha',
 						'codigo_unico',
@@ -382,32 +461,6 @@ class UsuariosController {
 			return res.status(200).json({
 				message: 'E-mail confirmado com sucesso',
 			});
-		} catch (error) {
-			return res.status(500).json(error.message);
-		}
-	}
-
-	// Função para atualizar o perfil do usuário
-	static async updatePerfil(req, res) {
-		const { id } = req.params;
-		const { id_perfil } = req.body;
-
-		try {
-			await database.Usuarios.update(
-				{
-					id_perfil_fk: Number(id_perfil),
-				},
-				{
-					where: { id: id },
-				}
-			);
-			const updatedUsuario = await database.Usuarios.findOne({
-				where: { id: id },
-				attributes: {
-					exclude: ['createdAt', 'updatedAt', 'senha'],
-				},
-			});
-			return res.status(200).json(updatedUsuario);
 		} catch (error) {
 			return res.status(500).json(error.message);
 		}

@@ -20,7 +20,10 @@ export class UsuariosService {
     return headers;
   }
 
-  public listPerPage(page: number, search?: string): Observable<UsuariosResponse> {
+  public listPerPage(
+    page: number,
+    search?: string
+  ): Observable<UsuariosResponse> {
     const headers = this.getHeaders();
     let url = `${environment.apiUrl}/usuarios/page/${page}`;
 
@@ -31,11 +34,26 @@ export class UsuariosService {
 
     return this.http.get<UsuariosResponse>(url, { headers });
   }
-  
+
   public addNew(body: UsuariosRequest): Observable<UsuariosRequest> {
     const headers = this.getHeaders();
-    return this.http.post<UsuariosRequest>(`${environment.apiUrl}/usuarios`, body, {
-      headers,
-    });
+    return this.http.post<UsuariosRequest>(
+      `${environment.apiUrl}/usuarios`,
+      body,
+      {
+        headers,
+      }
+    );
+  }
+
+  public edit(body: UsuariosRequest, id: string): Observable<UsuariosRequest> {
+    const headers = this.getHeaders();
+    return this.http.put<UsuariosRequest>(
+      `${environment.apiUrl}/usuarios/${id}/atualizar`,
+      body,
+      {
+        headers,
+      }
+    );
   }
 }

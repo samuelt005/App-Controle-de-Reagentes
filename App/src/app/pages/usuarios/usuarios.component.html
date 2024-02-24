@@ -33,6 +33,7 @@
           <p class="ra body-medium">RA</p>
           <p class="cpf body-medium">CPF</p>
           <p class="perfil body-medium">Perfil</p>
+          <p class="email-confirmado body-medium">Validação de E-mail</p>
           <p class="data body-medium">Data de Criação</p>
         </div>
         <div
@@ -43,8 +44,18 @@
           <p class="nome body-medium">{{ row.nome }}</p>
           <p class="email body-medium">{{ row.email }}</p>
           <p class="ra body-medium">{{ row.ra }}</p>
-          <p class="cpf body-medium">{{ getFormattedCpf(row.cpf) }}</p>
-          <p class="perfil body-medium">{{ row.perfil ? row.perfil.nome : '-' }}</p>
+          <p class="cpf body-medium">
+            {{ getFormattedCpf(row.cpf) }}
+          </p>
+          <p class="perfil body-medium">
+            {{ row.perfil ? row.perfil.nome : "-" }}
+          </p>
+          <p
+            class="email-confirmado body-medium"
+            [ngClass]="{ unvalidated: !row.confirmed_email }"
+          >
+            {{ row.confirmed_email ? "Validado" : "Não Validado" }}
+          </p>
           <p class="data body-medium">
             {{ getFormattedDate(row.createdAt) }}
           </p>

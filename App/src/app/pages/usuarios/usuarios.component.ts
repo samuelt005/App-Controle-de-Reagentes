@@ -15,7 +15,7 @@ export class UsuariosComponent extends PageComponent implements OnInit {
   // Construtor
   constructor(
     private tableUpdaterService: UsuariosUpdaterService,
-    private UsuariosService: UsuariosService,
+    private usuariosService: UsuariosService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router
@@ -76,8 +76,8 @@ export class UsuariosComponent extends PageComponent implements OnInit {
     this.loading = true;
 
     const observable = search
-      ? this.UsuariosService.listPerPage(page, search)
-      : this.UsuariosService.listPerPage(page);
+      ? this.usuariosService.listPerPage(page, search)
+      : this.usuariosService.listPerPage(page);
 
     observable.subscribe((responseData) => {
       const { currentPage, totalPages, totalItems } = responseData;
@@ -96,7 +96,6 @@ export class UsuariosComponent extends PageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.openNewItem();
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
       this.updateTableData(this.page, this.search);

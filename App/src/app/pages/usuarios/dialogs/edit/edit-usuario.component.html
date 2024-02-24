@@ -1,54 +1,78 @@
 <div class="item-container">
-  <h3 class="title-large">Editar Nota Fiscal</h3>
+  <h3 class="title-large">Editar Usuário</h3>
   <div class="inputs" [formGroup]="form">
     <mat-form-field class="input" appearance="outline">
       <input
         matInput
         type="text"
-        class="number-input body-large"
-        placeholder="Número da Nota"
-        formControlName="numero"
-        mask="999999999"
-        [specialCharacters]="[]"
+        class="body-large"
+        placeholder="Nome"
+        formControlName="nome"
       />
-      <mat-error *ngIf="form.get('numero')?.hasError('required')">
-        Insira o número da nota fiscal.
+      <mat-error *ngIf="form.get('nome')?.hasError('required')">
+        Insira o nome.
       </mat-error>
     </mat-form-field>
     <mat-form-field class="input" appearance="outline">
       <input
         matInput
-        minlength="10"
-        maxlength="10"
-        placeholder="Data de Emissão"
-        [matDatepicker]="picker"
-        formControlName="data_emissao"
+        type="email"
+        class="body-large"
+        placeholder="E-mail"
+        formControlName="email"
       />
-      <mat-error
-        *ngIf="
-          form.get('data_emissao')?.hasError('required') ||
-          form.get('data_emissao')?.hasError('invalidDate')
-        "
-      >
-        Insira uma data válida.
+      <mat-error *ngIf="form.get('email')?.hasError('required')">
+        Insira o E-mail.
       </mat-error>
-      <mat-datepicker-toggle matIconSuffix [for]="picker">
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        Formato inválido para e-mail.
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="input" appearance="outline">
-      <mat-select placeholder="Fornecedor" formControlName="id_fornecedor">
+      <input
+        matInput
+        type="text"
+        class="body-large"
+        placeholder="RA"
+        formControlName="ra"
+        mask="99999999"
+        maxlength="8"
+      />
+      <mat-error *ngIf="form.get('ra')?.hasError('required')">
+        Insira o RA.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <input
+        matInput
+        type="text"
+        class="body-large"
+        placeholder="CPF"
+        mask="000.000.000-00"
+        [validation]="false"
+        formControlName="cpf"
+      />
+      <mat-error *ngIf="form.get('cpf')?.hasError('invalidLength')">
+        CPF esta incompleto.
+      </mat-error>
+      <mat-error
+        *ngIf="
+          form.get('cpf')?.hasError('invalidRules') &&
+          !form.get('cpf')?.hasError('invalidLength')
+        "
+      >
+        CPF é inválido.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="input" appearance="outline">
+      <mat-select placeholder="Perfil" formControlName="id_perfil">
         <!-- TODO Incluir pesquisa neste select -->
-        <mat-option
-          *ngFor="let item of selectData"
-          [value]="item.id.toString()"
-          >{{
-            getFormattedCnpj(item.cnpj) + " - " + item.razao_social
-          }}</mat-option
-        >
+        <mat-option *ngFor="let item of selectData" [value]="item.id">{{
+          item.nome
+        }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('id_fornecedor')?.hasError('required')">
-        Escolhar o emitente.
+      <mat-error *ngIf="form.get('id_perfil')?.hasError('required')">
+        Escolhar o perfil do usuário.
       </mat-error>
     </mat-form-field>
   </div>

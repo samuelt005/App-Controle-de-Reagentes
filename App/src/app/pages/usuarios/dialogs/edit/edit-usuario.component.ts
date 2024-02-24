@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FornecedoresData, NfesData } from 'src/app/interfaces';
+import { PerfisData, UsuariosData } from 'src/app/interfaces';
 import {
-  NfesService,
-  NfesUpdaterService,
-  FornecedoresService,
+  PerfisService,
+  UsuariosService,
+  UsuariosUpdaterService,
 } from 'src/app/services';
 import { ConfirmSaveComponent, DialogComponent } from 'src/app/shared';
-import { dateValidator } from 'src/app/utils';
+import { cpfValidator } from 'src/app/utils';
 
 @Component({
   templateUrl: './edit-usuario.component.html',
@@ -18,65 +18,72 @@ import { dateValidator } from 'src/app/utils';
 export class EditUsuarioComponent extends DialogComponent implements OnInit {
   // Construtor
   constructor(
-    @Inject(MAT_DIALOG_DATA) public dialogData: NfesData,
-    private fornecedoresService: FornecedoresService,
-    private tableUpdaterService: NfesUpdaterService,
-    private nfesService: NfesService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: UsuariosData,
+    private tableUpdaterService: UsuariosUpdaterService,
+    private usuariosService: UsuariosService,
+    private perfisService: PerfisService,
     private dialog: MatDialog,
     snackBar: MatSnackBar
   ) {
     super(snackBar);
 
     this.form.setValue({
-      numero: dialogData.numero.toString(),
-      data_emissao: dialogData.data_emissao,
-      id_fornecedor: dialogData.emitente.id.toString(),
+      nome: dialogData.nome,
+      email: dialogData.email,
+      ra: dialogData.ra,
+      cpf: dialogData.cpf.toString(),
+      id_perfil: dialogData.perfil.id,
     });
+
+    if (dialogData.confirmed_email) {
+      this.form.get('email')?.disable();
+    }
   }
 
   // Atributos
   public form = new FormGroup({
-    numero: new FormControl('', [
+    nome: new FormControl('', [Validators.required]),
+    email: new FormControl({ value: '', disabled: false }, [
+      Validators.email,
       Validators.required,
-      Validators.pattern('^[0-9]*$'),
     ]),
-    data_emissao: new FormControl('', [Validators.required, dateValidator()]),
-    id_fornecedor: new FormControl('', [Validators.required]),
+    ra: new FormControl('', [Validators.required]),
+    cpf: new FormControl('', [cpfValidator()]),
+    id_perfil: new FormControl('', [Validators.required]),
   });
 
-  public selectData: FornecedoresData[] = [];
+  public selectData: PerfisData[] = [];
 
   // Métodos
   public saveData(
     enterAnimationDuration = '100ms',
-    exitAnimationDuration = '100ms',
-    message = ''
+    exitAnimationDuration = '100ms'
   ) {
     const dialogRef = this.dialog.open(ConfirmSaveComponent, {
       enterAnimationDuration,
       exitAnimationDuration,
-      data: message,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const formData = this.form.value as unknown as {
-          numero: number;
-          data_emissao: Date;
-          id_fornecedor: number;
-        };
+          nome: string;
+          email: string;
+          ra: string;
+          cpf: string;
+        }; // TODO ver se tem uma maneira melhor de fazer esta parte
 
-        this.nfesService.edit(formData, this.dialogData.id).subscribe({
+        this.usuariosService.edit(formData, this.dialogData.id).subscribe({
           complete: () => {
             this.openSnackBar(false);
             this.tableUpdaterService.updateTable();
           },
           error: (e) => {
-            if (e.status === 409) {
-              this.openSnackBar(true, 'Esta nota fiscal já existe.');
+            if (e.status === 400) {
+              this.openSnackBar(true, `${e.error.message}`);
             } else {
               this.openSnackBar(true);
+              console.error('Ocorreu um erro:', e);
             }
-            console.error('Ocorreu um erro:', e);
           },
         });
       } else {
@@ -86,7 +93,7 @@ export class EditUsuarioComponent extends DialogComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.fornecedoresService.listAll().subscribe((responseData) => {
+    this.perfisService.listAll().subscribe((responseData) => {
       this.selectData = responseData.data;
     });
   }

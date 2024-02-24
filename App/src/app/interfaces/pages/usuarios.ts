@@ -6,6 +6,7 @@ export interface UsuariosResponse {
 }
 
 export interface UsuariosData {
+  id: string;
   nome: string;
   email: string;
   confirmed_email: boolean;
@@ -13,6 +14,7 @@ export interface UsuariosData {
   cpf: number;
   createdAt: string;
   perfil: {
+    id: string;
     nome: string;
   };
 }

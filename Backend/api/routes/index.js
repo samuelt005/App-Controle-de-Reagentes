@@ -9,6 +9,7 @@ const usuarios = require('./usuariosRoutes');
 const itensmovimentacao = require('./itensmovimentacaoRoutes');
 const cards = require('./cardsRoutes');
 const auth = require('./authRoutes');
+const perfis = require('./perfisRoutes');
 
 module.exports = (app) => {
 	app.use(bodyParser.json());
@@ -22,6 +23,7 @@ module.exports = (app) => {
 		tags,
 		tiposdereagente,
 		itensmovimentacao,
-		cards
+		cards,
+		perfis
 	);
 };

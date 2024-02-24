@@ -9,8 +9,16 @@ router
 	// Rota para criar um usuario
 	.post('/usuarios', UsuariosController.createUsuario)
 
-  // // Rota para listar usuários com paginação
-  .get(
+	// Rota para atualizar um usuario
+	.put(
+		'/usuarios/:id/atualizar',
+		autenticado,
+		autorizacao(['Administrador']),
+		UsuariosController.updateUsuario
+	)
+
+	// // Rota para listar usuários com paginação
+	.get(
 		'/usuarios/page/:page',
 		autenticado,
 		autorizacao(['Administrador']),
@@ -18,7 +26,10 @@ router
 	)
 
 	// Rota para validar ra e codigo_unico
-	.get('/validarnovousuario/:ra/:codigo_unico', UsuariosController.validateNewUser)
+	.get(
+		'/validarnovousuario/:ra/:codigo_unico',
+		UsuariosController.validateNewUser
+	)
 
 	// Rota para efetuar o signup
 	.put('/registrarse', UsuariosController.signup)
@@ -36,14 +47,6 @@ router
 
 	// Rota para confirmar o email
 	.get('/confirmaremail/:confirmation_code', UsuariosController.confirmarEmail)
-
-	// Rota para atualizar o perfil de um usuário
-	.put(
-		'/usuario/:id/perfil',
-		autenticado,
-		autorizacao(['Administrador']),
-		UsuariosController.updatePerfil
-	)
 
 	// Rota para atualizar a senha de um usuário
 	.put(
