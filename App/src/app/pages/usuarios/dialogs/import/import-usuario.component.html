@@ -1,0 +1,43 @@
+<div class="item-container">
+  <h3 class="title-large">Importar Usuários</h3>
+  <div class="inputs">
+    <button
+      class="normal-button body-medium filled"
+      matRippleColor="rgba(255, 255, 255, 0.05)"
+      matRipple
+      (click)="onFileInput.click()"
+    >
+      Enviar Arquivo para importação
+      <mat-icon class="title-icon material-icons-outlined">
+        upload_file
+      </mat-icon>
+    </button>
+    <input
+      type="file"
+      #onFileInput
+      (change)="onFileChange($event)"
+      style="display: none"
+    />
+    <p>{{ file === null ? "Nenhum arquivo selecionado" : file.name }}</p>
+  </div>
+  <a
+    matRipple
+    class="download-file"
+    href="/assets/modelo_para_importacao.xlsx"
+    download
+    >Baixar arquivo modelo</a
+  >
+
+  <div class="buttons">
+    <app-normal-button
+      mat-dialog-close
+      [filled]="true"
+      (click)="saveData()"
+      [inactive]="file === null ? true : false"
+      [disabled]="file === null ? true : false"
+    >
+      Salvar
+    </app-normal-button>
+    <app-normal-button mat-dialog-close> Cancelar </app-normal-button>
+  </div>
+</div>

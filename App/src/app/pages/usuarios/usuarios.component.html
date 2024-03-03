@@ -82,6 +82,9 @@
     <app-paginator [data]="paginatorData" />
 
     <div class="button-container">
+      <app-normal-button (click)="openImportItems()" [filled]="true">
+        Importar Usuários
+      </app-normal-button>
       <app-normal-button (click)="openNewItem()" [filled]="true">
         Incluir Novo
       </app-normal-button>

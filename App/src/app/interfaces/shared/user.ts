@@ -11,6 +11,7 @@ export interface NewUserData {
   nome: string;
   ra: string;
   cpf: string;
+  email: string;
 }
 
 export interface SignupData {

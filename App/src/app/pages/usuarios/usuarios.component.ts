@@ -6,6 +6,7 @@ import { UsuariosService, UsuariosUpdaterService } from 'src/app/services';
 import { PageComponent } from 'src/app/shared';
 import { EditUsuarioComponent } from './dialogs/edit/edit-usuario.component';
 import { NewUsuarioComponent } from './dialogs/new/new-usuario.component';
+import { ImportUsuarioComponent } from './dialogs/import/import-usuario.component';
 
 @Component({
   templateUrl: './usuarios.component.html',
@@ -42,6 +43,16 @@ export class UsuariosComponent extends PageComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
       data: rowData,
+    });
+  }
+
+  public openImportItems(
+    enterAnimationDuration = '100ms',
+    exitAnimationDuration = '100ms'
+  ): void {
+    this.dialog.open(ImportUsuarioComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
     });
   }
 
@@ -96,6 +107,7 @@ export class UsuariosComponent extends PageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.openImportItems();
     this.route.paramMap.subscribe((params) => {
       this.page = Number(params.get('page'));
       this.updateTableData(this.page, this.search);
